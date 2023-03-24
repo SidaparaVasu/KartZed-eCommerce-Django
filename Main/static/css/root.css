@@ -1,0 +1,30 @@
+:root{
+
+    /* Screen Size Setup */
+    --max-width: 100%;
+    --min-height: 100vh;
+
+    --nav-height: 80px;
+
+    /* Colors */ 
+    /* based on logo theme */
+    --light-grey: #e6e6e6;
+    --grey-400: #67707e;
+    --grey-600: #505762;
+    --grey-800: #393e46;
+    --dark-grey: #22252a;
+    --bg-color: #f0f0f0;
+    
+    /* General Colors */
+    --black: #000000;
+    --white: #ffffff;
+
+    /* Font Family */
+    --ff-lato: 'Lato', sans-serif;
+    --ff-montserrat: 'Montserrat', sans-serif;
+    --ff-cinzel: 'Cinzel', serif;
+    --ff-berkshire-swash : 'Berkshire Swash', cursive;
+    --ff-cormorant-garamond: 'Cormorant Garamond', serif;
+    --ff-bitter: 'Bitter', serif;
+} 
+

@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KartZed - eCommerce</title>
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/root.css' %}">
+    <link rel="stylesheet" href="{% static 'css/plugins.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <!-- Include Top Main Navigation Bar -->
+    {% include 'main-navbar.html' %}
+
+    <!-- Navigation Bar -->
+    <div class="navigation">
+        <a href="#" class="category-list"><img src="{% static 'assets/img/category-home.png' %}" alt="img"/><p>Home</p></a>
+        <a href="#" class="category-list"><img src="{% static 'assets/img/category-mobile.png' %}" alt="img"/><p>Mobiles</p></a>
+        <a href="#" class="category-list"><img src="{% static 'assets/img/category-electronics.png' %}" alt="img"/><p>Electronics</p></a>
+        <a href="#" class="category-list"><img src="{% static 'assets/img/category-appliances.png' %}" alt="img"/><p>Appliances</p></a>
+        <a href="#" class="category-list"><img src="{% static 'assets/img/category-babycare.png' %}" alt="img"/><p>Baby Care</p></a>
+        <a href="#" class="category-list"><img src="{% static 'assets/img/category-smartwatches.png' %}" alt="img"/><p>Smart Watches</p></a>
+        <a href="#" class="category-list"><img src="{% static 'assets/img/category-fitness.png' %}" alt="img"/><p>Health & Fitness</p></a>
+    </div>
+
+    <!-- Banner -->
+    <div class="flash-banner-container">
+
+    </div>
+
+    <div class="best-sell-view">
+        <div class="card">
+
+        </div>
+    </div>
+
+</body>
+</html>
