@@ -1,4 +1,5 @@
 body{
+    position: relative;
     min-height: 140vh;
     max-width: var(--max-width);
     background-color: var(--bg-color);
@@ -32,6 +33,10 @@ body{
     color: var(--black);
 }
 
+.navigation .category-list:hover > p{
+    color: var(--grey-400);
+}
+
 .navigation .category-list > img{
     width: 70%;
     aspect-ratio: 3/2;
@@ -44,6 +49,149 @@ body{
     margin-bottom: 5%;
 }
 
+
+
+/* Login Popup */
+.login-popup{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(67, 67, 67, 0.79);
+    display: grid;
+    place-items: center;
+    opacity: 0;
+}
+.login-container{
+    position: relative;
+    height: 520px;
+    width: 650px;
+    font-family: var(--ff-montserrat);
+    border-radius: 4px;
+}
+.close-btn{
+    position: absolute;
+    right: -50px;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    color: var(--white);
+    cursor: pointer;
+}
+
+/* On Toggle */
+.active-popup{
+    opacity: 1;
+    z-index: 1000;
+}
+
+.login-container > .login-card,
+.login-container > .signup-card{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 40% 60%;
+}
+.login-card{
+    z-index: 1;
+}
+/* toggle signup card */
+.toggle-signup-card{
+    z-index: -1;
+}
+
+.lft-div{
+    background-color: var(--blue);
+    padding: 40px 35px 0 35px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    color: var(--white);
+}
+.lft-div p:nth-child(1){
+    font-size: 25px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+.lft-div p:nth-child(2){
+    line-height: 23px;
+}
+.rgt-div{
+    position: relative;
+    background-color: var(--white);
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    padding: 50px 40px 0 40px;
+}
+
+.rgt-div > .login-input-label{
+    font-size: 13px;
+    letter-spacing: .1px;
+    color: var(--grey-400);
+}
+.rgt-div > .login-input, 
+.rgt-div > .send-otp-btn{
+    width: 100%;
+    outline: none;
+    border-radius: 4px;
+}
+.rgt-div > .login-input{
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 8px;
+    border: 1px solid var(--grey-600);
+}
+.rgt-div > .login-input:focus{
+    border: 2px solid var(--blue);
+}
+
+.error-validate-message{
+    padding: 8px 0 8px 0;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: var(--ff-montserrat);
+    color: var(--col-validate)
+}
+
+.term-policy-label{
+    font-size: 12px;
+    color: var(--grey-600);
+    font-family: var(--ff-lato);
+}
+
+.term-policy-label > p > a,
+.link-signup > a{
+    text-decoration: none;
+    color: var(--blue);
+}
+
+.rgt-div > .send-otp-btn{
+    padding: 15px;
+    border: none;
+    background-color: var(--orange);
+    color: var(--white);
+    cursor: pointer;
+    margin-top: 40px;
+}
+
+.link-signup{
+    position: absolute;
+    left: 0;
+    bottom: 35px;
+    width: 100%;
+    text-align: center;
+}
+.link-signup > a{
+    font-size: 16px;
+    font-family: var(--ff-lato);
+    cursor: pointer;
+}
+
+
+/* Banner Styling */
 .flash-banner-container{
     width: 100%;
     height: 220px;
