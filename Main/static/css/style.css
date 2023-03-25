@@ -59,9 +59,7 @@ body{
     height: 100vh;
     width: 100%;
     background-color: rgba(67, 67, 67, 0.79);
-    display: grid;
-    place-items: center;
-    opacity: 0;
+    display: none;
 }
 .login-container{
     position: relative;
@@ -69,6 +67,8 @@ body{
     width: 650px;
     font-family: var(--ff-montserrat);
     border-radius: 4px;
+    margin: auto;
+    margin-top: calc((100vh - 520px)/2);
 }
 .close-btn{
     position: absolute;
@@ -82,8 +82,11 @@ body{
 
 /* On Toggle */
 .active-popup{
-    opacity: 1;
-    z-index: 1000;
+    display: block;
+    z-index: 10;
+}
+body.active-popup{
+    height: 100%;
 }
 
 .login-container > .login-card,

@@ -6,7 +6,7 @@
     box-shadow: 0 0 2px 1px rgba(190,190,190,04);
     background-color: var(--white);
     font-family: var(--ff-lato);
-    z-index: 100;
+    z-index: 10;
 }
 
 .main-navbar > .logo-box, .nav-btn-box, .search-bar-box{
