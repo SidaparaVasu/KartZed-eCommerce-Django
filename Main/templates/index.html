@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <script src="https://kit.fontawesome.com/2d2e379b4b.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 <body>
 
@@ -23,7 +24,7 @@
     <!-- Popup form for login/registration -->
     <div class="login-popup" id="login-popup">
         <div class="login-container">
-            <div class="close-btn" onclick="popupLoginBox()">
+            <div class="close-btn" onclick="closeLoginBox()">
                 <!-- <i class="fa-regular fa-xmark-large fa-rotate-90" style="color: #bf1d1d;"></i> -->
                 close
             </div>
@@ -54,7 +55,7 @@
                     <p class="error-validate-message"></p>
                     <span class="term-policy-label"><p>By continuing, you agree to Flipkart's <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p></span>
                     <input type="submit" class="send-otp-btn" value="CONTINUE">
-                    <div class="link-signup"><a onclick="toggleLoginCard()">Existing User? Log in</a></div>
+                    <div class="link-login"><a onclick="toggleLoginCard()">Existing User? Log in</a></div>
                 </div>
             </div>
 
@@ -62,7 +63,8 @@
                 function toggleLoginCard() {
                     var element = document.getElementById("login-card");
                     element.classList.toggle("toggle-signup-card");
-                    document.getElementsById("login-input").focus();
+                    // document.body.style.overflowY = 'hidden';
+                    // document.getElementsById("login-input").focus();
                 }
             </script>
         </div>

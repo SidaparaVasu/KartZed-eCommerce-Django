@@ -29,5 +29,12 @@
     function popupLoginBox() {
         var element = document.getElementById("login-popup");
         element.classList.toggle("active-popup");
+        document.body.style.overflowY = 'hidden';
+    }
+
+    function closeLoginBox() {
+        var element = document.getElementById("login-popup");
+        element.classList.remove("active-popup");
+        document.body.style.overflowY = 'visible';
     }
 </script>

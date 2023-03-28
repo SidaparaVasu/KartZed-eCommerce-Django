@@ -12,8 +12,8 @@ body{
     height: var(--navigation-height);
     width: 100%;
     background-color: var(--white);
-    box-shadow: 0 0 2px 2px var(--light-grey);
-    margin-bottom: 15px;
+    box-shadow: 0 0 4px 4px var(--light-grey);
+    margin-bottom: 20px;
     display: inline-flex;
     justify-content: center;
     gap: 10px;
@@ -84,9 +84,10 @@ body{
 .active-popup{
     display: block;
     z-index: 10;
+    overflow-y: hidden;
 }
 body.active-popup{
-    height: 100%;
+    /* height: 100%; */
 }
 
 .login-container > .login-card,
@@ -166,7 +167,8 @@ body.active-popup{
 }
 
 .term-policy-label > p > a,
-.link-signup > a{
+.link-signup > a,
+.link-login > a{
     text-decoration: none;
     color: var(--blue);
 }
@@ -175,19 +177,21 @@ body.active-popup{
     padding: 15px;
     border: none;
     background-color: var(--orange);
+    font-family: var(--ff-lato);
     color: var(--white);
     cursor: pointer;
     margin-top: 40px;
 }
 
-.link-signup{
+.link-signup, .link-login{
     position: absolute;
     left: 0;
     bottom: 35px;
     width: 100%;
     text-align: center;
 }
-.link-signup > a{
+.link-signup > a,
+.link-login > a{
     font-size: 16px;
     font-family: var(--ff-lato);
     cursor: pointer;
@@ -198,6 +202,6 @@ body.active-popup{
 .flash-banner-container{
     width: 100%;
     height: 220px;
-    background-color: pink;
+    background-color: rgb(0, 0, 0);
     box-shadow: 0 0 2px 2px var(--light-grey);
 }
