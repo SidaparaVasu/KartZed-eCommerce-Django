@@ -86,9 +86,6 @@ body{
     z-index: 10;
     overflow-y: hidden;
 }
-body.active-popup{
-    /* height: 100%; */
-}
 
 .login-container > .login-card,
 .login-container > .signup-card{
@@ -137,7 +134,7 @@ body.active-popup{
     color: var(--grey-400);
 }
 .rgt-div > .login-input, 
-.rgt-div > .send-otp-btn{
+.rgt-div > .button{
     width: 100%;
     outline: none;
     border-radius: 4px;
@@ -173,7 +170,7 @@ body.active-popup{
     color: var(--blue);
 }
 
-.rgt-div > .send-otp-btn{
+.rgt-div > .button{
     padding: 15px;
     border: none;
     background-color: var(--orange);

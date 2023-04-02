@@ -8,4 +8,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('', views.indexPage, name="indexPage"),
+    
+    # Authentication
+    path('registerUser', views.registerUser, name="registerUser"),
 ]

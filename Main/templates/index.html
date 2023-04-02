@@ -34,14 +34,14 @@
                     <p>Login</p>
                     <p>Get access to your Orders, Wishlist and Recommendations</p>
                 </div>
-                <div class="rgt-div">
+                <form class="rgt-div" action="" method="post">
                     <label for="login-input" class="login-input-label">Enter Email/Mobile number</label>
                     <input type="text" class="login-input" id="login-input" name="email-or-mobileno" />
                     <p class="error-validate-message"></p>
                     <span class="term-policy-label"><p>By continuing, you agree to Flipkart's <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p></span>
-                    <input type="submit" class="send-otp-btn" value="Request OTP">
+                    <input type="submit" class="button send-otp-btn" value="Request OTP" />
                     <div class="link-signup"><a onclick="toggleLoginCard()">New to KartZed? Create an Account</a></div>
-                </div>
+                </form>
             </div>
 
             <div class="signup-card" id="signup-card">
@@ -49,22 +49,22 @@
                     <p>Looks Like you're new here!</p>
                     <p>Sign up with your mobile number to get started</p>
                 </div>
-                <div class="rgt-div">
+                <form class="rgt-div" action="registerUser" method="post">
+                    {% csrf_token %}
                     <label for="login-input" class="login-input-label">Enter Mobile number</label>
-                    <input type="text" class="login-input signup-input" id="login-input" name="mobileno" />
+                    <input type="tel" class="login-input signup-input" id="login-input" name="mobileno"
+                        maxlength="10" />
                     <p class="error-validate-message"></p>
                     <span class="term-policy-label"><p>By continuing, you agree to Flipkart's <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p></span>
-                    <input type="submit" class="send-otp-btn" value="CONTINUE">
+                    <input type="submit" class="button" value="CONTINUE" />
                     <div class="link-login"><a onclick="toggleLoginCard()">Existing User? Log in</a></div>
-                </div>
+                </form>
             </div>
 
             <script>
                 function toggleLoginCard() {
                     var element = document.getElementById("login-card");
                     element.classList.toggle("toggle-signup-card");
-                    // document.body.style.overflowY = 'hidden';
-                    // document.getElementsById("login-input").focus();
                 }
             </script>
         </div>
@@ -82,9 +82,9 @@
     </div>
 
     <!-- Banner -->
-    <div class="flash-banner-container">
+    <!-- <div class="flash-banner-container">
 
-    </div>
+    </div> -->
 
     <div class="best-sell-view">
         <div class="card">

@@ -75,10 +75,25 @@ WSGI_APPLICATION = 'KartZed.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': 'KartZed-eCommerce',
+        
+        # If your database is not on localhost or is secured, 
+        # you should also fill in the CLIENT information like HOST, USERNAME, PASSWORD, etc.
+        
+        # 'ENFORCE_SCHEMA': False,
+        # 'CLIENT': {
+        #     'host': 'mongodb+srv://<username>:<password>@<atlas cluster>/<myFirstDatabase>?retryWrites=true&w=majority'
+        # } 
     }
 }
 
