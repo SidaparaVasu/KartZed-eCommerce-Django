@@ -43,13 +43,13 @@
 .main-navbar .search-bar-box > .search-bar{
     width: 100%;
     outline: none;
-    border: 1px solid var(--black);
+    border: 1px solid var(--black-300);
     padding: 12px 20px;
     border-radius: 4px;
 }
 
 .main-navbar .search-bar-box > .search-bar:focus{
-    border-color: var(--black);
+    border-color: var(--black-300);
     border-width: 2px;
 }
 
@@ -79,7 +79,7 @@
 }
 .nav-btn-box .btn-box > .btn:hover{
     /* color: var(--white); */
-    background-color: var(--light-grey);
+    background-color: #eee;
 }
 
 .nav-btn-box .btn-box > .btn::before{
