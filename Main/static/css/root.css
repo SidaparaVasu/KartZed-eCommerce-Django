@@ -4,7 +4,8 @@
     --max-width: 100%;
     --min-height: 100vh;
 
-    --nav-height: 80px;
+    --main-navbar-height: 80px;
+    --main-navbar-width: var(--max-width);
 
     /* Colors */ 
     /* based on logo theme */
@@ -23,6 +24,7 @@
     --white: #ffffff;
     --blue: #2874F0;
     --red: #E30613;
+    --tomato: #F22F46;
     --orange: #fb641b;
     --col-validate: #ff6161;
     --yellow: #FFD700;

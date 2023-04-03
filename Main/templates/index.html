@@ -13,8 +13,14 @@
     <link rel="stylesheet" href="{% static 'css/main-navbar.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
+    <!-- Font Awesome CDN -->
     <script src="https://kit.fontawesome.com/2d2e379b4b.js" crossorigin="anonymous"></script>
+    <!-- JQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+    <!-- Embed the intl-tel-input plugin (international country code for mobile number) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 </head>
 <body>
 
@@ -25,7 +31,6 @@
     <div class="login-popup" id="login-popup">
         <div class="login-container">
             <div class="close-btn" onclick="closeLoginBox()">
-                <!-- <i class="fa-regular fa-xmark-large fa-rotate-90" style="color: #bf1d1d;"></i> -->
                 close
             </div>
 
@@ -36,9 +41,9 @@
                 </div>
                 <form class="rgt-div" action="" method="post">
                     <label for="login-input" class="login-input-label">Enter Email/Mobile number</label>
-                    <input type="text" class="login-input" id="login-input" name="email-or-mobileno" />
+                    <input type="tel" class="login-input" id="login-input" name="email-or-mobileno" maxlength="10" />
                     <p class="error-validate-message"></p>
-                    <span class="term-policy-label"><p>By continuing, you agree to Flipkart's <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p></span>
+                    <span class="term-policy-label"><p>By continuing, you agree to KartZed's <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p></span>
                     <input type="submit" class="button send-otp-btn" value="Request OTP" />
                     <div class="link-signup"><a onclick="toggleLoginCard()">New to KartZed? Create an Account</a></div>
                 </form>
@@ -55,23 +60,16 @@
                     <input type="tel" class="login-input signup-input" id="login-input" name="mobileno"
                         maxlength="10" />
                     <p class="error-validate-message"></p>
-                    <span class="term-policy-label"><p>By continuing, you agree to Flipkart's <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p></span>
+                    <span class="term-policy-label"><p>By continuing, you agree to KartZed's <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p></span>
                     <input type="submit" class="button" value="CONTINUE" />
                     <div class="link-login"><a onclick="toggleLoginCard()">Existing User? Log in</a></div>
                 </form>
             </div>
-
-            <script>
-                function toggleLoginCard() {
-                    var element = document.getElementById("login-card");
-                    element.classList.toggle("toggle-signup-card");
-                }
-            </script>
         </div>
     </div>
 
     <!-- Navigation Bar -->
-    <div class="navigation">
+    <div class="navigation" id="navigation">
         <a href="#" class="category-list"><img src="{% static 'assets/img/category-home.png' %}" alt="img"/><p>Home</p></a>
         <a href="#" class="category-list"><img src="{% static 'assets/img/category-mobile.png' %}" alt="img"/><p>Mobiles</p></a>
         <a href="#" class="category-list"><img src="{% static 'assets/img/category-electronics.png' %}" alt="img"/><p>Electronics</p></a>
@@ -82,7 +80,7 @@
     </div>
 
     <!-- Banner -->
-    <div class="flash-banner-container">
+    <!-- <div class="flash-banner-container">
         <div class="slideshow-container">
             <div class="slides">Slide 1</div>
             <div class="slides">Slide 2</div>
@@ -90,7 +88,7 @@
             <div class="slides">Slide 4</div>
             <div class="slides">Slide 5</div>
         </div>
-    </div>
+    </div> -->
 
     <div class="best-sell-view">
         <div class="card">
@@ -98,5 +96,11 @@
         </div>
     </div>
 
+
+    <!-- Javascript Links -->
+    <!-- <script src="{% static 'js/intl-tel-input.js' %}"></script> -->
+    <script src="{% static 'js/popupLoginBox.js' %}"></script>
+    <script src="{% static 'js/show-hide-searchbar.js' %}"></script>
+    <script src="{% static 'js/toggle-login-signup-card.js' %}"></script>
 </body>
 </html>
