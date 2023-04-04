@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{% static 'css/plugins.css' %}">
     <link rel="stylesheet" href="{% static 'css/main-navbar.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
 
     <!-- Font Awesome CDN -->
     <script src="https://kit.fontawesome.com/2d2e379b4b.js" crossorigin="anonymous"></script>
@@ -27,46 +28,28 @@
     <!-- Include Top Main Navigation Bar -->
     {% include 'main-navbar.html' %}
 
-    <!-- Popup form for login/registration -->
-    <div class="login-popup" id="login-popup">
-        <div class="login-container">
-            <div class="close-btn" onclick="closeLoginBox()">
-                close
-            </div>
+    <!-- Include Login file -->
+    {% include 'login.html' %}
 
-            <div class="login-card" id="login-card">
-                <div class="lft-div">
-                    <p>Login</p>
-                    <p>Get access to your Orders, Wishlist and Recommendations</p>
-                </div>
-                <form class="rgt-div" action="" method="post">
-                    <label for="login-input" class="login-input-label">Enter Email/Mobile number</label>
-                    <input type="tel" class="login-input" id="login-input" name="email-or-mobileno" maxlength="10" />
-                    <p class="error-validate-message"></p>
-                    <span class="term-policy-label"><p>By continuing, you agree to KartZed's <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p></span>
-                    <input type="submit" class="button send-otp-btn" value="Request OTP" />
-                    <div class="link-signup"><a onclick="toggleLoginCard()">New to KartZed? Create an Account</a></div>
-                </form>
-            </div>
+    {% if result %}
+        <script>
+            // Activate the login popup
+            document.getElementById('login-popup').classList.add('active-login-popup');
+            document.getElementById("login-card").classList.add("toggle-otp-card");
+        </script>
+    {% endif %}
 
-            <div class="signup-card" id="signup-card">
-                <div class="lft-div">
-                    <p>Looks Like you're new here!</p>
-                    <p>Sign up with your mobile number to get started</p>
-                </div>
-                <form class="rgt-div" action="registerUser" method="post">
-                    {% csrf_token %}
-                    <label for="login-input" class="login-input-label">Enter Mobile number</label>
-                    <input type="tel" class="login-input signup-input" id="login-input" name="mobileno"
-                        maxlength="10" />
-                    <p class="error-validate-message"></p>
-                    <span class="term-policy-label"><p>By continuing, you agree to KartZed's <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p></span>
-                    <input type="submit" class="button" value="CONTINUE" />
-                    <div class="link-login"><a onclick="toggleLoginCard()">Existing User? Log in</a></div>
-                </form>
-            </div>
-        </div>
-    </div>
+    {% if result is False %}
+        <script>          
+            document.getElementById('check').innerText = "{{ email }}"
+            document.getElementById('loginLink')
+            const existing_tag = document.getElementById('loginLink');  // Get the element with ID "loginLink"
+            const new_tag = document.createElement('a');  // Create a new <p> element
+            new_tag.textContent = 'Logout'
+            new_tag.href = "{% url 'esehi' %}"
+            existing_tag.replaceWith(new_tag);  // Replace the original element with the new element
+        </script>
+    {% endif %}
 
     <!-- Navigation Bar -->
     <div class="navigation" id="navigation">
