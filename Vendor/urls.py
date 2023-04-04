@@ -5,8 +5,8 @@ from .forms import registervendor
 
 
 urlpatterns = [
-   path('',views.indexVendor),
+   path('/',views.indexVendor),
    #path('vendorlogin/', login, name='login'),
-   path('vendorregister/', registervendor, name='register'),
-   path('addproduct/', views.addproduct, name="addproduct"),
+   path('/addproduct/', views.addproduct, name='addproduct'),
+   #path('addproduct/', views.addproduct, name="addproduct"),
 ]

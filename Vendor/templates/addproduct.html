@@ -277,15 +277,15 @@
 <div class="body-content">
   <div class="module">
     <h1>Create an account</h1>
-    <form class="form" method="post"> <!-- enctype="multipart/form-data" autocomplete="off"> -->
+    <form class="form" method="POST"> <!-- enctype="multipart/form-data" autocomplete="off"> -->
         {% csrf_token %}
       <div class="alert alert-error"></div>
-      <input type="text" placeholder="User Name" name="username" r>{{ form.username }}</input>
+      <input type="text" placeholder="User Name" name="username">{{ form.username }}</input>
       <input type="email" placeholder="Email" name="email" required >{{ form.email }}</input>
       <input type="password" placeholder="Password" name="password" autocomplete="new-password" required >{{ form.password }}</input>
       <!-- <input type="password" placeholder="Confirm Password" name="confirmpassword" autocomplete="new-password" required />
       <div class="avatar"><label>Select your avatar: </label><input type="file" name="avatar" accept="image/*" required /></div> -->
-      <input type="submit" value="Register" name="register" class="btn btn-block btn-primary" />
+      <input type="submit" value="Register" name="addproduct" class="btn btn-block btn-primary" />
     </form>
   </div>
 </div>
