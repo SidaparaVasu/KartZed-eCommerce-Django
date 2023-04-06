@@ -28,25 +28,15 @@
     <!-- Include Top Main Navigation Bar -->
     {% include 'main-navbar.html' %}
 
-    <!-- Include Login file -->
-    {% include 'login.html' %}
-
-    {% if result %}
-        <script>
-            // Activate the login popup
-            document.getElementById('login-popup').classList.add('active-login-popup');
-            document.getElementById("login-card").classList.add("toggle-otp-card");
-        </script>
-    {% endif %}
-
-    {% if result is False %}
-        <script>          
+    {% if is_loggedIn %}
+        <script> 
+            alert('{{ email }}');         
             document.getElementById('check').innerText = "{{ email }}"
             document.getElementById('loginLink')
             const existing_tag = document.getElementById('loginLink');  // Get the element with ID "loginLink"
             const new_tag = document.createElement('a');  // Create a new <p> element
             new_tag.textContent = 'Logout'
-            new_tag.href = "{% url 'esehi' %}"
+            // new_tag.href = "{% url 'esehi' %}"
             existing_tag.replaceWith(new_tag);  // Replace the original element with the new element
         </script>
     {% endif %}

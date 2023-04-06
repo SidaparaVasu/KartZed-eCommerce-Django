@@ -1,40 +1,52 @@
-<!-- Popup form for login/registration -->
-<div class="login-popup" id="login-popup">
-    <div class="login-container">
-        <div class="close-btn" onclick="closeLoginBox()">
-            close
-        </div>
+{% load static %}
 
-        <div class="login-card" id="login-card">
-            <div class="lft-div">
-                <p>Login</p>
-                <p>Get access to your Orders, Wishlist and Recommendations</p>
-            </div>
-            <form class="rgt-div" action="userLogin" method="post">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login to KartZed</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/root.css' %}">
+    <link rel="stylesheet" href="{% static 'css/plugins.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+
+    <section class="login-container" id="login-container">
+        <img src="{% static 'assets/img/KartZed-logo.png' %}" alt="logo" class="logo" />
+
+        <div class="form-div" id="form-div">
+            <form action="userLogin" method="post" class="login-form form" id="login-form">
+                <h1>Welcome back</h1>
                 {% csrf_token %}
                 <label for="login-input" class="login-input-label">Enter Email ID</label>
                 <input type="email" class="login-input" id="login-input" name="email" required/>
                 <p class="error-validate-message" id="error-validate-message"></p>
                 <span class="term-policy-label"><p>By continuing, you agree to KartZed's <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p></span>
                 <input type="submit" class="button send-otp-btn" value="Request OTP" />
-                <!-- <div class="link-signup"><a onclick="toggleLoginCard()">New to KartZed? Create an Account</a></div> -->
             </form>
         </div>
 
-        <div class="otp-card" id="otp-card">
-            <div class="lft-div">
-                <p>OTP Verification</p>
-                <p>Verify your Email</p>
-            </div>
-            <form class="rgt-div" action="verify_otp" method="post">
+        <div class="otp-div" id="otp-div">
+            <form action="verify_otp" method="post" class="login-form form" id="login-form">
+                <h1>OTP Verification</h1>
+
                 {% csrf_token %}
-                <label for="login-input" class="login-input-label">Enter OTP</label>
                 {% if email %}
-                    <input type="hidden" name="email" id="hidden-email" value="{{ email }}">
+                    <input type="hidden" name="email" id="hidden-email" value="{{ email }}"/>
+                    <!-- <input type="text" name="email" id="hidden-email" value="vasupatel303@gmail.com" class="disabled-input" disabled/> -->
                 {% endif %}
-                <input type="tel" class="login-input otp-input" id="login-input" name="otp-input"
-                    maxlength="6" required/>
-                <p class="error-validate-message"></p>
+                <label for="login-input" class="login-input-label">Enter OTP</label>
+                <input type="text" class="login-input otp-input" id="login-input" name="otp-input"
+                    maxlength="6" pattern="[0-9]+" required/>
+                <p class="error-validate-message">
+                    {% if errormsg %}
+                        {{ errormsg}}
+                    {% endif %}
+                </p>
                 <div class="resend-otp-div">
                     <p>Don't you get the OTP? Click 
                         <button type="submit" name="resend-otp">Resend OTP</button>
@@ -42,51 +54,16 @@
                     <p class="otp-cooldown-timer">60 sec.</p>
                 </div>
                 <input type="submit" class="button" value="CONTINUE" />
-                <!-- <div class="link-login"><a onclick="toggleLoginCard()">Existing User? Log in</a></div> -->
             </form>
         </div>
-    </div>
-</div>
+    </section>
 
-<!-- OLD LOGIN POPUP -->
-<!-- 🙅‍♂️ DON'T REMOVE THIS -->
 
-<!-- <div class="login-popup" id="login-popup">
-    <div class="login-container">
-        <div class="close-btn" onclick="closeLoginBox()">
-            close
-        </div>
-
-        <div class="login-card" id="login-card">
-            <div class="lft-div">
-                <p>Login</p>
-                <p>Get access to your Orders, Wishlist and Recommendations</p>
-            </div>
-            <form class="rgt-div" action="" method="post">
-                <label for="login-input" class="login-input-label">Enter Email/Mobile number</label>
-                <input type="tel" class="login-input" id="login-input" name="email-or-mobileno" maxlength="10" />
-                <p class="error-validate-message"></p>
-                <span class="term-policy-label"><p>By continuing, you agree to KartZed's <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p></span>
-                <input type="submit" class="button send-otp-btn" value="Request OTP" />
-                <div class="link-signup"><a onclick="toggleLoginCard()">New to KartZed? Create an Account</a></div>
-            </form>
-        </div>
-
-        <div class="signup-card" id="signup-card">
-            <div class="lft-div">
-                <p>Looks Like you're new here!</p>
-                <p>Sign up with your mobile number to get started</p>
-            </div>
-            <form class="rgt-div" action="registerUser" method="post">
-                {% csrf_token %}
-                <label for="login-input" class="login-input-label">Enter Mobile number</label>
-                <input type="tel" class="login-input signup-input" id="login-input" name="mobileno"
-                    maxlength="10" />
-                <p class="error-validate-message"></p>
-                <span class="term-policy-label"><p>By continuing, you agree to KartZed's <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p></span>
-                <input type="submit" class="button" value="CONTINUE" />
-                <div class="link-login"><a onclick="toggleLoginCard()">Existing User? Log in</a></div>
-            </form>
-        </div>
-    </div>
-</div> -->
+    {% if result %}
+        <script>
+            var element = document.getElementById("otp-div");
+            element.classList.toggle("show-otp-div");
+        </script>
+    {% endif %}
+</body>
+</html>

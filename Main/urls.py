@@ -8,7 +8,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('', views.indexPage, name="indexPage"),
-    path('esehi', views.esehi, name="esehi"),
+    path('render_login_page', views.render_login_page, name="render_login_page"),
     
     # Authentication
     path('userLogin', views.userLogin, name="userLogin"),

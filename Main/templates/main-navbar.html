@@ -9,12 +9,9 @@
             <img src="{% static 'assets/img/KartZed-logo.png' %}" alt="Logo" srcset="">
         </div>
         <div class="main-navbar-links">
-            
-            <a href="#" id="check">aa</a>
-
+            <a href="#" id="check"></a>
             <a href="#" class="show-search-bar" onclick="showSearchbar()">Search</a>
-            <!-- <button type="button" class="login-btn btn" onclick="popupLoginBox()">Login</button> -->
-            <a href="#" id="loginLink"  onclick="popupLoginBox()">Login</a>
+            <a href="{% url 'render_login_page' %}" id="loginLink" >Login</a>
             <a href="#">Become a Seller</a>
             <a href="#">Cart</a>
         </div>    
