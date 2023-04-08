@@ -1,44 +1,52 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import get_object_or_404, render, redirect, HttpResponse
 from django.shortcuts import render
 from .forms import registervendor
 from Vendor.models import Vendor
 
 
 # Create your views here.
+
+#call main page
 def indexVendor(req):
     return render(req,'indexVendor.html')
 
+#add product information
 def addproduct(request):
-        return render(request, 'addproduct.html')
+    form = registervendor(request.POST,request.FILES)
+    if form.is_valid():
 
-def addproduct(request):
-    # return HttpResponse("Success")
-    if request.method == "POST":
-        form = registervendor(request.POST)
-        if form.is_valid():
-            if form.save():
-                return HttpResponse("done")
-            
-            # return render('register')
-    else:
-        form = registervendor()
-        return render(request, 'indexVendor.html', {'form': form})
+        form.save()
+        return redirect("/vendor")
+    
+    return render(request, 'addproduct.html')
 
-def login(request):
-    if request.method == "POST":    
-        form = registervendor(request.POST)
-        un = request.POST.get("username")
-        ps = request.POST.get("password")
-        
-        flag = 0
-        data = Vendor.objects.all()
-        for i in range(len(data)):
-            if data[i].username == un and data[i].password == ps:
-                
-                return render(request,'home.html')
-                #return HttpResponse("Success")
-            else :
-                flag = 0
-        if flag == 0:
-            return render(request,'login.html')
-            #return HttpResponse("Failed")
+#view product information
+def viewproduct(request):
+    context = {}
+    
+    context["prod"] = Vendor.objects.all()
+    return render(request, "viewproduct.html", context)
+
+#edit product information
+def editproduct(request,id):
+    context = {}
+    obj = get_object_or_404(Vendor, id=id)
+    form = registervendor(request.POST or None, instance=obj)
+
+    if form.is_valid():
+        # return HttpResponse(form)
+        form.save()
+
+        return redirect("/vendor")
+
+    context['form'] = form
+    return render(request, "editproduct.html",context)
+
+#delete product information
+def deleteproduct(request,id):
+	context={}
+	obj = get_object_or_404(Vendor, id=id)
+	if request.method == "GET":
+		obj.delete()
+		return redirect("/vendor")
+	return render(request, "viewproduct.html", context)

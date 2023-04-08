@@ -281,8 +281,8 @@
         {% csrf_token %}
       <div class="alert alert-error"></div>
       <input type="text" placeholder="User Name" name="username">{{ form.username }}</input>
-      <input type="email" placeholder="Email" name="email" required >{{ form.email }}</input>
-      <input type="password" placeholder="Password" name="password" autocomplete="new-password" required >{{ form.password }}</input>
+      <input type="email" placeholder="Email" name="email">{{ form.email }}</input>
+      <input type="password" placeholder="Password" name="password" autocomplete="new-password">{{ form.password }}</input>
       <input type="submit" class="btn btn-block btn-primary" />
     </form>
   </div>
