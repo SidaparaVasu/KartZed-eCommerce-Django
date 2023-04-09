@@ -4,7 +4,10 @@
     --max-width: 100%;
     --min-height: 100vh;
 
-    --nav-height: 80px;
+    --main-navbar-height: 80px;
+    --main-navbar-width: var(--max-width);
+
+    --admin-navbar-height: 65px;
 
     /* Colors */ 
     /* based on logo theme */
@@ -23,14 +26,18 @@
     --white: #ffffff;
     --blue: #2874F0;
     --red: #E30613;
+    --tomato: #F22F46;
     --orange: #fb641b;
     --col-validate: #ff6161;
     --yellow: #FFD700;
+    --green: #0E9272;
     --sand: #E1CEB1;
     --navy: #2c3e50;
     --mint: #C7F0D8;
     --lavender: #B1A6D1;
     --softpink: #FFC6D9;
+    --violet: #6741d9;
+    --pink: #f33155;
 
     /* Font Family */
     --ff-lato: 'Lato', sans-serif;
