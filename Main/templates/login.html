@@ -24,7 +24,7 @@
                 {% csrf_token %}
                 <label for="login-input" class="login-input-label">Enter Email ID</label>
                 <input type="email" class="login-input" id="login-input" name="email" required/>
-                <p class="error-validate-message" id="error-validate-message"></p>
+                <!-- <p class="error-validate-message" id="error-validate-message"></p> -->
                 <span class="term-policy-label"><p>By continuing, you agree to KartZed's <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p></span>
                 <input type="submit" class="button send-otp-btn" value="Request OTP" />
             </form>
@@ -65,5 +65,13 @@
             element.classList.toggle("show-otp-div");
         </script>
     {% endif %}
+
+    <script>
+        var val = document.getElementsByClassName("error-validate-message");
+        console.log(val.innerText);
+        if (val.value < 1){
+            val.padding = '0';
+        }
+    </script>
 </body>
 </html>

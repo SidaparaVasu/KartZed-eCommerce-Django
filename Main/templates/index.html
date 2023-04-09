@@ -15,31 +15,40 @@
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
 
     <!-- Font Awesome CDN -->
-    <script src="https://kit.fontawesome.com/2d2e379b4b.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/61732659a0.js" crossorigin="anonymous"></script>
     <!-- JQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-
     <!-- Embed the intl-tel-input plugin (international country code for mobile number) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 </head>
 <body>
 
     <!-- Include Top Main Navigation Bar -->
-    {% include 'main-navbar.html' %}
-
-    {% if is_loggedIn %}
-        <script> 
-            alert('{{ email }}');         
-            document.getElementById('check').innerText = "{{ email }}"
+    {% if request.session.is_session %}
+        {% include 'after-login-main-navbar.html' %}
+    {% else %} 
+        {% include 'main-navbar.html' %}
+    {% endif %}
+    <!-- {% if request.session.is_session %}
+        <script>    
+            document.getElementById('check').innerText = "{{ request.session.email_id }}"
             document.getElementById('loginLink')
             const existing_tag = document.getElementById('loginLink');  // Get the element with ID "loginLink"
             const new_tag = document.createElement('a');  // Create a new <p> element
             new_tag.textContent = 'Logout'
-            // new_tag.href = "{% url 'esehi' %}"
+            new_tag.href = "{% url 'logoutHandle' %}"
+            new_tag.id = "loginLink"
             existing_tag.replaceWith(new_tag);  // Replace the original element with the new element
-        </script>
-    {% endif %}
+        </script>    
+    {% else %}    
+        <script> 
+            existing_tag = document.getElementById('loginLink');  // Get the element with ID "loginLink"
+            const new_tag = document.createElement('a');  // Create a new <p> element
+            new_tag.textContent = 'Login'
+            new_tag.href = "{% url 'render_login_page' %}"
+            existing_tag.replaceWith(new_tag);  // Replace the original element with the new element
+        </script> 
+    {% endif %} -->
 
     <!-- Navigation Bar -->
     <div class="navigation" id="navigation">
@@ -65,7 +74,6 @@
 
     <div class="best-sell-view">
         <div class="card">
-
         </div>
     </div>
 
