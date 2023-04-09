@@ -38,6 +38,16 @@
     font-size: 15px;
     text-decoration: none;
 }
+.main-navbar-links > a > ion-icon{
+    font-size: 24px;
+}
+
+.cart-btn{ position: relative; }
+.cart-btn .cart-badge{
+    position: absolute; top: -10px; right: -10px; height: 20px; width: 20px; border-radius: 100%; 
+    background-color: var(--red); color: var(--white);
+    display: grid; place-items: center;
+}
 
 .search-bar-box{
     position: absolute;
