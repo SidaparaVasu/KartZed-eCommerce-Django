@@ -7,6 +7,8 @@
     --main-navbar-height: 80px;
     --main-navbar-width: var(--max-width);
 
+    --admin-navbar-height: 65px;
+
     /* Colors */ 
     /* based on logo theme */
     --primary: #145A32;
@@ -34,6 +36,8 @@
     --mint: #C7F0D8;
     --lavender: #B1A6D1;
     --softpink: #FFC6D9;
+    --violet: #6741d9;
+    --pink: #f33155;
 
     /* Font Family */
     --ff-lato: 'Lato', sans-serif;
