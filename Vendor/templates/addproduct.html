@@ -277,12 +277,14 @@
 <div class="body-content">
   <div class="module">
     <h1>Create an account</h1>
-    <form class="form" method="POST"> <!-- enctype="multipart/form-data" autocomplete="off"> -->
+    <form class="form" method="POST" enctype="multipart/form-data"> <!-- autocomplete="off"> -->
         {% csrf_token %}
       <div class="alert alert-error"></div>
-      <input type="text" placeholder="User Name" name="username">{{ form.username }}</input>
-      <input type="email" placeholder="Email" name="email" required >{{ form.email }}</input>
-      <input type="password" placeholder="Password" name="password" autocomplete="new-password" required >{{ form.password }}</input>
+      <input type="text" placeholder="Product Name" name="prodname">{{ form.prodname }}</input>
+      <input type="text" placeholder="Product Description" name="proddescription" required >{{ form.proddescription }}</input>
+      <input type="file" Required name="prodimage">{{ form.prodimage }}</input>
+      <input type="text" placeholder="Price" name="prodprice" required >{{ form.prodprice }}</input>
+      <input type="text" placeholder="Discount " name="discount" required >{{ form.discount }}</input>
       <input type="submit" class="btn btn-block btn-primary" />
     </form>
   </div>

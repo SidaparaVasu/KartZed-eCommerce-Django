@@ -1,10 +1,10 @@
 from django.db import models
 
+
 # Create your models here.
 class Vendor(models.Model):
-    username = models.CharField(max_length=50)
-    email = models.EmailField()
-    password = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.username
+    prodname = models.CharField(max_length=50)
+    proddescription = models.CharField(max_length=500)
+    prodimage = models.ImageField(upload_to='vendor/product_img', null=True, blank=True)
+    prodprice = models.IntegerField(max_length=20)
+    discount = models.CharField(max_length=50)

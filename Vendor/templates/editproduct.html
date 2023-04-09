@@ -276,13 +276,16 @@
 <link rel="stylesheet" href="form.css" type="text/css">
 <div class="body-content">
   <div class="module">
-    <h1>Create an account</h1>
-    <form class="form" method="POST"> <!-- enctype="multipart/form-data" autocomplete="off"> -->
+    <h1>Edit an account</h1>
+    <form class="form" method="POST" enctype="multipart/form-data"> <!-- autocomplete="off"> -->
         {% csrf_token %}
       <div class="alert alert-error"></div>
-      <input type="text" placeholder="User Name" name="username">{{ form.username }}</input>
-      <input type="email" placeholder="Email" name="email">{{ form.email }}</input>
-      <input type="password" placeholder="Password" name="password" autocomplete="new-password">{{ form.password }}</input>
+
+      <li class="list-group-item"><b>Product Name</b> <a class="float-right">{{ form.prodname }}</a></li>
+      <li class="list-group-item"><b>Product Description</b> <a class="float-right">{{ form.proddescription }}</a></li>
+      <li class="list-group-item"><b>Image</b> <input type="file" name="prodimage"/></li>
+      <li class="list-group-item"><b>Price</b> <a class="float-right">{{ form.prodprice }}</a></li>
+      <li class="list-group-item"><b>Discount</b> <a class="float-right">{{ form.discount }}</a></li>
       <input type="submit" class="btn btn-block btn-primary" />
     </form>
   </div>

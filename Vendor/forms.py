@@ -4,5 +4,5 @@ from .models import Vendor
 class registervendor(forms.ModelForm):
     class Meta:
         model = Vendor
-        fields = ['username', 'email', 'password']
+        fields = ['prodname', 'proddescription' ,'prodimage', 'prodprice','discount']
 
