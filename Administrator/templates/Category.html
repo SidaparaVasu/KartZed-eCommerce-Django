@@ -143,7 +143,7 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="{% url 'deleteCategory' data.category_id %}">
+                                        <a href="{% url 'deleteCategory' data.category_id %}" onclick="return confirm('Are you sure you want to delete this?')">
                                             <span class="icon-box rd-icon">
                                                 <ion-icon name="trash-outline" class="icon"></ion-icon>
                                             </span>
