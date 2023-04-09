@@ -15,7 +15,7 @@ def indexAdmin(req):
 def viewCategory(request):  
     category = Category.objects.all()
     
-    p = Paginator(category, 1)
+    p = Paginator(category, 3)
     page_number = request.GET.get('page')
     
     try:
