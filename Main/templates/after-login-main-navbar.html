@@ -9,14 +9,9 @@
             <img src="{% static 'assets/img/KartZed-logo.png' %}" alt="Logo" srcset="">
         </div>
         <div class="main-navbar-links">
-            <a href="#" id="check"></a>
+            <a href="#" id="check">{{ request.session.email_id }}</a>
             <a href="#" class="show-search-bar" onclick="showSearchbar()">Search</a>
-            <a href="{% url 'render_login_page' %}" id="loginLink" >Login</a>
-
-            <!-- {% if request.session.is_session %}
-                <a href="{% url 'logoutHandle' %}" id="loginLink" >Logout</a>
-            {% else %} -->
-            <!-- {% endif %} -->
+            <a href="{% url 'logoutHandle' %}" id="loginLink" >Logout</a>
             <a href="#">Become a Seller</a>
             <a href="#">Cart
                 <i class="fa fa-regular fa-cart-shopping"></i>
