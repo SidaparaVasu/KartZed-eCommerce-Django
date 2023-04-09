@@ -6,8 +6,7 @@ urlpatterns = [
    path('',views.indexAdmin),
    path('indexAdmin',views.indexAdmin,name='indexAdmin'),
    
-   path('category',views.Category,name='category'),
-   path('addCategory',views.addCategory,name='addCategory'),
+   path('category',views.viewCategory,name='viewCategory'),
    path('insertCategory',views.insertCategory,name='insertCategory'),
 
 ]

@@ -3,3 +3,76 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+/* Table designing */
+.show-data-box{
+    width: 100%;
+}
+thead th{
+    text-align: center;
+    padding: 10px 0 10px 0;
+    border-bottom: 1px solid var(--light-grey);
+}
+tbody tr{
+    margin-top: 3px;
+}
+tbody tr td{
+    font-size: 15px;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid var(--light-grey);
+}
+.icon-box{
+    padding: 5px 8px;
+    border-radius: 4px;
+}
+.icon{
+    color: white;
+}
+.blk-icon{
+    color: #111;
+    font-size: 20px;
+}
+
+.gr-icon{
+    background-color: var(--green);
+}
+.rd-icon{
+    background-color: var(--red);
+}
+
+.img-size{
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+    border-radius: 100%;
+}
+
+.img-size img{
+    height: 100%;
+    width: 100%;
+}
+
+.pagination{
+    margin-top: 10px;
+    width: 100%;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.pagination-btn{
+    border: 2px solid var(--pink);
+    padding: 8px 15px;
+    border-radius: 5px;
+    color: var(--pink);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.pagination-btn:hover{
+    background-color: var(--pink);
+    color: var(--white);
+}

@@ -34,3 +34,11 @@
     box-shadow: 0 0 0 4px #b59ff581;
     letter-spacing: 10px;
 } */
+
+
+.category-form{
+    display: none;
+}
+.active-category-form{
+    display: block;
+}

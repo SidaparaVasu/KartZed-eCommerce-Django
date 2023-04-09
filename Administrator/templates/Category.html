@@ -16,8 +16,15 @@
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'plugins/images/favicon.png' %}">
+    
+    <!-- Ion Icon -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <!-- Custom CSS -->
-   <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'css/root.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main-navbar.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
    <link href="{% static 'css/catstyle.css' %}" rel="stylesheet">
    
    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -64,8 +71,11 @@
                             <ol class="breadcrumb ms-auto">
                                 <li><a href="#" class="fw-normal"></a></li>
                             </ol>
-                            <a href="{% url 'addCategory' %}" target="_blank"
-                                class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">+ ADD</a>
+                            <a href="#"
+                                id="toggleForm"
+                                class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white"
+                                onclick="toggleCategoryForm()"
+                                >+ ADD</a>
                         </div>
                     </div>
                 </div>
@@ -81,37 +91,82 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="white-box">
-                            <h3 class="box-title">CATEGORY</h3>
-                            
-                            <div class="table-responsive">
-                                <table class="table text-nowrap">
-                                    <thead>
-                                        <tr>
-                                            <th class="border-top-0">#</th>
-                                            <th class="border-top-0">First Name</th>
-                                            <th class="border-top-0">Last Name</th>
-                                            <th class="border-top-0">Username</th>
-                                            <th class="border-top-0">Role</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Deshmukh</td>
-                                            <td>Prohaska</td>
-                                            <td>@Genelia</td>
-                                            <td>admin</td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
+                <div class="category-form" id="category-form">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="white-box">
+                                <h3 class="box-title">ADD CATEGORY</h3>
+                                <form action="insertCategory" method="post" enctype="multipart/form-data" class="content-area-form">
+                                    {% csrf_token %}
+                                    <input type="text" name="category" class="input" placeholder="category" required />
+                                    <input type="file" name="cat_image_path" class="input">
+                                    
+                                    <input type="submit" value="add category" class="form-btn">
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <!-- <div class="col-lg-4 col-md-12"> -->
+                    <div class="white-box">
+                        <table class="show-data-box">
+                            <thead>
+                                <th>sr no.</th>
+                                <th>Image</th>
+                                <th>Category</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </thead>
+                            <tbody>
+                                {% for data in category %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    {% if data.imagepath %}
+                                        <td class="img-size"><img src="{{ data.imagepath.url }}" alt="{{data.imagepath.url}}" class="table-img"/></td>
+                                    {% else %}
+                                        <td>defaultimg</td>
+                                    {% endif %}
+                                    <td>{{ data.category }}</td>
+                                    <td>
+                                        <a href="#">
+                                            <span class="icon-box gr-icon">
+                                                <ion-icon name="create-outline" class="icon"></ion-icon>
+                                            </span> 
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="#">
+                                            <span class="icon-box rd-icon">
+                                                <ion-icon name="trash-outline" class="icon"></ion-icon>
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                    <center>No data found</center>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="pagination">
+                            {%if category.has_previous %} {# whether the previous page exists #}
+                                <a href="?page={{category.previous_page_number}}" class="pagination-btn">prev</a> {# link to the prev page #}
+                            {% endif %}
+            
+                            {% if category.number == 1 %}
+                                <p></p>
+                            {% else %}
+                                <span>page: {{category.number}}</span> {# the current page number #}
+                            {% endif %}
+                            
+                            {%if category.has_next %} {# whether the next page exists #}
+                                <a href="?page={{category.next_page_number}}" class="pagination-btn">next</a> {# link to the next page #}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -146,6 +201,14 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
+
+    <script>
+        function toggleCategoryForm(){
+            element  = document.getElementById('category-form')
+            element.classList.toggle('active-category-form')
+        }
+    </script>
+
     <script src="plugins/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="bootstrap/dist/js/bootstrap.bundle.min.js"></script>
