@@ -20,7 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     # Importing URLs of 'Administrator' application
-    path('administrator', include('Administrator.urls')),
+    path('administrator/', include('Administrator.urls')),
     
     # Importing URLs of 'Main' application
     path('', include('Main.urls')),
