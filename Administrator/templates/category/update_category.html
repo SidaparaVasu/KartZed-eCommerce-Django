@@ -12,7 +12,7 @@
     <meta name="description"
         content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
-    <title>Category | KartZed</title>
+    <title>Update Category | KartZed</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'plugins/images/favicon.png' %}">
@@ -36,12 +36,6 @@
 </head>
 
 <body>
-    {% if messages %}
-        {% for message in messages %}
-        {% if message.tags %}
-            <script>alert("{{ message }}")</script> {% endif %}
-        {% endfor %}
-    {% endif %}
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
@@ -70,19 +64,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">CATEGORY</h4>
-                    </div>
-                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                        <div class="d-md-flex">
-                            <ol class="breadcrumb ms-auto">
-                                <li><a href="#" class="fw-normal"></a></li>
-                            </ol>
-                            <a href="#"
-                                id="toggleForm"
-                                class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white"
-                                onclick="toggleCategoryForm()"
-                                >+ ADD</a>
-                        </div>
+                        <h4 class="page-title">UPDATE CATEGORY</h4>
                     </div>
                 </div>
                 <!-- /.col-lg-12 -->
@@ -97,78 +79,20 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <div class="category-form" id="category-form">
+                <div class="update-category-form">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="white-box">
-                                <h3 class="box-title">ADD CATEGORY</h3>
-                                <form action="insertCategory" method="post" enctype="multipart/form-data" class="content-area-form">
+                                <h3 class="box-title">UPDATE CATEGORY</h3>
+                                <form action="editCategory/{{ context.category_id }}" method="post" enctype="multipart/form-data" class="content-area-form">
                                     {% csrf_token %}
-                                    <input type="text" name="category" class="input" placeholder="category" required />
-                                    <input type="file" name="cat_image_path" class="input">
+                                    <input type="hidden" name="category_id" id="id" value="{{ context.category_id }}" />
+                                    <input type="text" name="category" value="{{ context.category }}" class="input" placeholder="category" required />
+                                    <input type="file" name="cat_image_path" value="{{ context.imagepath }}" class="input" />
                                     
-                                    <input type="submit" value="add category" class="form-btn">
+                                    <input type="submit" value="update category" class="form-btn">
                                 </form>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <!-- <div class="col-lg-4 col-md-12"> -->
-                    <div class="white-box">
-                        <table class="show-data-box">
-                            <thead>
-                                <th>sr no.</th>
-                                <th>Image</th>
-                                <th>Category</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                            </thead>
-                            <tbody>
-                                {% for data in category %}
-                                <tr>
-                                    <td>{{ forloop.counter }}</td>
-                                    {% if data.imagepath %}
-                                        <td class="img-size"><img src="{{ data.imagepath.url }}" alt="" class="table-img"/></td>
-                                    {% else %}
-                                        <td>defaultimg</td>
-                                    {% endif %}
-                                    <td>{{ data.category }}</td>
-                                    <td>
-                                        <a href="{% url 'updateCategory' data.category_id %}">
-                                            <span class="icon-box gr-icon">
-                                                <ion-icon name="create-outline" class="icon"></ion-icon>
-                                            </span> 
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="{% url 'deleteCategory' data.category_id %}">
-                                            <span class="icon-box rd-icon">
-                                                <ion-icon name="trash-outline" class="icon"></ion-icon>
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                {% empty %}
-                                    <center>No data found</center>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                        <div class="pagination">
-                            {%if category.has_previous %} {# whether the previous page exists #}
-                                <a href="?page={{category.previous_page_number}}" class="pagination-btn">prev</a> {# link to the prev page #}
-                            {% endif %}
-            
-                            {% if category.number == 1 %}
-                                <p></p>
-                            {% else %}
-                                <span>page: {{category.number}}</span> {# the current page number #}
-                            {% endif %}
-                            
-                            {%if category.has_next %} {# whether the next page exists #}
-                                <a href="?page={{category.next_page_number}}" class="pagination-btn">next</a> {# link to the next page #}
-                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -207,13 +131,6 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-
-    <script>
-        function toggleCategoryForm(){
-            element  = document.getElementById('category-form')
-            element.classList.toggle('active-category-form')
-        }
-    </script>
 
     <script src="plugins/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->

@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,HttpResponse
+from django.shortcuts import render,redirect,HttpResponse, get_object_or_404
 from django.urls import reverse
 from django.core.paginator import Paginator
 from django.contrib import messages
@@ -47,13 +47,40 @@ def insertCategory(request):
                 category = category,
                 imagepath = imagepath
             )
-            
+            messages.success(request, "Category Added successfully!")
             return redirect(reverse(viewCategory))
         except Exception as e:
-            return HttpResponse(e)
-        if form.save():
-            return HttpResponse("Saved!")    
-        else:
-            return HttpResponse("Error!")    
+            messages.error(request, "Category Insertion failed!")
+            return redirect(reverse(viewCategory))
 
-#SUB-CATEGORY :: CRUD
+def updateCategory(request, id):
+    context = Category.objects.get(category_id=id)
+    return render(request, "category/update_category.html",{'context' : context})
+
+# Update Function Of Category
+def editCategory(request, id):
+    data = Category.objects.get(category_id=id)
+    edited_category  = request.POST.get('category')
+    try:
+        data.category = edited_category
+        if data.save():
+            messages.success(request, "Category Updated successfully!")
+            return redirect(reverse(viewCategory))
+        else:
+            messages.success(request, "Category Updation failed!")
+            return redirect(reverse(viewCategory))
+    except Exception as e:
+        messages.success(request, "Category Updation failed!")
+        return redirect(reverse(viewCategory))  
+    
+def deleteCategory(request, id):
+    
+    obj = get_object_or_404(Category,category_id=id)
+    # return HttpResponse(obj)
+    if request.method == "GET":
+        if obj.delete():
+            messages.success(request,"Category deleted successfully!")
+            return redirect(reverse(viewCategory))
+        else:
+            messages.error(request,"Category couldn't delete!")
+    return redirect(reverse(viewCategory))

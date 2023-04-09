@@ -8,5 +8,7 @@ urlpatterns = [
    
    path('category',views.viewCategory,name='viewCategory'),
    path('insertCategory',views.insertCategory,name='insertCategory'),
-
+   path('updateCategory<id>',views.updateCategory,name='updateCategory'),
+   path('editCategory/<id>',views.editCategory,name='editCategory'),
+   path('deleteCategory<id>', views.deleteCategory, name="deleteCategory"),
 ]
