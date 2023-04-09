@@ -13,13 +13,14 @@
             <a href="#" class="show-search-bar" onclick="showSearchbar()">Search</a>
             <a href="{% url 'render_login_page' %}" id="loginLink" >Login</a>
 
-            <!-- {% if request.session.is_session %}
-                <a href="{% url 'logoutHandle' %}" id="loginLink" >Logout</a>
-            {% else %} -->
-            <!-- {% endif %} -->
             <a href="#">Become a Seller</a>
-            <a href="#">Cart
-                <i class="fa fa-regular fa-cart-shopping"></i>
+            <a href="#" class="cart-btn">
+                <ion-icon name="cart-outline"></ion-icon>
+                {% if not is_empty_cart %}
+                    <span></span>
+                {% else %}
+                    <span class="cart-badge">1</span>
+                {% endif %}
             </a>
         </div>    
     </div>
