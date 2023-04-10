@@ -3,8 +3,12 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 from django.contrib import messages
 from Administrator.forms import CategoryForm
+from Administrator.forms import SubCategoryForm
+
 
 from .models import Category
+from .models import SubCategory
+
 
 # Create your views here.
 def indexAdmin(req):
@@ -84,3 +88,53 @@ def deleteCategory(request, id):
         else:
             messages.error(request,"Category couldn't delete!")
     return redirect(reverse(viewCategory))
+
+
+# Sub-Category :: CRUD
+
+def viewSubCategory(request):
+    subcategory = SubCategory.objects.all()
+    
+    p = Paginator(subcategory, 3)
+    page_number = request.GET.get('page')
+    
+    try:
+        page_obj = p.get_page(page_number)
+    except Paginator.PageNotAnInteger:
+        # if page_number is not an integer then assign the first page
+        page_obj = p.page(1)
+    except Paginator.EmptyPage:
+        # if page is empty then return last page
+        page_obj = p.page(p.num_pages)
+    return render(request,'SubCategory.html',context={'subcategory':page_obj})
+
+def insertSubCategory(request):
+    if request.method == 'POST':
+        
+        subCategory  = request.POST.get('subCategory')
+        imagepath = ""
+        category = request.POST.get('category')
+        # cat_image_path = request.POST.get('cat_image_path')
+        form = SubCategoryForm(request.POST or None, request.FILES)  
+        if len(request.FILES) != 0:
+            form.image = request.FILES['sub_cat_image_path']
+            imagepath = form.image
+        # return HttpResponse(imagepath) 
+        try:
+            SubCategory.objects.create(
+                subCategory = subCategory,
+                imagepath = imagepath,
+                category = category
+            )
+            messages.success(request, "Sub-Category Added successfully!")
+            return redirect(reverse(viewSubCategory))
+        except Exception as e:
+            # messages.error(request, "Sub-Category Insertion failed!")
+            # return redirect(reverse(viewSubCategory))
+            return HttpResponse(e)
+
+def updateSubCategory(request):
+    pass
+
+def deleteSubCategory(request):
+    pass

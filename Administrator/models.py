@@ -14,3 +14,10 @@ class Category(models.Model):
     category_id = models.AutoField(primary_key=True)
     category = models.CharField(max_length=50, unique=True)
     imagepath = models.ImageField(upload_to=filepath, null=True, blank=True) 
+
+class SubCategory(models.Model):
+    subCategory_id = models.AutoField(primary_key=True)
+    subCategory = models.CharField(max_length=50, unique=True)
+    imagepath = models.ImageField(upload_to=filepath, null=True, blank=True) 
+    category = models.CharField(max_length=50, unique=True)
+    
