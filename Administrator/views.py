@@ -94,6 +94,7 @@ def deleteCategory(request, id):
 
 def viewSubCategory(request):
     subcategory = SubCategory.objects.all()
+    category = Category.objects.all()
     
     p = Paginator(subcategory, 3)
     page_number = request.GET.get('page')
@@ -106,7 +107,7 @@ def viewSubCategory(request):
     except Paginator.EmptyPage:
         # if page is empty then return last page
         page_obj = p.page(p.num_pages)
-    return render(request,'SubCategory.html',context={'subcategory':page_obj})
+    return render(request,'SubCategory.html',context={'subcategory':page_obj,'category':category})
 
 def insertSubCategory(request):
     if request.method == 'POST':

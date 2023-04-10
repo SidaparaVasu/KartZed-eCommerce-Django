@@ -140,17 +140,17 @@
                                     {% else %}
                                         <td>defaultimg</td>
                                     {% endif %}
-                                    <td>{{ data.subcategory }}</td>
+                                    <td>{{ data.subCategory }}</td>
                                     <td>{{ data.category }}</td>
                                     <td>
-                                        <a href="{% url 'updateSubCategory' data.subcategory_id %}">
+                                        <a href="#">
                                             <span class="icon-box gr-icon">
                                                 <ion-icon name="create-outline" class="icon"></ion-icon>
                                             </span> 
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="{% url 'deleteSubCategory' data.subcategory_id %}">
+                                        <a href="#">
                                             <span class="icon-box rd-icon">
                                                 <ion-icon name="trash-outline" class="icon"></ion-icon>
                                             </span>
