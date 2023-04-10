@@ -27,6 +27,9 @@ urlpatterns = [
     
     # Importing URLs of 'Main' application
     path('', include('Main.urls')),
+
+    # Importing URLs of 'Vendor' application
+    path('vendor', include('Vendor.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
