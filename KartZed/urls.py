@@ -29,7 +29,7 @@ urlpatterns = [
     path('', include('Main.urls')),
 
     # Importing URLs of 'Vendor' application
-    path('vendor', include('Vendor.urls')),
+    path('vendor/', include('Vendor.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -10,6 +10,7 @@ def filepath(request, filename):
 
 # Create your models here.
 class Vendor(models.Model):
+    product_key = models.AutoField(primary_key=True, max_length=16)
     prodname = models.CharField(max_length=50)
     proddescription = models.CharField(max_length=500)
     prodimage = models.ImageField(upload_to=filepath, null=True, blank=True)

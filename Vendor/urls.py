@@ -6,12 +6,13 @@ from Administrator.views import auth_admin
 
 
 urlpatterns = [
-   path('',views.indexVendor),
+   path('',views.index_vendor, name='index_vendor'),
    # path('', auth_admin, name='auth_admin'),
    
    #path('vendorlogin/', login, name='login'),
-   path('addproduct', views.addproduct, name='addproduct'),
-   path('viewproduct', views.viewproduct, name="viewproduct"),
-   path('editproduct<id>', views.editproduct,name="prod-edit"),
-   path('deleteproduct<id>', views.deleteproduct,name="prod-delete"),
+   path('add_product', views.add_product, name='add_product'),
+   path('view_product', views.view_product, name="view_product"),
+   path('update_product<id>',views.update_product,name='update_product'),
+   path('edit_product/<product_key>', views.edit_product,name="edit_product"),
+   path('delete_product/<product_key>', views.delete_product,name="delete_product"),
 ]

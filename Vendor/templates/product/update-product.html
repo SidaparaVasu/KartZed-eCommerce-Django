@@ -1,15 +1,17 @@
+
 {% load static %}
 
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Update Category | Admin</title>
+    <title>Update Product | Vendor</title>
     <!-- Favicon Icon -->
     <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon.png' %}" />
     <!-- CSS Styling -->
     <link rel="stylesheet" href="{% static 'css/styles.min.css' %}" />
-
+    <link rel="stylesheet" href="{% static 'css/root.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/global.css' %}" />
     <!-- Ion Icon CDN -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -27,34 +29,39 @@
         data-sidebar-position="fixed" data-header-position="fixed">
 
         <!-- Including Sidebar -->
-        {% include 'sidebar-admin.html' %}
+        {% include 'sidebar-vendor.html' %}
 
         <!--  Main wrapper -->
         <div class="body-wrapper">
 
             <!-- Including Header -->
-            {% include 'navbar-admin.html' %}
+            {% include 'navbar-vendor.html' %}
 
             <div class="container-fluid">
-                <!-- Category Form -->
+                <!-- Update Product Form -->
                 <div class="card shadow p-3 mb-5 bg-white rounded">
                     <div class="card-body">
-                        <h5 class="card-title fw-semibold mb-4">Update Category</h5>                        
-                        <form action="edit_category/{{ context.category_id }}" method="post" enctype="multipart/form-data" class="content-area-form">
+                        <h5 class="card-title fw-semibold mb-4">Update Product</h5>
+                        <form action="edit_product/{{ product.product_key }}" method="post" enctype="multipart/form-data" class="content-area-form">
                             {% csrf_token %}
-                            <input type="hidden" name="category_id" id="id" value="{{ context.category_id }}" />
+                            <input type="hidden" name="product_key" id="id" value="{{ product.product_key }}" />
                             <div class="mb-3">
-                                <label for="exampleInputCategory1" class="form-label">Edit Category</label>
-                                <input type="text" name="category" value="{{ context.category }}"
-                                    class="form-control" id="exampleInputCategory1" 
-                                    placeholder="Appliances, Electronics, Health etc." required/>
+                                <input type="text" name="prodname" value="{{ product.prodname }}" class="form-control" placeholder="Enter Product Name" required/>
                             </div>
                             <div class="mb-3">
-                                <label for="exampleImageFileCategory1" class="form-label">Category Image</label>
-                                <input type="file" name="cat_image_path" value="{{ context.imagepath }}" class="form-control" id="exampleImageFileCategory1" />
-                                <div id="categoryImageHelp" class="form-text">Image should be JPG or PNG format.</div>
+                                <textarea name="proddescription" value="{{ product.proddescription }}" class="form-control" 
+                                placeholder="Enter Product Description" rows="5" required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-success">Update category</button>
+                            <div class="mb-3">
+                                <input type="number" name="prodprice" value="{{ product.prodprice }}" class="form-control" placeholder="Enter Price" required/>
+                            </div>
+                            <div class="mb-3">
+                                <input type="number" name="discount" value="{{ product.discount }}" class="form-control" placeholder="Enter Discount(%)" required/>
+                            </div>
+                            <div class="mb-3">
+                                <input type="file" name="prodimage" value="{{ product.prodimage }}" class="form-control" />
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Product</button>
                         </form>  
                     </div>
                 </div>
