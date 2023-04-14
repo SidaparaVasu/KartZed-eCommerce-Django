@@ -155,15 +155,34 @@ def insert_subcategory(request):
             return HttpResponse(e)
 
 # update function of subcategory
-def edit_subcategory(request, id):
-    pass
+def update_subcategory(request, id):
+    category = Category.objects.all()        
+    context = SubCategory.objects.get(subCategory_id=id)
+    return render(request, "subcategory/update-subcategory.html",{'context' : context, 'category':category})
 
-def update_subcategory(request):
-    pass
+def edit_subcategory(request, id):
+    data = SubCategory.objects.get(category_id=id)
+    edited_subcategory  = request.POST.get('subCategory')
+    try:
+        data.subCategory = edited_subcategory
+        data.save()
+        messages.success(request, "Sub-Category Updated successfully!")
+        return redirect(reverse(view_subcategory))
+    except Exception as e:
+        messages.success(request, "Sub-Category Updation failed!")
+        return redirect(reverse(view_subcategory))  
 
 # delete subcategory
-def delete_subcategory(request):
-    pass
+def delete_subcategory(request, id):
+    obj = get_object_or_404(SubCategory,subCategory_id=id)
+    # return HttpResponse(obj)
+    if request.method == "GET":
+        if obj.delete():
+            messages.success(request,"Sub-Category deleted successfully!")
+            return redirect(reverse(view_subcategory))
+        else:
+            messages.error(request,"Sub-Category couldn't delete!")
+    return redirect(reverse(view_subcategory))
 
 """ 
     Sub Category CRUD End

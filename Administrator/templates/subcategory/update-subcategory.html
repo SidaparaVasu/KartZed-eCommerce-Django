@@ -1,0 +1,81 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Update Sub-Category | Admin</title>
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon.png' %}" />
+    <!-- CSS Styling -->
+    <link rel="stylesheet" href="{% static 'css/styles.min.css' %}" />
+
+    <!-- Ion Icon CDN -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags %}
+                <script>alert("{{ message }}")</script> 
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <!--  Body Wrapper -->
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed">
+
+        <!-- Including Sidebar -->
+        {% include 'sidebar.html' %}
+
+        <!--  Main wrapper -->
+        <div class="body-wrapper">
+
+            <!-- Including Header -->
+            {% include 'header.html' %}
+
+            <div class="container-fluid">
+                <!-- Category Form -->
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold mb-4">Update Sub-Category</h5>                        
+                        <form action="edit_subcategory/{{ context.subCategory_id }}" method="post" enctype="multipart/form-data" class="content-area-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="subCategory_id" id="id" value="{{ context.subCategory_id }}" />
+                            <div class="mb-3">
+                                <select name="category" class="form-control dropdown">
+                                    <option value="none" disabled>select a category</option>
+                                    {% for data in category %}
+                                        <option value="{{ data.category_id}}" name="category" selected>{{ data.category }}</option>    
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputSubCategory1" class="form-label">Edit Sub-Category</label>
+                                <input type="text" name="subCategory" value="{{ context.subCategory }}"
+                                    class="form-control" id="exampleInputSubCategory1" 
+                                    placeholder="Appliances, Electronics, Health etc." required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleImageFileSubCategory1" class="form-label">Sub-Category Image</label>
+                                <input type="file" name="sub_cat_image_path" value="{{ context.imagepath }}" class="form-control" id="exampleImageFileSubCategory1" />
+                                <div id="categoryImageHelp" class="form-text">Image should be JPG or PNG format.</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Subcategory</button>
+                        </form>  
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/sidebarmenu.js' %}"></script>
+    <script src="{% static 'js/app.min.js' %}"></script>
+    <script src="{% static 'libs/apexcharts/dist/apexcharts.min.js' %}"></script>
+    <script src="{% static 'libs/simplebar/dist/simplebar.js' %}"></script>
+    <script src="{% static 'js/dashboard.js' %}"></script>
+</body>
+</html>

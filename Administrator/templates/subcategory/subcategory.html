@@ -94,14 +94,14 @@
                                             <td>{{ data.category.category }}</td>
                                             <td>{{ data.subCategory }}</td>
                                             <td>
-                                                <a href="#">
+                                                <a href="{% url 'update_subcategory' data.subCategory_id %}">
                                                     <span class="icon-box gr-icon">
                                                         <ion-icon name="create-outline" class="icon"></ion-icon>
                                                     </span> 
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="#" onclick="return confirm('Are you sure you want to delete this?')">
+                                                <a href="{% url 'delete_subcategory' data.subCategory_id %}" onclick="return confirm('Are you sure you want to delete this?')">
                                                     <span class="icon-box rd-icon">
                                                         <ion-icon name="trash-outline" class="icon"></ion-icon>
                                                     </span>
