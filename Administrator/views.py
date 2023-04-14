@@ -113,8 +113,8 @@ def delete_category(request, id):
 """
 def view_subcategory(request):
     subcategory = SubCategory.objects.all()
-    category = Category.objects.all()
-    
+    category = Category.objects.all()        
+
     p = Paginator(subcategory, 3)
     page_number = request.GET.get('page')
     
@@ -139,19 +139,20 @@ def insert_subcategory(request):
         if len(request.FILES) != 0:
             form.image = request.FILES['sub_cat_image_path']
             imagepath = form.image
-        # return HttpResponse(imagepath) 
+        # return HttpResponse(category) 
+
         try:
             SubCategory.objects.create(
                 subCategory = subCategory,
                 imagepath = imagepath,
-                category = category
+                category = Category.objects.get(category_id=category)
             )
             messages.success(request, "Sub-Category Added successfully!")
             return redirect(reverse(view_subcategory))
         except Exception as e:
+            return HttpResponse(e)
             messages.error(request, "Sub-Category Insertion failed!")
             return redirect(reverse(view_subcategory))
-            # return HttpResponse(e)
 
 # update function of subcategory
 def edit_subcategory(request, id):

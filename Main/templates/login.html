@@ -16,11 +16,14 @@
 <body>
 
     <section class="login-container" id="login-container">
-        <img src="{% static 'assets/img/KartZed-logo.png' %}" alt="logo" class="logo" />
+        <img src="{% static 'assets/img/logo-rmvd-bg.png' %}" alt="logo" class="logo" />
+        <!-- <h1 class="logo">KartZed</h1> -->
 
         <div class="form-div" id="form-div">
             <form action="userLogin" method="post" class="login-form form" id="login-form">
-                <h1>Welcome back</h1>
+                <!-- <h1>Welcome back</h1> -->
+                <h3>Effortless Shopping at Your Fingertips</h3>
+                <h5>Unlock Exclusive Shopping Benefits</h5>
                 {% csrf_token %}
                 <label for="login-input" class="login-input-label">Enter Email ID</label>
                 <input type="email" class="login-input" id="login-input" name="email" required/>

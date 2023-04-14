@@ -23,7 +23,7 @@ body{
     top: 40px;
     left: 50%;
     transform: translateX(-50%);
-    width: 250px;
+    width: 300px;
     z-index: 10;
 }
 
@@ -38,6 +38,7 @@ body{
     justify-content: center;
     flex-direction: column;
     background-color: var(--white);
+    border: 2px solid #eee;
 }
 
 .otp-div{
@@ -67,15 +68,23 @@ body{
 
 .form{
     height: 400px;
-    width: 400px;
+    width: 450px;
     padding: 30px;
 }
 
-.form h1{
+.form h3{
     text-align: center;
-    font-size: 28px;
+    font-size: 25px;
+    margin: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.form h5{
+    text-align: center;
+    font-size: 16px;
     margin: 10px;
     margin-bottom: 40px;
+    font-weight: normal;
 }
 
 .form .login-input-label{

@@ -6,6 +6,7 @@ class Users(models.Model):
     last_name = models.CharField(max_length=20)
     gender = models.CharField(max_length=6)
     email_id = models.CharField(max_length=320, unique=True)
+    password = models.CharField(max_length=12)
     phone_number = models.CharField(max_length=10, unique=True)
     is_phone_verified = models.BooleanField(default=False)
     otp = models.CharField(max_length=6)

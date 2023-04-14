@@ -48,7 +48,7 @@
                                 <select name="category" class="form-control dropdown">
                                     <option value="none" disabled>select a category</option>
                                     {% for data in category %}
-                                        <option value="{{ data.category }}" name="category" selected>{{ data.category }}</option>    
+                                        <option value="{{ data.category_id}}" name="category" selected>{{ data.category }}</option>    
                                     {% endfor %}
                                 </select>
                             </div>
@@ -91,7 +91,7 @@
                                             {% else %}
                                                 <td>defaultimg</td>
                                             {% endif %}
-                                            <td>{{ data.category }}</td>
+                                            <td>{{ data.category.category }}</td>
                                             <td>{{ data.subCategory }}</td>
                                             <td>
                                                 <a href="#">
