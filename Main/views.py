@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib import messages
 from os import *
 
 from Email.views import Email
@@ -91,5 +92,5 @@ def logoutHandle(request):
         del request.session['is_session']
     except KeyError:
         pass
-    # messages.success(request, "You are Logged out!")
+    messages.success(request, "You are Logged out!")
     return redirect(reverse('indexPage'))

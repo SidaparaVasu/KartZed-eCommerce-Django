@@ -1,0 +1,146 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SubCategory | Admin | Dashboard</title>
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon.png' %}" />
+    <!-- CSS Styling -->
+    <link rel="stylesheet" href="{% static 'css/styles.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/root.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/global.css' %}" />
+
+    <!-- Ion Icon CDN -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags %}
+                <script>alert("{{ message }}")</script> 
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <!--  Body Wrapper -->
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed">
+
+        <!-- Including Sidebar -->
+        {% include 'sidebar.html' %}
+
+        <!--  Main wrapper -->
+        <div class="body-wrapper">
+
+            <!-- Including Header -->
+            {% include 'header.html' %}
+
+            <div class="container-fluid">
+                <!-- Category Form -->
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold mb-4">Add Sub Category</h5>
+                        <form action="insert_subcategory" method="post" enctype="multipart/form-data" class="content-area-form">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <select name="category" class="form-control dropdown">
+                                    <option value="none" disabled>select a category</option>
+                                    {% for data in category %}
+                                        <option value="{{ data.category }}" name="category" selected>{{ data.category }}</option>    
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputSubCategory1" class="form-label">Enter Subcategory</label>
+                                <input type="text" name="subCategory" class="form-control" id="exampleInputSubCategory1" 
+                                    placeholder="Smart phones, Television, Watches etc." required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleImageFileSubCategory1" class="form-label">Subcategory Image</label>
+                                <input type="file" name="sub_cat_image_path" class="form-control" id="exampleImageFileSubCategory1" />
+                                <div id="categoryImageHelp" class="form-text">Image should be JPG or PNG format.</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">add subcategory</button>
+                        </form>  
+                    </div>
+                </div>
+
+                <!-- Display Category -->
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold mb-4">View SubCategory</h5>
+                        <div class="row">
+                            <div class="white-box">
+                                <table class="show-data-box">
+                                    <thead>
+                                        <th>sr no.</th>
+                                        <th>image</th>
+                                        <th>category</th>
+                                        <th>subcategory</th>
+                                        <th>edit</th>
+                                        <th>delete</th>
+                                    </thead>
+                                    <tbody>
+                                        {% for data in subcategory %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            {% if data.imagepath %}
+                                                <td class="img-size"><img src="{{ data.imagepath.url }}" alt="" class="table-img"/></td>
+                                            {% else %}
+                                                <td>defaultimg</td>
+                                            {% endif %}
+                                            <td>{{ data.category }}</td>
+                                            <td>{{ data.subCategory }}</td>
+                                            <td>
+                                                <a href="#">
+                                                    <span class="icon-box gr-icon">
+                                                        <ion-icon name="create-outline" class="icon"></ion-icon>
+                                                    </span> 
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="#" onclick="return confirm('Are you sure you want to delete this?')">
+                                                    <span class="icon-box rd-icon">
+                                                        <ion-icon name="trash-outline" class="icon"></ion-icon>
+                                                    </span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                            <center>No data found</center>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <div class="pagination">
+                                    {%if subcategory.has_previous %} {# whether the previous page exists #}
+                                        <a href="?page={{subcategory.previous_page_number}}" class="pagination-btn">prev</a> {# link to the prev page #}
+                                    {% endif %}
+                    
+                                    {% if subcategory.number == 1 %}
+                                        <p></p>
+                                    {% else %}
+                                        <span>page: {{subcategory.number}}</span> {# the current page number #}
+                                    {% endif %}
+                                    
+                                    {%if subcategory.has_next %} {# whether the next page exists #}
+                                        <a href="?page={{subcategory.next_page_number}}" class="pagination-btn">next</a> {# link to the next page #}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/sidebarmenu.js' %}"></script>
+    <script src="{% static 'js/app.min.js' %}"></script>
+    <script src="{% static 'libs/apexcharts/dist/apexcharts.min.js' %}"></script>
+    <script src="{% static 'libs/simplebar/dist/simplebar.js' %}"></script>
+    <script src="{% static 'js/dashboard.js' %}"></script>
+</body>
+</html>
