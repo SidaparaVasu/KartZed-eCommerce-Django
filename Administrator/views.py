@@ -150,9 +150,9 @@ def insert_subcategory(request):
             messages.success(request, "Sub-Category Added successfully!")
             return redirect(reverse(view_subcategory))
         except Exception as e:
-            return HttpResponse(e)
             messages.error(request, "Sub-Category Insertion failed!")
             return redirect(reverse(view_subcategory))
+            return HttpResponse(e)
 
 # update function of subcategory
 def edit_subcategory(request, id):
