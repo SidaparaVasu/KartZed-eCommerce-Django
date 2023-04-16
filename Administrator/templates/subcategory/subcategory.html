@@ -45,10 +45,11 @@
                         <form action="insert_subcategory" method="post" enctype="multipart/form-data" class="content-area-form">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <select name="category" class="form-control dropdown">
-                                    <option value="none" disabled>select a category</option>
+                                <label for="category-dropdown" class="form-label" id="category-dropdown-label"></label>
+                                <select name="category" class="form-control dropdown" id="category-dropdown">
+                                    <option value="disabled" selected disabled>-- select a category --</option>
                                     {% for data in category %}
-                                        <option value="{{ data.category_id}}" name="category" selected>{{ data.category }}</option>    
+                                        <option value="{{ data.category_id}}" name="category" id="disabled-option" selected>{{ data.category }}</option>    
                                     {% endfor %}
                                 </select>
                             </div>
@@ -62,15 +63,28 @@
                                 <input type="file" name="sub_cat_image_path" class="form-control" id="exampleImageFileSubCategory1" />
                                 <div id="categoryImageHelp" class="form-text">Image should be JPG or PNG format.</div>
                             </div>
-                            <button type="submit" class="btn btn-primary">add subcategory</button>
+                            <button type="submit" class="btn btn-primary" id="submit-btn">add subcategory</button>
                         </form>  
                     </div>
                 </div>
+                <script>
+                    const categoryDropdown = document.getElementById('category-dropdown');
+                    
+                    // If Category dropdown has no value then disabled submit button
+                    const dropdownLabel = document.getElementById('category-dropdown-label'); 
+                    const submitButton = document.getElementById('submit-btn'); 
+                    if (categoryDropdown.value === "") {
+                        dropdownLabel.textContent = "Category is empty! cannot insert Sub-Category";
+                        dropdownLabel.style.color = '#E30613'
+                        categoryDropdown.disabled = true;
+                        submitButton.disabled = true;
+                    }
+                </script>
 
                 <!-- Display Category -->
                 <div class="card shadow p-3 mb-5 bg-white rounded">
                     <div class="card-body">
-                        <h5 class="card-title fw-semibold mb-4">View SubCategory</h5>
+                        <h5 class="card-title fw-semibold mb-4">View Sub Category</h5>
                         <div class="row">
                             <div class="white-box">
                                 <table class="show-data-box">
@@ -139,8 +153,8 @@
     <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/sidebarmenu.js' %}"></script>
     <script src="{% static 'js/app.min.js' %}"></script>
-    <script src="{% static 'libs/apexcharts/dist/apexcharts.min.js' %}"></script>
+    <!-- <script src="{% static 'libs/apexcharts/dist/apexcharts.min.js' %}"></script> -->
     <script src="{% static 'libs/simplebar/dist/simplebar.js' %}"></script>
-    <script src="{% static 'js/dashboard.js' %}"></script>
+    <!-- <script src="{% static 'js/dashboard.js' %}"></script> -->
 </body>
 </html>

@@ -45,7 +45,7 @@
                             <input type="hidden" name="subCategory_id" id="id" value="{{ context.subCategory_id }}" />
                             <div class="mb-3">
                                 <select name="category" class="form-control dropdown">
-                                    <option value="none" disabled>select a category</option>
+                                    <option value="none" disabled>-- select a category --</option>
                                     {% for data in category %}
                                         <option value="{{ data.category_id}}" name="category" selected>{{ data.category }}</option>    
                                     {% endfor %}
@@ -74,8 +74,8 @@
     <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/sidebarmenu.js' %}"></script>
     <script src="{% static 'js/app.min.js' %}"></script>
-    <script src="{% static 'libs/apexcharts/dist/apexcharts.min.js' %}"></script>
+    <!-- <script src="{% static 'libs/apexcharts/dist/apexcharts.min.js' %}"></script> -->
     <script src="{% static 'libs/simplebar/dist/simplebar.js' %}"></script>
-    <script src="{% static 'js/dashboard.js' %}"></script>
+    <!-- <script src="{% static 'js/dashboard.js' %}"></script> -->
 </body>
 </html>
