@@ -6,6 +6,13 @@ body{
     overflow: hidden;
 }
 
+h1, h2, h3, h4, h5, h6, p, a, span{
+    color: white;
+}
+h1{
+    text-align: center;
+}
+
 .login-container{
     position: relative;
     height: 100%;
@@ -37,8 +44,7 @@ body{
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: var(--white);
-    border: 2px solid #eee;
+    background-color: #000000;
 }
 
 .otp-div{
@@ -90,7 +96,7 @@ body{
 .form .login-input-label{
     font-size: 13px;
     letter-spacing: .1px;
-    color: var(--black-300);
+    color: var(--white);
     font-weight: 600;
 }
 
@@ -106,7 +112,7 @@ body{
 .disabled-input{
     font-size: 16px;
     margin-top: 8px;
-    border: 1px solid var(--grey-600);
+    border: 1px solid var(--white);
     margin-bottom: 10px;
 }
 .form > .login-input:focus{
@@ -147,6 +153,9 @@ body{
     font-family: var(--ff-lato);
 }
 
+.term-policy-label > p{
+    color: white;
+}
 .term-policy-label > p > a,
 .link-signup > a,
 .link-login > a{
@@ -161,7 +170,7 @@ body{
 }
 .resend-otp-div p, .resend-otp-div p button{
     font-size: 12px;
-    color: var(--black-300);
+    color: var(--white);
     font-family: var(--ff-lato);
 }
 .resend-otp-div p button{
@@ -178,7 +187,6 @@ body{
 }
 
 .error-validate-message{
-    padding: 12px;
     font-size: 13px;
     margin-bottom: 10px;
     border-radius: 4px;

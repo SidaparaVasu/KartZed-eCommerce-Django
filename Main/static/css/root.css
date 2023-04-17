@@ -4,7 +4,7 @@
     --max-width: 100%;
     --min-height: 100vh;
 
-    --main-navbar-height: 80px;
+    --main-navbar-height: 70px;
     --main-navbar-width: var(--max-width);
 
     --admin-navbar-height: 65px;
@@ -12,6 +12,8 @@
     /* Colors */ 
     /* based on logo theme */
     --primary: #145A32;
+    --body: #121212;
+
     --light-grey: #e6e6e6;
     --grey-400: #67707e;
     --grey-600: #505762;
@@ -21,6 +23,10 @@
     /* --bg-color: #f0f0f0; */
     --bg-color: #edf1f5;
     --dark-theme: #2a3447;
+
+    /* Navbar */
+    --col-navbar: #000;
+    /* --col-navbar: #2A2A2A; */
     
     /* General Colors */
     --black: #000000;

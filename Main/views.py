@@ -17,7 +17,7 @@ def render_login_page(request):
 
 """ Authentication """
 # User Login
-def userLogin(request):        
+def user_login(request):        
     
     if request.method == 'POST':
         
@@ -25,28 +25,31 @@ def userLogin(request):
         email = request.POST.get('email')
     
         fetch_email = Users.objects.filter(email_id=str(email))
-        
+        # return HttpResponse(len(fetch_email))
         if len(fetch_email) > 0:
             if email_obj.send_login_otp([email]):
                 return render(request, 'login.html', {'result': True, 'email': email})
-                return redirect(reverse('indexPage'), {'result': True, 'email': email})
         else:
+            # return HttpResponse(email)
             try: 
                 Users.objects.create(
                     first_name = '',
                     last_name = '',
                     gender = '',
                     email_id = email,
+                    password = '',
                     phone_number = '',
                     is_phone_verified = False,
                     otp = None,
                     user_type = 'is_user'
                 )
+                
                 email_obj.send_login_otp([email])
                 return render(request, 'login.html', {'result': True, 'email': email})
-                return redirect(reverse('indexPage'), {'result': True, 'email': email})
             except Exception as e:
-                return HttpResponse(f"An Error Occured: Cannot create user {e}")
+                messages.success(request, "An Error Occured: try login again")
+                # return render(request, 'login.html')
+                # return HttpResponse(f"An Error Occured: Cannot create user {e}")
         
     return render(request, 'login.html')
 
@@ -65,22 +68,27 @@ def verify_otp(request):
             return render(request, 'login.html', er_context)
         
         if int(user_data.otp) == int(input_otp):
-            
-            request.session['first_name'] = user_data.first_name
-            request.session['last_name'] = user_data.last_name
-            request.session['gender'] = user_data.gender
-            request.session['email_id'] = user_data.email_id
-            request.session['phone_number'] = user_data.phone_number
-            request.session['is_phone_verified'] = user_data.is_phone_verified
-            request.session['user_type'] = user_data.user_type
-            request.session['is_session'] = True
-            
-            return HttpResponseRedirect('/')
-        else:
-            er_context = {'result' : True, 'email': email, 'errormsg': "OTP doesn't match! New OTP sent"}
-            return render(request, 'login.html', er_context)
+            return True, user_data
         
-def logoutHandle(request):
+def login_handle(request):
+    verified, user_data = verify_otp(request)
+    if verified:
+        request.session['first_name'] = user_data.first_name
+        request.session['last_name'] = user_data.last_name
+        request.session['gender'] = user_data.gender
+        request.session['email_id'] = user_data.email_id
+        request.session['phone_number'] = user_data.phone_number
+        request.session['is_phone_verified'] = user_data.is_phone_verified
+        request.session['user_type'] = user_data.user_type
+        request.session['is_session'] = True
+        
+        messages.success(request, "You are Logged in successfully!")
+        return HttpResponseRedirect('/')
+    else:
+        er_context = {'result' : True, 'email': user_data.email_id, 'errormsg': "OTP doesn't match! New OTP sent"}
+        return render(request, 'login.html', er_context)
+        
+def logout_handle(request):
     try:
         del request.session['first_name']
         del request.session['last_name']

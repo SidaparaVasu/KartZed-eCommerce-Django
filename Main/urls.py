@@ -11,8 +11,7 @@ urlpatterns = [
     path('login', views.render_login_page, name="render_login_page"),
     
     # Authentication
-    path('userLogin', views.userLogin, name="userLogin"),
-    path('verify_otp', views.verify_otp, name="verify_otp"),
-    
-    path('logoutHandle', views.logoutHandle, name="logoutHandle"),
+    path('user_login', views.user_login, name="user_login"),
+    path('login_handle', views.login_handle, name="login_handle"),
+    path('logout_handle', views.logout_handle, name="logout_handle"),
 ]

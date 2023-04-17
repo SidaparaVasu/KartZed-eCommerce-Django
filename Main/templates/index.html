@@ -1,91 +1,43 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KartZed - eCommerce</title>
+    <title>KartZed</title>
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon_logo.png' %}" />
+    <!-- CSS Links -->
     <link rel="stylesheet" href="{% static 'css/global.css' %}">
     <link rel="stylesheet" href="{% static 'css/root.css' %}">
     <link rel="stylesheet" href="{% static 'css/plugins.css' %}">
-    <link rel="stylesheet" href="{% static 'css/main-navbar.css' %}">
-    <link rel="stylesheet" href="{% static 'css/estyle.css' %}">
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
-
-    <!-- Font Awesome CDN -->
-    <script src="https://kit.fontawesome.com/61732659a0.js" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- Ion Icons CDN -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <!-- JQuery CDN -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <!-- Embed the intl-tel-input plugin (international country code for mobile number) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 </head>
 <body>
+    
+    <!-- Include Navigation Bar -->
+    {% include 'navbar/navbar.html' %}
 
-    <!-- Include Top Main Navigation Bar -->
-    {% if request.session.is_session %}
-        {% include 'after-login-main-navbar.html' %}
-    {% else %} 
-        {% include 'main-navbar.html' %}
-    {% endif %}
-    <!-- {% if request.session.is_session %}
-        <script>    
-            document.getElementById('check').innerText = "{{ request.session.email_id }}"
-            document.getElementById('loginLink')
-            const existing_tag = document.getElementById('loginLink');  // Get the element with ID "loginLink"
-            const new_tag = document.createElement('a');  // Create a new <p> element
-            new_tag.textContent = 'Logout'
-            new_tag.href = "{% url 'logoutHandle' %}"
-            new_tag.id = "loginLink"
-            existing_tag.replaceWith(new_tag);  // Replace the original element with the new element
-        </script>    
-    {% else %}    
-        <script> 
-            existing_tag = document.getElementById('loginLink');  // Get the element with ID "loginLink"
-            const new_tag = document.createElement('a');  // Create a new <p> element
-            new_tag.textContent = 'Login'
-            new_tag.href = "{% url 'render_login_page' %}"
-            existing_tag.replaceWith(new_tag);  // Replace the original element with the new element
-        </script> 
-    {% endif %} -->
+    <section class="main-container">
 
-    <!-- Navigation Bar -->
-    <div class="navigation" id="navigation">
-        <a href="#" class="category-list"><img src="{% static 'assets/img/category-home.png' %}" alt="img"/><p>Home</p></a>
-        <a href="#" class="category-list"><img src="{% static 'assets/img/category-mobile.png' %}" alt="img"/><p>Mobiles</p></a>
-        <a href="#" class="category-list"><img src="{% static 'assets/img/category-electronics.png' %}" alt="img"/><p>Electronics</p></a>
-        <a href="#" class="category-list"><img src="{% static 'assets/img/category-appliances.png' %}" alt="img"/><p>Appliances</p></a>
-        <a href="#" class="category-list"><img src="{% static 'assets/img/category-babycare.png' %}" alt="img"/><p>Baby Care</p></a>
-        <a href="#" class="category-list"><img src="{% static 'assets/img/category-smartwatches.png' %}" alt="img"/><p>Smart Watches</p></a>
-        <a href="#" class="category-list"><img src="{% static 'assets/img/category-fitness.png' %}" alt="img"/><p>Health & Fitness</p></a>
-    </div>
-
-    <!-- Banner -->
-    <!-- <div class="flash-banner-container">
-        <div class="slideshow-container">
-            <div class="slides">Slide 1</div>
-            <div class="slides">Slide 2</div>
-            <div class="slides">Slide 3</div>
-            <div class="slides">Slide 4</div>
-            <div class="slides">Slide 5</div>
+        <div class="flash-banner">
+            <div class="gitem grid-item-1">
+                <img src="{% static 'images/flash-banner/flash-banner-1.jpg' %}" alt="" srcset="">
+            </div>
+            <div class="gitem grid-item-2">
+                <img src="{% static 'images/flash-banner/flash-banner-2.jpg' %}" alt="" srcset="">
+            </div>
+            <div class="gitem grid-item-3">
+                <img src="{% static 'images/flash-banner/flash-banner-3.jpg' %}" alt="" srcset="">
+            </div>
         </div>
-    </div> -->
 
-    <div class="best-sell-view">
-        <div class="card">
-        </div>
-    </div>
+    </section>
 
-
-    <!-- Javascript Links -->
-    <!-- <script src="{% static 'js/intl-tel-input.js' %}"></script> -->
-    <script src="{% static 'js/popupLoginBox.js' %}"></script>
-    <script src="{% static 'js/show-hide-searchbar.js' %}"></script>
-    <script src="{% static 'js/toggle-login-signup-card.js' %}"></script>
 </body>
 </html>

@@ -16,11 +16,11 @@
 <body>
 
     <section class="login-container" id="login-container">
-        <img src="{% static 'assets/img/logo-rmvd-bg.png' %}" alt="logo" class="logo" />
+        <img src="{% static 'images/logos/logo_dark.png' %}" alt="logo" class="logo" />
         <!-- <h1 class="logo">KartZed</h1> -->
 
         <div class="form-div" id="form-div">
-            <form action="userLogin" method="post" class="login-form form" id="login-form">
+            <form action="user_login" method="post" class="login-form form" id="login-form">
                 <!-- <h1>Welcome back</h1> -->
                 <h3>Effortless Shopping at Your Fingertips</h3>
                 <h5>Unlock Exclusive Shopping Benefits</h5>
@@ -28,13 +28,13 @@
                 <label for="login-input" class="login-input-label">Enter Email ID</label>
                 <input type="email" class="login-input" id="login-input" name="email" required/>
                 <!-- <p class="error-validate-message" id="error-validate-message"></p> -->
-                <span class="term-policy-label"><p>By continuing, you agree to KartZed's <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p></span>
+                <span class="term-policy-label"><p>By continuing, you agree to KartZed's <a href="javascript:void(0)">Terms of Use</a> and <a href="javascript:void(0)">Privacy Policy</a>.</p></span>
                 <input type="submit" class="button send-otp-btn" value="Request OTP" />
             </form>
         </div>
 
         <div class="otp-div" id="otp-div">
-            <form action="verify_otp" method="post" class="login-form form" id="login-form">
+            <form action="login_handle" method="post" class="login-form form" id="login-form">
                 <h1>OTP Verification</h1>
 
                 {% csrf_token %}
@@ -45,10 +45,14 @@
                 <label for="login-input" class="login-input-label">Enter OTP</label>
                 <input type="text" class="login-input otp-input" id="login-input" name="otp-input"
                     maxlength="6" pattern="[0-9]+" required/>
-                <p class="error-validate-message">
+                <p class="error-validate-message" id="error-validate-message">
                     {% if errormsg %}
+                        <script>
+                            document.getElementById('error-validate-message').style.padding = "12px";
+                        </script>
                         {{ errormsg}}
                     {% endif %}
+                    <!-- padding: 12px; -->
                 </p>
                 <div class="resend-otp-div">
                     <p>Don't you get the OTP? Click 

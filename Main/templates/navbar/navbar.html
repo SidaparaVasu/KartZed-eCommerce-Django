@@ -1,0 +1,38 @@
+{% load static %}
+<nav class="navbar">
+
+    <div class="logo-box">
+        <img src="{% static 'images/logos/logo_dark.png' %}" width="180" alt="Logo" srcset="">
+    </div>
+    <div class="center-nav">
+        <div class="search-box">
+            <input type="text" class="search-bar" id="search-bar"
+                placeholder="Search store" />
+            <ion-icon name="search-outline" class="search-icon"></ion-icon>
+        </div>
+        <div class="links">
+            <a href="#">Discover</a>
+            <a href="#">Browse</a>
+            <a href="#">Distribution</a>
+            {% if request.session.is_session %}
+                <a href="#">Account</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="right-nav">
+        {% if request.session.is_session %}
+            <a href="{% url 'logout_handle' %}">Logout</a>
+        {% else %}
+            <a href="{% url 'render_login_page' %}">Login</a>
+        {% endif %}
+        <a href="#" class="cart-btn">
+            Cart
+            {% if not is_empty_cart %}
+                <span></span>
+            {% else %}
+                <span class="cart-badge">1</span>
+            {% endif %}
+        </a>
+    </div>
+
+</nav>

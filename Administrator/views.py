@@ -17,6 +17,7 @@ def index_admin(request):
 def auth_admin(request):
     return render(request,'authentication-login.html')
 
+
 def admin_logout_handle(request):
     try:
         del request.session['first_name']
