@@ -2,7 +2,9 @@
 <nav class="navbar">
 
     <div class="logo-box">
-        <img src="{% static 'images/logos/logo_dark.png' %}" width="180" alt="Logo" srcset="">
+        <a href="{% url 'indexPage' %}">
+            <img src="{% static 'images/logos/logo_dark.png' %}" width="180" alt="Logo" srcset="" />
+        </a>
     </div>
     <div class="center-nav">
         <div class="search-box">
@@ -15,7 +17,7 @@
             <a href="#">Browse</a>
             <a href="#">Distribution</a>
             {% if request.session.is_session %}
-                <a href="#">Account</a>
+                <a href="{% url 'render_account_page' %}">Account</a>
             {% endif %}
         </div>
     </div>

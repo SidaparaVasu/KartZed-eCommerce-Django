@@ -51,6 +51,9 @@
 .navbar > .logo-box{
     margin-left: 20px;
 }
+.navbar > .logo-box a:hover::before{
+    bottom: -2px;
+}
 
 /* Center Nav */
 .navbar > .center-nav{

@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KartZed | Profile</title>
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon_logo.png' %}" />
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/root.css' %}">
+    <link rel="stylesheet" href="{% static 'css/plugins.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+    <!-- Ion Icons CDN -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags %}
+                <script>alert("{{ message }}")</script> 
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <!-- Include Navigation Bar -->
+    {% include 'navbar/navbar.html' %}
+
+    <section class="profile-container">
+        <div class="personal-info-box">
+            <div class="profile-photo-box">
+                <img src="{% static 'images/profile/default-user.jpg' %}" alt="" srcset="">
+            </div>
+            <div class="profile-form">
+                <h1>Hello, {% if request.session.first_name %} {{ request.session.first_name }} {% endif %}
+                    <span id="edit-btn" onclick="enable_username_form()">Edit</span>
+                </h1>
+                <div class="personal-info">
+                    <form action="update_user_profile" method="get" class="first-form">
+                        {% csrf_token %}
+                        <label for="input-group" class="form-label">Personal Information</label>
+                        <div class="input-group" id="input-group">
+                            <input type="text" name="first_name" placeholder="First Name" id="first-name-input" 
+                                class="form-control" value="{{ request.session.first_name}}" disabled required/>
+                            <input type="text" name="last_name" placeholder="Last Name" id="last-name-input" 
+                                class="form-control" value="{{ request.session.last_name}}" disabled required/>
+                        </div>
+                        <div class="col-2-group">
+                            <div class="col">
+                                <label for="input-group" class="form-label">Email Address</label>
+                                <div class="input-group" id="input-group">
+                                    <input type="email" name="email_id" placeholder="kartzed@mail.com" id="email-input" 
+                                    value="{{ request.session.email_id }}" class="form-control" disabled required/>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <label for="input-group" class="form-label">Phone Number</label>
+                                <div class="input-group" id="input-group">
+                                    <input type="tel" name="phone_number" placeholder="e.g. 9874561230" id="phone-number-input" class="form-control" 
+                                    value="{{ request.session.phone_number }}"  maxlength="10" pattern="[0-9]+" disabled required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2-group">
+
+                            <label for="radio-group" class="form-label">Gender:</label>
+                            <div class="radio-group" id="input-group">
+                                <input type="hidden" id="user_gender" value="{{ request.session.gender }}" />
+                                <label for="gender-input-1">
+                                    <input type="radio" name="gender" id="gender-input-1" 
+                                    class="form-control" value="Male" disabled/>
+                                    Male
+                                </label>
+                                <label for="gender-input-2">
+                                    <input type="radio" name="gender" id="gender-input-2" 
+                                        class="form-control" value="Female" disabled/>
+                                    Female
+                                </label>
+                                <label for="gender-input-3">
+                                    <input type="radio" name="gender" id="gender-input-3" 
+                                    class="form-control" value="Other" disabled/>
+                                    Other
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="save-btn" style="display: none;">save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+
+        var user_gender = document.getElementById('user_gender')
+        console.log(user_gender.value)
+        if (user_gender.value == 'Male'){
+            document.getElementById('gender-input-1').checked = true;
+        }else if(user_gender.value == 'Female'){
+            document.getElementById('gender-input-2').checked = true;
+        }else if(user_gender.value == 'Other'){
+            document.getElementById('gender-input-3').checked = true;
+        }
+
+        function enable_username_form(){
+            
+            var editBtn = document.getElementById('edit-btn');
+            var inputGroup = document.getElementById('input-group');
+            var firstNameInput = document.getElementById('first-name-input')
+            var lastNameInput = document.getElementById('last-name-input')
+            var emailInput = document.getElementById('email-input')
+            var phoneNumberInput = document.getElementById('phone-number-input')
+            var genderRadio1 = document.getElementById('gender-input-1')
+            var genderRadio2 = document.getElementById('gender-input-2')
+            var genderRadio3 = document.getElementById('gender-input-3')
+            var saveBtn = document.getElementById('save-btn')
+
+            inputGroup.classList.toggle('active-name-form');
+            
+            if (inputGroup.classList.contains("active-name-form")) {
+                editBtn.textContent = 'Cancel';
+                firstNameInput.disabled = false;
+                lastNameInput.disabled = false;
+                emailInput.disabled = false;
+                phoneNumberInput.disabled = false;
+                genderRadio1.disabled = false;
+                genderRadio2.disabled = false;
+                genderRadio3.disabled = false;
+                saveBtn.style.display = 'block';
+            } else {
+                editBtn.textContent = 'Edit';
+                firstNameInput.disabled = true;
+                lastNameInput.disabled = true;
+                emailInput.disabled = true;
+                phoneNumberInput.disabled = true;
+                genderRadio1.disabled = true;
+                genderRadio2.disabled = true;
+                genderRadio3.disabled = true;
+
+                firstNameInput.value = '{{ request.session.first_name }}';
+                lastNameInput.value = '{{ request.session.last_name }}';
+                emailInput.value = '{{ request.session.email_id }}';
+                phoneNumberInput.value = '{{ request.session.phone_number }}';
+                saveBtn.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+</html>
