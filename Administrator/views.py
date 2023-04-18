@@ -4,8 +4,7 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 
 from .models import Platform, GameFeatures, GameModes, GameCategory
-from Administrator.forms import PlatformForm
-
+from Main.models import Users
 
 # Create your views here.
 def index_admin(request):
@@ -29,6 +28,24 @@ def admin_logout_handle(request):
         pass
     messages.success(request, "You are Logged out!")
     return redirect(reverse('auth_admin'))
+
+
+""" USER """
+def view_users(request):
+    email_id = Users.objects.all()
+
+    p = Paginator(email_id, 3)
+    page_number = request.GET.get('page')
+    
+    try:
+        page_obj = p.get_page(page_number)
+    except Paginator.PageNotAnInteger:
+        # if page_number is not an integer then assign the first page
+        page_obj = p.page(1)
+    except Paginator.EmptyPage:
+        # if page is empty then return last page
+        page_obj = p.page(p.num_pages)
+    return render(request,'users/users.html',context={'users':page_obj})
 
 
 """ Platform CRUD Start """
