@@ -14,6 +14,30 @@
     <!-- Ion Icon CDN -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<style>
+    .grid-3{
+        width: 100%;
+        display: grid;
+        grid-template-columns: 30% 30% 30%;
+    }
+    .grid-3 > .grid-items{
+        text-align: center;
+    }
+    .grid-3 > .grid-items > h5{
+        padding: 4px;
+        background-color: #eee;
+    }
+    .grid-3 > .grid-items > .item-value{
+        background-color: white;
+    }
+    .grid-3 > .grid-items > .item-value > p{
+        padding: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 2px solid #eee;
+    }
+</style>
 </head>
 <body>
     {% if messages %}
@@ -29,55 +53,81 @@
 
         <!-- Including Sidebar -->
         {% include 'sidebar-admin.html' %}
-
+        
         <!--  Main wrapper -->
         <div class="body-wrapper">
-
+            
             <!-- Including Header -->
             {% include 'navbar-admin.html' %}
-
+            
             <div class="container-fluid">
-                <!-- Category Form -->
+                <!-- Display users -->
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold mb-4">View OS & Versions</h5>
+                        <div class="row">
+                            <div class="grid-3">
+                                {% for os in operating_system %}
+                                    <div class="grid-items">
+                                        <h5>{{ os.os_name }}</h5>
+                                        <div class="item-value">
+                                        {% for keys, values in categorized_version_data.items %}
+                                            {% if keys == os.os_name %}
+                                                {% for val in values %}
+                                                    <p>{{ val }}</p>
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OS Form -->
                 <div class="card shadow p-3 mb-5 bg-white rounded">
                     <div class="card-body">
                         <h5 class="card-title fw-semibold mb-4">Add Operating Systems</h5>
-                        <form action="insert-category" method="get" enctype="multipart/form-data" class="content-area-form">
+                        <form action="insert-os" method="get" enctype="multipart/form-data" class="content-area-form">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="inputCategory" class="form-label">Enter Operating System</label>
-                                <input type="text" name="os_name" class="form-control" id="inputCategory" 
-                                    placeholder="Windows, Mac OS.." required/>
+                                <label for="inputOs" class="form-label">Enter Operating System</label>
+                                <input type="text" name="os_name" class="form-control" id="inputOs" 
+                                    placeholder="Windows, Mac OS etc." required/>
                             </div>
                             <button type="submit" class="btn btn-primary">add Operating System</button>
                         </form>  
                     </div>
                 </div>
 
-                <!-- Display Gategories -->
+                <!-- OS Version Form -->
                 <div class="card shadow p-3 mb-5 bg-white rounded">
                     <div class="card-body">
-                        <h5 class="card-title fw-semibold mb-4">Operting Systems</h5>
-                        <div class="row">
-                            <div class="grid-box">
-                                {% comment %} {% for category in game_category %}
-                                <div class="col-3" id="category-form">
-
-                                    <input type="hidden" value="{{ category.game_category_id }}" disabled />
-
-                                    <p>{{ category.game_category_name }}</p>
-
-                                    <!-- Delete -->
-                                    <a href="{% url 'delete_game_category' category.game_category_id %}" onclick="return confirm('Are you sure you want to delete this?')">
-                                        <span class="delete-btn icon-box">
-                                            <ion-icon name="trash-outline" class="icon"></ion-icon>
-                                        </span> 
-                                    </a>
-                                </div>
-                                {% endfor %} {% endcomment %}
+                        <h5 class="card-title fw-semibold mb-4">Add OS Version</h5>
+                        <form action="insert-os-version" method="get" enctype="multipart/form-data" class="content-area-form">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="os-dropdown" class="form-label">Select Operating System</label>
+                                <select name="os_name" class="form-control" id="os-dropdown">
+                                    <option value="disabeld" selected disabled>-- select operating system --</option>
+                                    {% for os in operating_system %}
+                                        <option value="{{ os.os_id }}">{{ os.os_name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <br/>
+                                <label for="inputOS" class="form-label">Enter OS Version</label>
+                                <input type="text" name="version" class="form-control" id="inputOs" 
+                                    placeholder="Windows 7, macOS Big Sur, Arch Linux etc." required/>
                             </div>
-                        </div>
+                            <button type="submit" class="btn btn-primary">add Version</button>
+                        </form>  
                     </div>
                 </div>
+
+                <!-- Display Gategories -->
+                
             </div>
         </div>
     </div>

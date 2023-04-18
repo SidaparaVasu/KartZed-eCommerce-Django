@@ -1,9 +1,9 @@
 from django.shortcuts import render,redirect,HttpResponse, get_object_or_404
 from django.urls import reverse
+from django.db.models import Count
 from django.core.paginator import Paginator
 from django.contrib import messages
-import json
-from .models import Platform, GameFeatures, GameModes, GameCategory, OperatingSystems
+from .models import Platform, GameFeatures, GameModes, GameCategory, OperatingSystems, OSVersions
 from Main.models import Users
 
 # Create your views here.
@@ -183,8 +183,22 @@ def delete_game_category(request, id):
 """ Operating System CRUD Starts """
 
 def view_os(request):
-    os = OperatingSystems.objects.all()
-    return render(request,'OperatingSystems/os.html',context={'os': os})
+    os_data = OperatingSystems.objects.all()
+    versions_data = OSVersions.objects.all().select_related('os_name')
+    # print(versions_data)
+    
+    categorized_version_data = {}
+    for os in os_data:
+        os_name = os.os_name
+        versions_for_os = versions_data.filter(os_name_id = os.os_id)
+        categorized_version_data[os_name] = [v['version'] for v in list(list(versions_for_os.values()))]
+        
+
+    for key, value in categorized_version_data.items():
+        print(key, " => ", value)
+    print(categorized_version_data)
+
+    return render(request,'OperatingSystems/os.html', context={'operating_system': os_data, 'categorized_version_data': categorized_version_data})
 
 def insert_os(request):
     if request.method == 'GET':
@@ -201,5 +215,21 @@ def insert_os(request):
     return redirect(reverse(view_os))
 
 def insert_os_version(request):
-    pass
+    if request.method == 'GET':
+        os_id  = request.GET.get('os_name')
+        os_version  = request.GET.get('version')
+        
+        os_data = OperatingSystems.objects.get(os_id = os_id)
+        
+        try:
+            OSVersions.objects.create(
+                os_name = os_data,
+                version = os_version
+            )
+            messages.success(request, "Version Added!")
+            return redirect(reverse(view_os))
+        except Exception as e:
+            messages.error(request, "An error occured! try again!")
+            return redirect(reverse(view_os))
+    return redirect(reverse(view_os))
 """ Operating System CRUD End """
