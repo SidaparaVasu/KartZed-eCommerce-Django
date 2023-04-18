@@ -3,8 +3,8 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 from django.contrib import messages
 
-from Administrator.forms import GameFeaturesForm, GameModesForm, GameCategoryForm
-from .models import GameFeatures, GameModes, GameCategory
+from .models import Platform, GameFeatures, GameModes, GameCategory
+from Administrator.forms import PlatformForm
 
 
 # Create your views here.
@@ -29,6 +29,42 @@ def admin_logout_handle(request):
         pass
     messages.success(request, "You are Logged out!")
     return redirect(reverse('auth_admin'))
+
+
+""" Platform CRUD Start """
+def view_platform(request):  
+    platform = Platform.objects.all()
+    return render(request,'platform/platform.html', context={'platforms':platform})
+
+# insertion of platform
+def insert_platform(request):
+    if request.method == 'GET':
+        platform  = request.GET.get('platform_name')
+        try:
+            Platform.objects.create(
+                platform_name = platform,
+            )
+            messages.success(request, "platform Added successfully!")
+            return redirect(reverse(view_platform))
+        except Exception as e:
+            messages.error(request, "platform Insertion failed!")
+            return redirect(reverse(view_platform)) 
+
+# delete platform
+def delete_platform(request, id):
+    
+    obj = get_object_or_404(Platform,platform_id=id)
+    # return HttpResponse(obj)
+    if request.method == "GET":
+        if obj.delete():
+            messages.success(request,"platform deleted successfully!")
+            return redirect(reverse(view_platform))
+        else:
+            messages.error(request,"platform couldn't delete!")
+    return redirect(reverse(view_platform))
+
+"""  platform CRUD End """
+
 
 """ Game Features CRUD Start """
 def view_game_features(request):

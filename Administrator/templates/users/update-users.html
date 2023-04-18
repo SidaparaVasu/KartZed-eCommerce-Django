@@ -4,11 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Update Category | Admin</title>
+    <title>Update Users | Admin</title>
     <!-- Favicon Icon -->
     <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon_logo.png' %}" />
     <!-- CSS Styling -->
-    <link rel="stylesheet" href="{% static 'css/dashboard-styles.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/dashboard/styles.min.css' %}" />
 
     <!-- Ion Icon CDN -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
@@ -36,25 +36,20 @@
             {% include 'navbar-admin.html' %}
 
             <div class="container-fluid">
-                <!-- Category Form -->
+                <!-- users Form -->
                 <div class="card shadow p-3 mb-5 bg-white rounded">
                     <div class="card-body">
-                        <h5 class="card-title fw-semibold mb-4">Update Category</h5>                        
-                        <form action="edit_category/{{ context.category_id }}" method="post" enctype="multipart/form-data" class="content-area-form">
+                        <h5 class="card-title fw-semibold mb-4">Update users</h5>                        
+                        <form action="edit_users/{{ context.users_id }}" method="post" enctype="multipart/form-data" class="content-area-form">
                             {% csrf_token %}
-                            <input type="hidden" name="category_id" id="id" value="{{ context.category_id }}" />
+                            <input type="hidden" name="users_id" id="id" value="{{ context.users_id }}" />
                             <div class="mb-3">
-                                <label for="exampleInputCategory1" class="form-label">Edit Category</label>
-                                <input type="text" name="category" value="{{ context.category }}"
-                                    class="form-control" id="exampleInputCategory1" 
+                                <label for="exampleInputusers1" class="form-label">Edit users</label>
+                                <input type="text" name="users" value="{{ context.users }}"
+                                    class="form-control" id="exampleInputusers1" 
                                     placeholder="Appliances, Electronics, Health etc." required/>
                             </div>
-                            <div class="mb-3">
-                                <label for="exampleImageFileCategory1" class="form-label">Category Image</label>
-                                <input type="file" name="cat_image_path" value="{{ context.imagepath }}" class="form-control" id="exampleImageFileCategory1" />
-                                <div id="categoryImageHelp" class="form-text">Image should be JPG or PNG format.</div>
-                            </div>
-                            <button type="submit" class="btn btn-success">Update category</button>
+                            <button type="submit" class="btn btn-success">Update users</button>
                         </form>  
                     </div>
                 </div>

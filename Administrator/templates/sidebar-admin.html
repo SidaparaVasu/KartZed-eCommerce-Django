@@ -15,6 +15,7 @@
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
             <ul id="sidebarnav">
+                <!-- Home -->
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">Home</span>
@@ -27,9 +28,35 @@
                         <span class="hide-menu">Dashboard</span>
                     </a>
                 </li>
-                <!-- Platform -->
 
-                <!-- Game Features -->
+                <!-- Users -->
+                <li class="nav-small-cap">
+                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                    <span class="hide-menu">Users</span>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{% url 'index_admin' %}" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-layout-dashboard"></i>
+                        </span>
+                        <span class="hide-menu">Dashboard</span>
+                    </a>
+                </li>
+
+                <!-- Platform  -->
+                <li class="nav-small-cap">
+                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                    <span class="hide-menu">Platform</span>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{% url 'view_platform' %}" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-article"></i>
+                        </span>
+                        <span class="hide-menu">View Platform</span>
+                    </a>
+                </li>
+                <!-- Game Features  -->
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">Game Features</span>
@@ -42,7 +69,7 @@
                         <span class="hide-menu">View Game Features</span>
                     </a>
                 </li>
-                <!-- Game Modes -->
+                <!-- Game Modes  -->
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">Game Modes</span>

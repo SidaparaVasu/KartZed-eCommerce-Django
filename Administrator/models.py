@@ -1,10 +1,11 @@
 # from django.db import models
 from djongo import models
 # from djongo.models.fields import EmbeddedField
-import datetime
-import os
 
-# Create your models here.
+# Create your models here.    
+class Platform(models.Model):
+    platform_id = models.AutoField(primary_key=True)
+    platform_name = models.CharField(max_length=25, unique=True)
     
 class GameFeatures(models.Model):
     game_feature_id = models.AutoField(primary_key=True)

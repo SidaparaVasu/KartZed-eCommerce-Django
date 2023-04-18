@@ -1,7 +1,12 @@
 from django import forms
 from Administrator.models import *
 
-       
+
+class PlatformForm(forms.ModelForm):
+    class Meta:
+        model  = Platform
+        fields = ('platform_id', 'platform_name')
+        
 class GameFeaturesForm(forms.ModelForm):
     class Meta:
         model  = GameFeatures
