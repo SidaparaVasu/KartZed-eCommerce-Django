@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Game Modes | Admin | Dashboard</title>
+    <title>Game Category | Admin | Dashboard</title>
     <!-- Favicon Icon -->
     <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon_logo.png' %}" />
     <!-- CSS Styling -->
@@ -37,37 +37,37 @@
             {% include 'navbar-admin.html' %}
 
             <div class="container-fluid">
-                <!-- Game Modes Form -->
+                <!-- Category Form -->
                 <div class="card shadow p-3 mb-5 bg-white rounded">
                     <div class="card-body">
-                        <h5 class="card-title fw-semibold mb-4">Add Game Modes</h5>
-                        <form action="insert-mode" method="get" enctype="multipart/form-data" class="content-area-form">
+                        <h5 class="card-title fw-semibold mb-4">Add Game Categories</h5>
+                        <form action="insert-category" method="get" enctype="multipart/form-data" class="content-area-form">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="inputGameMode" class="form-label">Enter Game Modes</label>
-                                <input type="text" name="game_mode_name" class="form-control" id="inputGameMode" 
-                                    placeholder="Campaign, Open world, Battle Royle etc." required/>
+                                <label for="inputCategory" class="form-label">Enter Game Category</label>
+                                <input type="text" name="game_category_name" class="form-control" id="inputCategory" 
+                                    placeholder="Adventure, Action, Casual etc." required/>
                             </div>
-                            <button type="submit" class="btn btn-primary">add game mode</button>
+                            <button type="submit" class="btn btn-primary">add category</button>
                         </form>  
                     </div>
                 </div>
 
-                <!-- Display Modes -->
+                <!-- Display Gategories -->
                 <div class="card shadow p-3 mb-5 bg-white rounded">
                     <div class="card-body">
-                        <h5 class="card-title fw-semibold mb-4">Game Modes</h5>
+                        <h5 class="card-title fw-semibold mb-4">Game Categories</h5>
                         <div class="row">
                             <div class="grid-box">
-                                {% for mode in game_modes %}
-                                <div class="col-3" id="feature-form">
+                                {% for category in game_category %}
+                                <div class="col-3" id="category-form">
 
-                                    <input type="hidden" value="{{ mode.game_mode_id }}" disabled />
+                                    <input type="hidden" value="{{ category.game_category_id }}" disabled />
 
-                                    <p>{{ mode.game_mode_name }}</p>
+                                    <p>{{ category.game_category_name }}</p>
 
                                     <!-- Delete -->
-                                    <a href="{% url 'delete_game_mode' mode.game_mode_id %}" onclick="return confirm('Are you sure you want to delete this?')">
+                                    <a href="{% url 'delete_game_category' category.game_category_id %}" onclick="return confirm('Are you sure you want to delete this?')">
                                         <span class="delete-btn icon-box">
                                             <ion-icon name="trash-outline" class="icon"></ion-icon>
                                         </span> 

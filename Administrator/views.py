@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,HttpResponse, get_object_or_404
 from django.urls import reverse
 from django.core.paginator import Paginator
 from django.contrib import messages
-
+import json
 from .models import Platform, GameFeatures, GameModes, GameCategory
 from Main.models import Users
 
@@ -148,3 +148,34 @@ def delete_game_mode(request, id):
     return redirect(reverse(view_game_modes))
 
 """ Game Modes CRUD End """
+
+""" Game Category CRUD Start """
+def view_game_category(request):
+    game_category = GameCategory.objects.all()
+    return render(request,'gameCategory/game_category.html',context={'game_category': game_category})
+
+def insert_game_category(request):
+    if request.method == 'GET':
+        game_category  = request.GET.get('game_category_name')
+        
+        try:
+            GameCategory.objects.create( game_category_name = game_category )
+            messages.success(request, "Game Category Added successfully!")
+            return redirect(reverse(view_game_category))
+        except Exception as e:
+            messages.error(request, "Game Category is alreay exists /  insertion failed!")
+            return redirect(reverse(view_game_category))
+    messages.error(request, "Game Category Insertion failed!")
+    return redirect(reverse(view_game_category))
+
+def delete_game_category(request, id):
+    obj = get_object_or_404(GameCategory,game_category_id=id)
+    
+    if request.method == "GET":
+        if obj.delete():
+            messages.success(request,"Game Category deleted successfully!")
+            return redirect(reverse(view_game_category))
+        else:
+            messages.error(request,"Game Category couldn't delete!")
+    return redirect(reverse(view_game_category))
+""" Game Category CRUD End """
