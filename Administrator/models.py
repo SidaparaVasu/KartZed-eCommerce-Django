@@ -18,3 +18,13 @@ class GameModes(models.Model):
 class GameCategory(models.Model):
     game_category_id = models.AutoField(primary_key=True)
     game_category_name = models.CharField(max_length=25, unique=True)
+
+
+class OperatingSystems(models.Model):
+    os_id = models.AutoField(primary_key=True)
+    os_name = models.CharField(max_length=25, unique=True)
+
+class OSVersions(models.Model):
+    version_id = models.AutoField(primary_key=True)
+    os_name = models.ForeignKey(OperatingSystems, on_delete=models.CASCADE)
+    version = models.CharField(max_length=50,unique=True) 

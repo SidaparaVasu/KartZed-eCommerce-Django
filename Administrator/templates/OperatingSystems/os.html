@@ -1,0 +1,94 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Operatig Systems | Admin | Dashboard</title>
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon_logo.png' %}" />
+    <!-- CSS Styling -->
+    <link rel="stylesheet" href="{% static 'css/dashboard-styles.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/root.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/global.css' %}" />
+    <!-- Ion Icon CDN -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags %}
+                <script>alert("{{ message }}")</script> 
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <!--  Body Wrapper -->
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed">
+
+        <!-- Including Sidebar -->
+        {% include 'sidebar-admin.html' %}
+
+        <!--  Main wrapper -->
+        <div class="body-wrapper">
+
+            <!-- Including Header -->
+            {% include 'navbar-admin.html' %}
+
+            <div class="container-fluid">
+                <!-- Category Form -->
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold mb-4">Add Operating Systems</h5>
+                        <form action="insert-category" method="get" enctype="multipart/form-data" class="content-area-form">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="inputCategory" class="form-label">Enter Operating System</label>
+                                <input type="text" name="os_name" class="form-control" id="inputCategory" 
+                                    placeholder="Windows, Mac OS.." required/>
+                            </div>
+                            <button type="submit" class="btn btn-primary">add Operating System</button>
+                        </form>  
+                    </div>
+                </div>
+
+                <!-- Display Gategories -->
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold mb-4">Operting Systems</h5>
+                        <div class="row">
+                            <div class="grid-box">
+                                {% comment %} {% for category in game_category %}
+                                <div class="col-3" id="category-form">
+
+                                    <input type="hidden" value="{{ category.game_category_id }}" disabled />
+
+                                    <p>{{ category.game_category_name }}</p>
+
+                                    <!-- Delete -->
+                                    <a href="{% url 'delete_game_category' category.game_category_id %}" onclick="return confirm('Are you sure you want to delete this?')">
+                                        <span class="delete-btn icon-box">
+                                            <ion-icon name="trash-outline" class="icon"></ion-icon>
+                                        </span> 
+                                    </a>
+                                </div>
+                                {% endfor %} {% endcomment %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/sidebarmenu.js' %}"></script>
+    <script src="{% static 'js/app.min.js' %}"></script>
+    <!-- <script src="{% static 'libs/apexcharts/dist/apexcharts.min.js' %}"></script> -->
+    <script src="{% static 'libs/simplebar/dist/simplebar.js' %}"></script>
+    <!-- <script src="{% static 'js/dashboard.js' %}"></script> -->
+</body>
+</html>

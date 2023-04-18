@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 from django.contrib import messages
 import json
-from .models import Platform, GameFeatures, GameModes, GameCategory
+from .models import Platform, GameFeatures, GameModes, GameCategory, OperatingSystems
 from Main.models import Users
 
 # Create your views here.
@@ -179,3 +179,27 @@ def delete_game_category(request, id):
             messages.error(request,"Game Category couldn't delete!")
     return redirect(reverse(view_game_category))
 """ Game Category CRUD End """
+
+""" Operating System CRUD Starts """
+
+def view_os(request):
+    os = OperatingSystems.objects.all()
+    return render(request,'OperatingSystems/os.html',context={'os': os})
+
+def insert_os(request):
+    if request.method == 'GET':
+        os_name  = request.GET.get('os_name')
+        
+        try:
+            OperatingSystems.objects.create( os_name = os_name )
+            messages.success(request, "Operating System Added successfully!")
+            return redirect(reverse(view_os))
+        except Exception as e:
+            messages.error(request, "Operating System is alreay exists /  insertion failed!")
+            return redirect(reverse(view_os))
+    messages.error(request, "Operating System Insertion failed!")
+    return redirect(reverse(view_os))
+
+def insert_os_version(request):
+    pass
+""" Operating System CRUD End """

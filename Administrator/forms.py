@@ -21,3 +21,13 @@ class GameCategoryForm(forms.ModelForm):
     class Meta:
         model  = GameCategory
         fields = ('game_category_id','game_category_name')
+
+class OperatingSystemsForm(forms.ModelForm):
+    class Meta:
+        model  = OperatingSystems
+        fields = ('os_id','os_name')
+
+class OSVersionForm(forms.ModelForm):
+    class Meta:
+        model  = OSVersion
+        fields = ('version_id','os_id','version')

@@ -29,4 +29,11 @@ urlpatterns = [
    path('category',views.view_game_category,name='view_game_category'),
    path('insert-category',views.insert_game_category,name='insert_game_category'),
    path('delete_game_category<id>', views.delete_game_category, name="delete_game_category"),
+
+   # Game OS & Versions ::
+   path('os',views.view_os,name='view_os'),
+   path('insert-os',views.insert_os,name='insert_os'),
+   path('insert-os-version',views.insert_os_version,name='insert_os_version'),
+
+
 ]
