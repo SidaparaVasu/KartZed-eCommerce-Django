@@ -2,11 +2,11 @@ from django.shortcuts import render,redirect,HttpResponse, get_object_or_404
 from django.urls import reverse
 from django.core.paginator import Paginator
 from django.contrib import messages
-from Administrator.forms import CategoryForm
+from Administrator.forms import PlatformForm
 from Administrator.forms import SubCategoryForm
 
-
-from .models import Category
+from Main.models import Users
+from .models import Platform
 from .models import SubCategory
 
 
@@ -35,12 +35,12 @@ def admin_logout_handle(request):
 
 
 """ 
-    Category CRUD 
+    Platform CRUD 
 """
-def view_category(request):  
-    category = Category.objects.all()
+def view_platform(request):  
+    platform = Platform.objects.all()
     
-    p = Paginator(category, 3)
+    p = Paginator(platform, 3)
     page_number = request.GET.get('page')
     
     try:
@@ -51,72 +51,68 @@ def view_category(request):
     except Paginator.EmptyPage:
         # if page is empty then return last page
         page_obj = p.page(p.num_pages)                   
-    return render(request,'category/category.html', context={"category":page_obj}) # calls category page
+    return render(request,'platform/platform.html', context={"platform":page_obj}) # calls platform page
 
-# insertion of category
-def insert_category(request):
+# insertion of platform
+def insert_platform(request):
     if request.method == 'POST':
         
-        category  = request.POST.get('category')
-        imagepath = ""
+        platform  = request.POST.get('platform')
+        
         # cat_image_path = request.POST.get('cat_image_path')
-        form = CategoryForm(request.POST or None, request.FILES)  
-        if len(request.FILES) != 0:
-            form.image = request.FILES['cat_image_path']
-            imagepath = form.image
-            
+        form = PlatformForm(request.POST or None, request.FILES)  
+        
         try:
-            Category.objects.create(
-                category = category,
-                imagepath = imagepath
+            Platform.objects.create(
+                platform = platform,
             )
-            messages.success(request, "Category Added successfully!")
-            return redirect(reverse(view_category))
+            messages.success(request, "platform Added successfully!")
+            return redirect(reverse(view_platform))
         except Exception as e:
-            messages.error(request, "Category Insertion failed!")
-            return redirect(reverse(view_category))
+            messages.error(request, "platform Insertion failed!")
+            return redirect(reverse(view_platform))
 
-# Update Function Of Category
-def update_category(request, id):
-    context = Category.objects.get(category_id=id)
-    return render(request, "category/update-category.html",{'context' : context})
+# Update Function Of platform
+def update_platform(request, id):
+    context = Platform.objects.get(platform_id=id)
+    return render(request, "platform/update-platform.html",{'context' : context})
 
-def edit_category(request, id):
-    data = Category.objects.get(category_id=id)
-    edited_category  = request.POST.get('category')
+def edit_platform(request, id):
+    data = Platform.objects.get(platform_id=id)
+    edited_platform  = request.POST.get('platform')
     try:
-        data.category = edited_category
+        data.platform = edited_platform
         data.save()
-        messages.success(request, "Category Updated successfully!")
-        return redirect(reverse(view_category))
+        messages.success(request, "platform Updated successfully!")
+        return redirect(reverse(view_platform))
     except Exception as e:
-        messages.success(request, "Category Updation failed!")
-        return redirect(reverse(view_category))  
+        messages.success(request, "platform Updation failed!")
+        return redirect(reverse(view_platform))  
 
-# delete category
-def delete_category(request, id):
+# delete platform
+def delete_platform(request, id):
     
-    obj = get_object_or_404(Category,category_id=id)
+    obj = get_object_or_404(Platform,platform_id=id)
     # return HttpResponse(obj)
     if request.method == "GET":
         if obj.delete():
-            messages.success(request,"Category deleted successfully!")
-            return redirect(reverse(view_category))
+            messages.success(request,"platform deleted successfully!")
+            return redirect(reverse(view_platform))
         else:
-            messages.error(request,"Category couldn't delete!")
-    return redirect(reverse(view_category))
+            messages.error(request,"platform couldn't delete!")
+    return redirect(reverse(view_platform))
 """ 
-    Category CRUD End
+    platform CRUD End
 """
 
 """ 
     Sub Category CRUD 
 """
-def view_subcategory(request):
-    subcategory = SubCategory.objects.all()
-    category = Category.objects.all()        
+def view_users(request):
+    email_id = Users.objects.all()
+            
 
-    p = Paginator(subcategory, 3)
+    p = Paginator(email_id, 3)
     page_number = request.GET.get('page')
     
     try:
@@ -127,7 +123,7 @@ def view_subcategory(request):
     except Paginator.EmptyPage:
         # if page is empty then return last page
         page_obj = p.page(p.num_pages)
-    return render(request,'subcategory/subcategory.html',context={'subcategory':page_obj,'category':category})
+    return render(request,'users/users.html',context={'users':page_obj})
 
 # insertion of subcategory
 def insert_subcategory(request):

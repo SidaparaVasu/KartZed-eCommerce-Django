@@ -1,0 +1,68 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Update Platform | Admin</title>
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon_logo.png' %}" />
+    <!-- CSS Styling -->
+    <link rel="stylesheet" href="{% static 'css/dashboard/styles.min.css' %}" />
+
+    <!-- Ion Icon CDN -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags %}
+                <script>alert("{{ message }}")</script> 
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <!--  Body Wrapper -->
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed">
+
+        <!-- Including Sidebar -->
+        {% include 'sidebar-admin.html' %}
+
+        <!--  Main wrapper -->
+        <div class="body-wrapper">
+
+            <!-- Including Header -->
+            {% include 'navbar-admin.html' %}
+
+            <div class="container-fluid">
+                <!-- platform Form -->
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold mb-4">Update platform</h5>                        
+                        <form action="edit_platform/{{ context.platform_id }}" method="post" enctype="multipart/form-data" class="content-area-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="platform_id" id="id" value="{{ context.platform_id }}" />
+                            <div class="mb-3">
+                                <label for="exampleInputplatform1" class="form-label">Edit platform</label>
+                                <input type="text" name="platform" value="{{ context.platform }}"
+                                    class="form-control" id="exampleInputplatform1" 
+                                    placeholder="Appliances, Electronics, Health etc." required/>
+                            </div>
+                            <button type="submit" class="btn btn-success">Update platform</button>
+                        </form>  
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/sidebarmenu.js' %}"></script>
+    <script src="{% static 'js/app.min.js' %}"></script>
+    <!-- <script src="{% static 'libs/apexcharts/dist/apexcharts.min.js' %}"></script> -->
+    <script src="{% static 'libs/simplebar/dist/simplebar.js' %}"></script>
+    <!-- <script src="{% static 'js/dashboard.js' %}"></script> -->
+</body>
+</html>

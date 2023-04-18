@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Category | Admin | Dashboard</title>
+    <title>Platform | Admin | Dashboard</title>
     <!-- Favicon Icon -->
     <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon_logo.png' %}" />
     <!-- CSS Styling -->
@@ -37,60 +37,50 @@
             {% include 'navbar-admin.html' %}
 
             <div class="container-fluid">
-                <!-- Category Form -->
+                <!-- platform Form -->
                 <div class="card shadow p-3 mb-5 bg-white rounded">
                     <div class="card-body">
-                        <h5 class="card-title fw-semibold mb-4">Add Category</h5>
-                        <form action="insert_category" method="post" enctype="multipart/form-data" class="content-area-form">
+                        <h5 class="card-title fw-semibold mb-4">Add platform</h5>
+                        <form action="insert_platform" method="post" enctype="multipart/form-data" class="content-area-form">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="exampleInputCategory1" class="form-label">Enter Category</label>
-                                <input type="text" name="category" class="form-control" id="exampleInputCategory1" 
-                                    placeholder="Appliances, Electronics, Health etc." required/>
+                                <label for="exampleInputplatform1" class="form-label">Enter platform</label>
+                                <input type="text" name="platform" class="form-control" id="exampleInputplatform1" 
+                                    placeholder="e.g. Windows, Mac OS.." required/>
                             </div>
-                            <div class="mb-3">
-                                <label for="exampleImageFileCategory1" class="form-label">Category Image</label>
-                                <input type="file" name="cat_image_path" class="form-control" id="exampleImageFileCategory1" />
-                                <div id="categoryImageHelp" class="form-text">Image should be JPG or PNG format.</div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">add category</button>
+                           
+                            <button type="submit" class="btn btn-primary">add platform</button>
                         </form>  
                     </div>
                 </div>
 
-                <!-- Display Category -->
+                <!-- Display platform -->
                 <div class="card shadow p-3 mb-5 bg-white rounded">
                     <div class="card-body">
-                        <h5 class="card-title fw-semibold mb-4">View Category</h5>
+                        <h5 class="card-title fw-semibold mb-4">View platform</h5>
                         <div class="row">
                             <div class="white-box">
                                 <table class="show-data-box">
                                     <thead>
                                         <th>sr no.</th>
-                                        <th>image</th>
-                                        <th>category</th>
+                                        <th>platform</th>
                                         <th>edit</th>
                                         <th>delete</th>
                                     </thead>
                                     <tbody>
-                                        {% for data in category %}
+                                        {% for data in platform %}
                                         <tr>
                                             <td>{{ forloop.counter }}</td>
-                                            {% if data.imagepath %}
-                                                <td class="img-size"><img src="{{ data.imagepath.url }}" alt="" class="table-img"/></td>
-                                            {% else %}
-                                                <td>defaultimg</td>
-                                            {% endif %}
-                                            <td>{{ data.category }}</td>
+                                            <td>{{ data.platform }}</td>
                                             <td>
-                                                <a href="{% url 'update_category' data.category_id %}">
+                                                <a href="{% url 'update_platform' data.platform_id %}">
                                                     <span class="icon-box gr-icon">
                                                         <ion-icon name="create-outline" class="icon"></ion-icon>
                                                     </span> 
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="{% url 'delete_category' data.category_id %}" onclick="return confirm('Are you sure you want to delete this?')">
+                                                <a href="{% url 'delete_platform' data.platform_id %}" onclick="return confirm('Are you sure you want to delete this?')">
                                                     <span class="icon-box rd-icon">
                                                         <ion-icon name="trash-outline" class="icon"></ion-icon>
                                                     </span>
@@ -103,18 +93,18 @@
                                     </tbody>
                                 </table>
                                 <div class="pagination">
-                                    {%if category.has_previous %} {# whether the previous page exists #}
-                                        <a href="?page={{category.previous_page_number}}" class="pagination-btn">prev</a> {# link to the prev page #}
+                                    {%if platform.has_previous %} {# whether the previous page exists #}
+                                        <a href="?page={{platform.previous_page_number}}" class="pagination-btn">prev</a> {# link to the prev page #}
                                     {% endif %}
                     
-                                    {% if category.number == 1 %}
+                                    {% if platform.number == 1 %}
                                         <p></p>
                                     {% else %}
-                                        <span>page: {{category.number}}</span> {# the current page number #}
+                                        <span>page: {{platform.number}}</span> {# the current page number #}
                                     {% endif %}
                                     
-                                    {%if category.has_next %} {# whether the next page exists #}
-                                        <a href="?page={{category.next_page_number}}" class="pagination-btn">next</a> {# link to the next page #}
+                                    {%if platform.has_next %} {# whether the next page exists #}
+                                        <a href="?page={{platform.next_page_number}}" class="pagination-btn">next</a> {# link to the next page #}
                                     {% endif %}
                                 </div>
                             </div>

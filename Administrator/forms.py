@@ -1,10 +1,10 @@
 from django import forms
 from Administrator.models import *
 
-class CategoryForm(forms.ModelForm):
+class PlatformForm(forms.ModelForm):
     class Meta:
-        model  = Category
-        fields = ('category','imagepath')
+        model  = Platform
+        fields = ('platform',)
 
 class SubCategoryForm(forms.ModelForm):
     class Meta:
