@@ -1,12 +1,18 @@
 from django import forms
 from Administrator.models import *
 
-class CategoryForm(forms.ModelForm):
+       
+class GameFeaturesForm(forms.ModelForm):
     class Meta:
-        model  = Category
-        fields = ('category','imagepath')
-
-class SubCategoryForm(forms.ModelForm):
+        model  = GameFeatures
+        fields = ('game_feature_id','game_feature_name')
+        
+class GameModesForm(forms.ModelForm):
     class Meta:
-        model  = SubCategory
-        fields = ('subCategory','imagepath','category')
+        model  = GameModes
+        fields = ('game_mode_id','game_mode_name')
+        
+class GameCategoryForm(forms.ModelForm):
+    class Meta:
+        model  = GameCategory
+        fields = ('game_category_id','game_category_name')

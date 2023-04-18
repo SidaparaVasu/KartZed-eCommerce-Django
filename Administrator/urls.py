@@ -7,19 +7,13 @@ urlpatterns = [
    path('dashboard',views.index_admin,name='index_admin'),
    path('admin_logout_handle',views.admin_logout_handle,name='admin_logout_handle'),
    
-   # Category ::
-   path('category',views.view_category,name='view_category'),
-   path('insert_category',views.insert_category,name='insert_category'),
-   path('update_category<id>',views.update_category,name='update_category'),
-   path('edit_category/<id>',views.edit_category,name='edit_category'),
-   path('delete_category<id>', views.delete_category, name="delete_category"),
+   # Game Features ::
+   path('game_features',views.view_game_features,name='view_game_features'),
+   path('insert_game_feature',views.insert_game_feature,name='insert_game_feature'),
+   path('delete_game_feature<id>', views.delete_game_feature, name="delete_game_feature"),
 
-   # Sub-Category ::
-   path('subcategory',views.view_subcategory,name='view_subcategory'),
-   path('insert_subcategory',views.insert_subcategory,name='insert_sub_category'),
-   path('update_subcategory<id>',views.update_subcategory,name='update_subcategory'),
-   path('edit_subcategory/<id>',views.edit_subcategory,name='edit_subcategory'),
-   path('delete_subcategory<id>', views.delete_subcategory, name="delete_subcategory"),
-
-
+   # Game Modes ::
+   path('game_modes',views.view_game_modes,name='view_game_modes'),
+   path('insert_game_mode',views.insert_game_mode,name='insert_game_mode'),
+   path('delete_game_mode<id>', views.delete_game_mode, name="delete_game_mode"),
 ]
