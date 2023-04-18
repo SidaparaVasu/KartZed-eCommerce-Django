@@ -15,6 +15,7 @@
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
             <ul id="sidebarnav">
+                <!-- Home -->
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">Home</span>
@@ -27,6 +28,7 @@
                         <span class="hide-menu">Dashboard</span>
                     </a>
                 </li>
+
                 <!-- Users -->
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
@@ -40,6 +42,7 @@
                         <span class="hide-menu">View Users</span>
                     </a>
                 </li>
+
                 <!-- Platform  -->
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
@@ -51,6 +54,45 @@
                             <i class="ti ti-article"></i>
                         </span>
                         <span class="hide-menu">View Platform</span>
+                    </a>
+                </li>
+                <!-- Game Features  -->
+                <li class="nav-small-cap">
+                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                    <span class="hide-menu">Game Features</span>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{% url 'view_game_features' %}" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-article"></i>
+                        </span>
+                        <span class="hide-menu">View Game Features</span>
+                    </a>
+                </li>
+                <!-- Game Modes  -->
+                <li class="nav-small-cap">
+                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                    <span class="hide-menu">Game Modes</span>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{% url 'view_game_modes' %}" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-article"></i>
+                        </span>
+                        <span class="hide-menu">View Game Modes</span>
+                    </a>
+                </li>
+                <!-- Game Category  -->
+                <li class="nav-small-cap">
+                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                    <span class="hide-menu">Game Categories</span>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{% url 'view_game_category' %}" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-article"></i>
+                        </span>
+                        <span class="hide-menu">View Game Categories</span>
                     </a>
                 </li>
 

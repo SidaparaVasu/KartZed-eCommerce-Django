@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Platform | Admin | Dashboard</title>
+    <title>Game Features | Admin | Dashboard</title>
     <!-- Favicon Icon -->
     <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon_logo.png' %}" />
     <!-- CSS Styling -->
@@ -37,38 +37,37 @@
             {% include 'navbar-admin.html' %}
 
             <div class="container-fluid">
-                <!-- platform Form -->
+                <!-- Feature Form -->
                 <div class="card shadow p-3 mb-5 bg-white rounded">
                     <div class="card-body">
-                        <h5 class="card-title fw-semibold mb-4">Add platform</h5>
-                        <form action="insert-platform" method="get" enctype="multipart/form-data" class="content-area-form">
+                        <h5 class="card-title fw-semibold mb-4">Add Game Features</h5>
+                        <form action="insert-feature" method="get" enctype="multipart/form-data" class="content-area-form">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="exampleInputplatform1" class="form-label">Enter platform</label>
-                                <input type="text" name="platform_name" class="form-control" id="exampleInputplatform1" 
-                                    placeholder="e.g. Windows, Mac OS.." required/>
+                                <label for="inputFeature" class="form-label">Enter Game Feature</label>
+                                <input type="text" name="game_feature_name" class="form-control" id="inputFeature" 
+                                    placeholder="SinglePlayer, Co-op, CrossPlatformPlay etc." required/>
                             </div>
-                           
-                            <button type="submit" class="btn btn-primary">add platform</button>
+                            <button type="submit" class="btn btn-primary">add feature</button>
                         </form>  
                     </div>
                 </div>
 
-                <!-- Display platform -->
+                <!-- Display Features -->
                 <div class="card shadow p-3 mb-5 bg-white rounded">
                     <div class="card-body">
-                        <h5 class="card-title fw-semibold mb-4">Game Modes</h5>
+                        <h5 class="card-title fw-semibold mb-4">Game Features</h5>
                         <div class="row">
                             <div class="grid-box">
-                                {% for platform in platforms %}
+                                {% for feature in features %}
                                 <div class="col-3" id="feature-form">
 
-                                    <input type="hidden" value="{{ platform.platform_id }}" disabled />
+                                    <input type="hidden" value="{{ feature.game_feature_id }}" disabled />
 
-                                    <p>{{ platform.platform_name }}</p>
+                                    <p>{{ feature.game_feature_name }}</p>
 
                                     <!-- Delete -->
-                                    <a href="{% url 'delete_platform' platform.platform_id %}" onclick="return confirm('Are you sure you want to delete this?')">
+                                    <a href="{% url 'delete_game_feature' feature.game_feature_id %}" onclick="return confirm('Are you sure you want to delete this?')">
                                         <span class="delete-btn icon-box">
                                             <ion-icon name="trash-outline" class="icon"></ion-icon>
                                         </span> 
@@ -79,11 +78,11 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
+
+    
     <script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script>
     <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/sidebarmenu.js' %}"></script>
