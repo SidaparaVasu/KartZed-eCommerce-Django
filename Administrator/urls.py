@@ -5,6 +5,7 @@ from Administrator import views
 urlpatterns = [
    path('',views.auth_admin, name='auth_admin'),
    path('dashboard',views.index_admin,name='index_admin'),
+   path('admin_login', views.admin_login, name="admin_login"),
    path('admin_logout_handle',views.admin_logout_handle,name='admin_logout_handle'),
    
    # Users ::

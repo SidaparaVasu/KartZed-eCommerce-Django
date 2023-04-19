@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.db.models import Count
 from django.core.paginator import Paginator
 from django.contrib import messages
+from django.contrib.auth.hashers import make_password, check_password
 from .models import Platform, GameFeatures, GameModes, GameCategory, OperatingSystems, OSVersions
 from Main.models import Users
 
@@ -12,6 +13,54 @@ def index_admin(request):
 
 def auth_admin(request):
     return render(request,'authentication-login.html')
+
+def admin_login(request):
+    if request.method == "POST":    
+        form = Users(request.POST)
+        email = request.POST.get("email_id")
+        password = request.POST.get("password")
+
+        encrypted_pass = make_password(password)
+        row_counter = Users.objects.filter(user_type="is_admin").count()
+        
+        if row_counter == 0:
+            form = Users(
+                        first_name = "",
+                        last_name = "",
+                        gender = "",
+                        email_id = "admin@gmail.com",
+                        password = encrypted_pass,
+                        phone_number = '',
+                        is_phone_verified = "False",
+                        otp = "null",
+                        user_type = "is_admin"
+            )
+            form.save()
+            messages.success(request, "please login again!")
+            return redirect(reverse('auth_admin'))
+        else:
+            flag = 0
+            try:
+                admin_data = Users.objects.filter(user_type = "is_admin")
+                
+                for i in range(len(admin_data)):
+                    if admin_data[i].email_id == email:
+                        is_password_match = check_password(password, admin_data[i].password)
+                        # return HttpResponse(is_password_match)
+                        if is_password_match == True:
+                            return redirect(reverse('index_admin'))
+                        else:
+                            messages.error(request, "Password is incorrect!")
+                            return redirect(reverse('auth_admin'))
+                    else:
+                        flag = 1
+                if flag == 1:
+                    messages.error(request, "Invalid Credentials, try again!")
+                    return redirect(reverse('auth_admin'))
+            except Exception as e:
+                messages.error(request, "An error occured, try again later!")
+                return redirect(reverse('auth_admin'))
+    return redirect(reverse('auth_admin'))
 
 
 def admin_logout_handle(request):
