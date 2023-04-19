@@ -29,7 +29,7 @@ def admin_login(request):
                         last_name = "",
                         gender = "",
                         email_id = "admin@gmail.com",
-                        password = encrypted_pass,
+                        password = make_password('12345'),
                         phone_number = '',
                         is_phone_verified = "False",
                         otp = "null",
