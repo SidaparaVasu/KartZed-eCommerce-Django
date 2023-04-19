@@ -81,7 +81,7 @@ def admin_logout_handle(request):
 
 """ USER """
 def view_users(request):
-    email_id = Users.objects.all()
+    email_id = Users.objects.filter(user_type = "is_user")
 
     p = Paginator(email_id, 3)
     page_number = request.GET.get('page')
