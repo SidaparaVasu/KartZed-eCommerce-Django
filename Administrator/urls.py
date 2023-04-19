@@ -1,12 +1,14 @@
 from django.urls import path, include
 from Administrator import views
+from Authapp import urls
+from Authapp.views import render_admin_login_page, admin_login, admin_logout_handle
 
 #
 urlpatterns = [
-   path('',views.auth_admin, name='auth_admin'),
+   path('', render_admin_login_page, name='render_admin_login_page'),
    path('dashboard',views.index_admin,name='index_admin'),
-   path('admin_login', views.admin_login, name="admin_login"),
-   path('admin_logout_handle',views.admin_logout_handle,name='admin_logout_handle'),
+   path('admin_login', admin_login, name="admin_login"),
+   path('admin_logout_handle',admin_logout_handle,name='admin_logout_handle'),
    
    # Users ::
    path('users',views.view_users,name='view_users'),

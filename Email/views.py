@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse
 from django.conf import settings
 from django.core.mail import send_mail
 import random
-from Main.models import Users # Users model
+from Authapp.models import Customers # Users model
 
 # Create your views here.
 class Email():
@@ -20,7 +20,7 @@ class Email():
         # return HttpResponse(email)      
         try:
             """ Updating OTP value with new generated OTP """            
-            Users.objects.filter(email_id=email).update(otp=str(otp))
+            Customers.objects.filter(cust_email=email).update(otp=str(otp))
             
             subject = "Login in KartZed"
             message = f"Your OTP for authentication is: {otp}"
@@ -30,5 +30,5 @@ class Email():
                 return f"OTP has been successfully sent on {email}."
             else:
                 return f"An error occurred while sending the OTP on {email}. Please check your email address and try again later!"
-        except Users.DoesNotExist:
+        except Customers.DoesNotExist:
             return f"No user found with email {email}."

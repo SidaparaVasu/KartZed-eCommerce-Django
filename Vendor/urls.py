@@ -1,7 +1,6 @@
 from django.urls import path, include
 from Vendor import views
 from .forms import registervendor
-from Administrator.views import auth_admin
 
 
 

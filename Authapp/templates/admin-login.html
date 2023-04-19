@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login | KartZed</title>
+  <title>Admin Login | KartZed</title>
   <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon_logo.png' %}" />
   <link rel="stylesheet" href="{% static 'css/dashboard-styles.css' %}" />
 </head>
@@ -37,11 +37,11 @@
                   {% csrf_token %}
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email</label>
-                    <input type="email" name="email_id" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="email" name="admin_email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
                   <div class="mb-4">
                     <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+                    <input type="password" name="admin_password" class="form-control" id="exampleInputPassword1">
                   </div>
                   <div class="d-flex align-items-center justify-content-between mb-4">
                     <div class="form-check">
