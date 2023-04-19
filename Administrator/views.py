@@ -4,7 +4,7 @@ from django.db.models import Count
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
-from .models import Platform, GameFeatures, GameModes, GameCategory, OperatingSystems, OSVersions
+from .models import Platform, GameFeatures, GameModes, GameCategory, OperatingSystems, OSVersions, Processors, VideoCards, VCVersions
 from Main.models import Users
 
 # Create your views here.
@@ -282,3 +282,95 @@ def insert_os_version(request):
             return redirect(reverse(view_os))
     return redirect(reverse(view_os))
 """ Operating System CRUD End """
+
+
+""" Processors CRUD Start """
+
+def view_processor(request):
+    processor = Processors.objects.all()
+    return render(request,'Processors/processors.html',context ={'processor':processor})
+
+def insert_processor(request):
+    if request.method == 'GET':
+        processor_name  = request.GET.get('processor_name')
+        
+        try:
+            Processors.objects.create( processor_name = processor_name )
+            messages.success(request, "Processor Added successfully!")
+            return redirect(reverse(view_processor))
+        except Exception as e:
+            messages.error(request, "Processor is alreay exists /  insertion failed!")
+            return redirect(reverse(view_processor))
+    messages.error(request, "Processor Insertion failed!")
+    return redirect(reverse(view_processor))
+
+def delete_processor(request,id):
+    obj = get_object_or_404(Processors,processor_id=id)
+    
+    if request.method == "GET":
+        if obj.delete():
+            messages.success(request,"Processor deleted successfully!")
+            return redirect(reverse(view_processor))
+        else:
+            messages.error(request,"Processor couldn't delete!")
+    return redirect(reverse(view_processor))
+
+""" Processors CRUD End """
+
+""" VideoCards CRUD Start """
+
+def view_vc(request):
+    vc_data = VideoCards.objects.all()
+    versions_data = VCVersions.objects.all().select_related('vc_name')
+    # print(versions_data)
+    
+    categorized_version_data = {}
+    for vc in vc_data:
+        vc_name = vc.vc_name
+        versions_for_vc = versions_data.filter(vc_name_id = vc.vc_id)
+        categorized_version_data[vc_name] = [v['vc_version_name'] for v in list(list(versions_for_vc.values()))]
+        
+
+    for key, value in categorized_version_data.items():
+        print(key, " => ", value)
+    print(categorized_version_data)
+
+    return render(request,'VideoCards/videocards.html', context={'vc_data': vc_data, 'categorized_version_data': categorized_version_data})
+    #return render(request,'VideoCards/videocards.html',context={'vc_data':vc_data})
+
+def insert_vc(request):
+    if request.method == 'GET':
+        vc_name  = request.GET.get('vc_name')
+        
+        try:
+            VideoCards.objects.create( vc_name = vc_name )
+            messages.success(request, "Video Card Added successfully!")
+            return redirect(reverse(view_vc))
+        except Exception as e:
+            messages.error(request, "Video Card is alreay exists /  insertion failed!")
+            return redirect(reverse(view_vc))
+    messages.error(request, "Video Card Insertion failed!")
+    return redirect(reverse(view_vc))
+
+def insert_vc_version(request):
+    if request.method == 'GET':
+        vc_id  = request.GET.get('vc_name')
+        version_name  = request.GET.get('vc_version')
+        
+        vc_data = VideoCards.objects.get(vc_id = vc_id)
+        # return HttpResponse(vc_data.vc_name)
+        
+        try:
+            VCVersions.objects.create(
+                vc_name = vc_data,
+                vc_version_name = version_name
+            )
+            messages.success(request, "VC Version Added!")
+            return redirect(reverse(view_vc))
+        except Exception as e:
+            messages.error(request, "An error occured! try again!")
+            return redirect(reverse(view_vc))
+            #return HttpResponse(e)
+    return redirect(reverse(view_vc))
+
+""" VideoCards CRUD End """

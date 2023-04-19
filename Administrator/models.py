@@ -28,3 +28,17 @@ class OSVersions(models.Model):
     version_id = models.AutoField(primary_key=True)
     os_name = models.ForeignKey(OperatingSystems, on_delete=models.CASCADE)
     version = models.CharField(max_length=50,unique=True) 
+
+class Processors(models.Model):
+    processor_id = models.AutoField(primary_key=True)
+    processor_name = models.CharField(max_length=50,unique=True)
+
+class VideoCards(models.Model):
+    vc_id = models.AutoField(primary_key=True)
+    vc_name = models.CharField(max_length=50,unique=True)
+
+class VCVersions(models.Model):
+    vc_version_id = models.AutoField(primary_key=True)
+    vc_name = models.ForeignKey(VideoCards, on_delete=models.CASCADE) 
+    vc_version_name = models.CharField(max_length=50,unique=True)
+    

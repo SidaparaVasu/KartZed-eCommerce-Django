@@ -1,0 +1,144 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Operatig Systems | Admin | Dashboard</title>
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon_logo.png' %}" />
+    <!-- CSS Styling -->
+    <link rel="stylesheet" href="{% static 'css/dashboard-styles.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/root.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/global.css' %}" />
+    <!-- Ion Icon CDN -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<style>
+    .grid-3{
+        width: 100%;
+        display: grid;
+        grid-template-columns: 30% 30% 30%;
+    }
+    .grid-3 > .grid-items{
+        text-align: center;
+    }
+    .grid-3 > .grid-items > h5{
+        padding: 4px;
+        background-color: #eee;
+    }
+    .grid-3 > .grid-items > .item-value{
+        background-color: white;
+    }
+    .grid-3 > .grid-items > .item-value > p{
+        padding: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 2px solid #eee;
+    }
+</style>
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags %}
+                <script>alert("{{ message }}")</script> 
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <!--  Body Wrapper -->
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed">
+
+        <!-- Including Sidebar -->
+        {% include 'sidebar-admin.html' %}
+        
+        <!--  Main wrapper -->
+        <div class="body-wrapper">
+            
+            <!-- Including Header -->
+            {% include 'navbar-admin.html' %}
+            
+            <div class="container-fluid">
+                <!-- Display users -->
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold mb-4">View VC & Versions</h5>
+                        <div class="row">
+                            <div class="grid-3">
+                                {% for vc in vc_data %}
+                                    <div class="grid-items">
+                                        <h5>{{ vc.vc_name }}</h5>
+                                        <div class="item-value">
+                                        {% for keys, values in categorized_version_data.items %}
+                                            {% if keys == vc.vc_name %}
+                                                {% for val in values %}
+                                                    <p>{{ val }}</p>
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VideoCards Form -->
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold mb-4">Add Video Cards</h5>
+                        <form action="insert-vc" method="get" enctype="multipart/form-data" class="content-area-form">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="inputOs" class="form-label">Enter VideoCard</label>
+                                <input type="text" name="vc_name" class="form-control" id="inputOs" 
+                                    placeholder="Intel, NVIDIA, etc." required/>
+                            </div>
+                            <button type="submit" class="btn btn-primary">add videocard</button>
+                        </form>  
+                    </div>
+                </div>
+
+                <!-- VC Version Form -->
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold mb-4">Add VC Version</h5>
+                        <form action="insert-vc-version" method="get" enctype="multipart/form-data" class="content-area-form">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="os-dropdown" class="form-label">Select VideoCard</label>
+                                <select name="vc_name" class="form-control" id="os-dropdown">
+                                    <option value="disabeld" selected disabled>-- select operating system --</option>
+                                    {% for vc in vc_data %}
+                                        <option value="{{ vc.vc_id }}">{{ vc.vc_name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <br/>
+                                <label for="inputOS" class="form-label">Enter VC Version</label>
+                                <input type="text" name="vc_version" class="form-control" id="inputOs" 
+                                    placeholder="Intel HD 4000, GeForce GT 710, etc." required/>
+                            </div>
+                            <button type="submit" class="btn btn-primary">add VC Version</button>
+                        </form>  
+                    </div>
+                </div>
+
+                <!-- Display Gategories -->
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/sidebarmenu.js' %}"></script>
+    <script src="{% static 'js/app.min.js' %}"></script>
+    <!-- <script src="{% static 'libs/apexcharts/dist/apexcharts.min.js' %}"></script> -->
+    <script src="{% static 'libs/simplebar/dist/simplebar.js' %}"></script>
+    <!-- <script src="{% static 'js/dashboard.js' %}"></script> -->
+</body>
+</html>

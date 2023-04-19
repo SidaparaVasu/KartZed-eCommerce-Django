@@ -30,4 +30,19 @@ class OperatingSystemsForm(forms.ModelForm):
 class OSVersionForm(forms.ModelForm):
     class Meta:
         model  = OSVersion
-        fields = ('version_id','os_id','version')
+        fields = ('version_id','os_name','version')
+
+class ProcessorForm(forms.ModelForm):
+    class Meta:
+        model  = Processors
+        fields = ('processor_id','processor_name')
+
+class VideoCardsForm(forms.ModelForm):
+    class Meta:
+        model  = VideoCards
+        fields = ('vc_id','vc_name')
+
+class VCVersionsForm(forms.ModelForm):
+    class Meta:
+        model  = VCVersions
+        fields = ('vc_version_id','vc_name','vc_version_name')

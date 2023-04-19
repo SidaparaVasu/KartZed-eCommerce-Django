@@ -36,5 +36,14 @@ urlpatterns = [
    path('insert-os',views.insert_os,name='insert_os'),
    path('insert-os-version',views.insert_os_version,name='insert_os_version'),
 
+   # Processors ::
+   path('processor',views.view_processor,name='view_processor'),
+   path('insert-processor',views.insert_processor,name='insert_processor'),
+   path('delete_processor<id>',views.delete_processor,name='delete_processor'),
+
+   # VideoCards ::
+   path('vc',views.view_vc,name='view_vc'),
+   path('insert-vc',views.insert_vc,name='insert_vc'),
+   path('insert-vc-version',views.insert_vc_version,name='insert_vc_version'),
 
 ]
