@@ -1,89 +1,19 @@
 from django.shortcuts import render,redirect,HttpResponse, get_object_or_404
 from django.urls import reverse
-from django.db.models import Count
 from django.core.paginator import Paginator
 from django.contrib import messages
-from django.contrib.auth.hashers import make_password, check_password
-from .models import Platform, GameFeatures, GameModes, GameCategory, OperatingSystems, OSVersions, Processors, VideoCards, VCVersions
-from Main.models import Users
+from .models import Platform, GameFeatures, GameModes, GameCategory, OperatingSystems, OSVersions
+from Authapp.models import Customers
 
 # Create your views here.
 def index_admin(request):
     return render(request,'index-admin.html')
 
-def auth_admin(request):
-    return render(request,'authentication-login.html')
-
-def admin_login(request):
-    if request.method == "POST":    
-        form = Users(request.POST)
-        email = request.POST.get("email_id")
-        password = request.POST.get("password")
-
-        encrypted_pass = make_password(password)
-        row_counter = Users.objects.filter(user_type="is_admin").count()
-        
-        if row_counter == 0:
-            form = Users(
-                        first_name = "",
-                        last_name = "",
-                        gender = "",
-                        email_id = "admin@gmail.com",
-                        password = encrypted_pass,
-                        phone_number = '',
-                        is_phone_verified = "False",
-                        otp = "null",
-                        user_type = "is_admin"
-            )
-            form.save()
-            messages.success(request, "please login again!")
-            return redirect(reverse('auth_admin'))
-        else:
-            flag = 0
-            try:
-                admin_data = Users.objects.filter(user_type = "is_admin")
-                
-                for i in range(len(admin_data)):
-                    if admin_data[i].email_id == email:
-                        is_password_match = check_password(password, admin_data[i].password)
-                        # return HttpResponse(is_password_match)
-                        if is_password_match == True:
-                            return redirect(reverse('index_admin'))
-                        else:
-                            messages.error(request, "Password is incorrect!")
-                            return redirect(reverse('auth_admin'))
-                    else:
-                        flag = 1
-                if flag == 1:
-                    messages.error(request, "Invalid Credentials, try again!")
-                    return redirect(reverse('auth_admin'))
-            except Exception as e:
-                messages.error(request, "An error occured, try again later!")
-                return redirect(reverse('auth_admin'))
-    return redirect(reverse('auth_admin'))
-
-
-def admin_logout_handle(request):
-    try:
-        del request.session['first_name']
-        del request.session['last_name']
-        del request.session['gender']
-        del request.session['email_id']
-        del request.session['phone_number']
-        del request.session['is_phone_verified']
-        del request.session['user_type']
-        del request.session['is_session']
-    except KeyError:
-        pass
-    messages.success(request, "You are Logged out!")
-    return redirect(reverse('auth_admin'))
-
-
 """ USER """
-def view_users(request):
-    email_id = Users.objects.all()
+def view_customers(request):
+    customers = Customers.objects.all()
 
-    p = Paginator(email_id, 3)
+    p = Paginator(customers, 10)
     page_number = request.GET.get('page')
     
     try:
@@ -94,7 +24,7 @@ def view_users(request):
     except Paginator.EmptyPage:
         # if page is empty then return last page
         page_obj = p.page(p.num_pages)
-    return render(request,'users/users.html',context={'users':page_obj})
+    return render(request,'customers/customers.html',context={'customers':page_obj})
 
 
 """ Platform CRUD Start """
@@ -282,95 +212,3 @@ def insert_os_version(request):
             return redirect(reverse(view_os))
     return redirect(reverse(view_os))
 """ Operating System CRUD End """
-
-
-""" Processors CRUD Start """
-
-def view_processor(request):
-    processor = Processors.objects.all()
-    return render(request,'Processors/processors.html',context ={'processor':processor})
-
-def insert_processor(request):
-    if request.method == 'GET':
-        processor_name  = request.GET.get('processor_name')
-        
-        try:
-            Processors.objects.create( processor_name = processor_name )
-            messages.success(request, "Processor Added successfully!")
-            return redirect(reverse(view_processor))
-        except Exception as e:
-            messages.error(request, "Processor is alreay exists /  insertion failed!")
-            return redirect(reverse(view_processor))
-    messages.error(request, "Processor Insertion failed!")
-    return redirect(reverse(view_processor))
-
-def delete_processor(request,id):
-    obj = get_object_or_404(Processors,processor_id=id)
-    
-    if request.method == "GET":
-        if obj.delete():
-            messages.success(request,"Processor deleted successfully!")
-            return redirect(reverse(view_processor))
-        else:
-            messages.error(request,"Processor couldn't delete!")
-    return redirect(reverse(view_processor))
-
-""" Processors CRUD End """
-
-""" VideoCards CRUD Start """
-
-def view_vc(request):
-    vc_data = VideoCards.objects.all()
-    versions_data = VCVersions.objects.all().select_related('vc_name')
-    # print(versions_data)
-    
-    categorized_version_data = {}
-    for vc in vc_data:
-        vc_name = vc.vc_name
-        versions_for_vc = versions_data.filter(vc_name_id = vc.vc_id)
-        categorized_version_data[vc_name] = [v['vc_version_name'] for v in list(list(versions_for_vc.values()))]
-        
-
-    for key, value in categorized_version_data.items():
-        print(key, " => ", value)
-    print(categorized_version_data)
-
-    return render(request,'VideoCards/videocards.html', context={'vc_data': vc_data, 'categorized_version_data': categorized_version_data})
-    #return render(request,'VideoCards/videocards.html',context={'vc_data':vc_data})
-
-def insert_vc(request):
-    if request.method == 'GET':
-        vc_name  = request.GET.get('vc_name')
-        
-        try:
-            VideoCards.objects.create( vc_name = vc_name )
-            messages.success(request, "Video Card Added successfully!")
-            return redirect(reverse(view_vc))
-        except Exception as e:
-            messages.error(request, "Video Card is alreay exists /  insertion failed!")
-            return redirect(reverse(view_vc))
-    messages.error(request, "Video Card Insertion failed!")
-    return redirect(reverse(view_vc))
-
-def insert_vc_version(request):
-    if request.method == 'GET':
-        vc_id  = request.GET.get('vc_name')
-        version_name  = request.GET.get('vc_version')
-        
-        vc_data = VideoCards.objects.get(vc_id = vc_id)
-        # return HttpResponse(vc_data.vc_name)
-        
-        try:
-            VCVersions.objects.create(
-                vc_name = vc_data,
-                vc_version_name = version_name
-            )
-            messages.success(request, "VC Version Added!")
-            return redirect(reverse(view_vc))
-        except Exception as e:
-            messages.error(request, "An error occured! try again!")
-            return redirect(reverse(view_vc))
-            #return HttpResponse(e)
-    return redirect(reverse(view_vc))
-
-""" VideoCards CRUD End """

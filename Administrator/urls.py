@@ -11,7 +11,7 @@ urlpatterns = [
    path('admin_logout_handle',admin_logout_handle,name='admin_logout_handle'),
    
    # Users ::
-   path('users',views.view_users,name='view_users'),
+   path('customers',views.view_customers,name='view_customers'),
    
    # Platform ::
    path('platform',views.view_platform,name='view_platform'),
