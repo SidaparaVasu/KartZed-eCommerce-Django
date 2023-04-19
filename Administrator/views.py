@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 from django.contrib import messages
 from .models import Platform, GameFeatures, GameModes, GameCategory, OperatingSystems, OSVersions
-from Main.models import Users
+from Authapp.models import Customers
 
 # Create your views here.
 def index_admin(request):
@@ -11,9 +11,9 @@ def index_admin(request):
 
 """ USER """
 def view_users(request):
-    email_id = Users.objects.filter(user_type = "is_user")
+    customers = Customers.objects.all()
 
-    p = Paginator(email_id, 3)
+    p = Paginator(customers, 10)
     page_number = request.GET.get('page')
     
     try:
@@ -24,7 +24,7 @@ def view_users(request):
     except Paginator.EmptyPage:
         # if page is empty then return last page
         page_obj = p.page(p.num_pages)
-    return render(request,'users/users.html',context={'users':page_obj})
+    return render(request,'customers/customers.html',context={'customers':page_obj})
 
 
 """ Platform CRUD Start """
