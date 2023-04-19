@@ -23,9 +23,9 @@
     </div>
     <div class="right-nav">
         {% if request.session.is_session %}
-            <a href="{% url 'logout_handle' %}">Logout</a>
+            <a href="{% url 'customer_logout_handle' %}">Logout</a>
         {% else %}
-            <a href="{% url 'render_login_page' %}">Login</a>
+            <a href="{% url 'render_customer_login_page' %}">Login</a>
         {% endif %}
         <a href="#" class="cart-btn">
             Cart

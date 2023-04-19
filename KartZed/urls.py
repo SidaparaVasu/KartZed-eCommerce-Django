@@ -22,6 +22,9 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     
+    # Importing URLs of 'Authapp' application
+    path('auth/', include('Authapp.urls')),
+    
     # Importing URLs of 'Administrator' application
     path('administrator/', include('Administrator.urls')),
     

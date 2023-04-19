@@ -5,19 +5,20 @@ Main - application URLs
 
 from . import views
 from django.urls import path, include
+from Authapp.views import render_customer_login_page, customer_login, customer_login_handle, customer_logout_handle, update_customer_profile
 
 urlpatterns = [
     path('', views.indexPage, name="indexPage"),
-    path('login', views.render_login_page, name="render_login_page"),
+    path('login', render_customer_login_page, name="render_customer_login_page"),
     path('account', views.render_account_page, name="render_account_page"),
     
     
     # Authentication
-    path('user_login', views.user_login, name="user_login"),
-    path('login_handle', views.login_handle, name="login_handle"),
-    path('logout_handle', views.logout_handle, name="logout_handle"),
+    path('customer_login', customer_login, name="customer_login"),
+    path('customer_login_handle', customer_login_handle, name="customer_login_handle"),
+    path('customer_logout_handle', customer_logout_handle, name="customer_logout_handle"),
     
     # Update User profile
-    path('update_user_profile', views.update_user_profile, name="update_user_profile"),
+    path('update_customer_profile', update_customer_profile, name="update_customer_profile"),
     
 ]
