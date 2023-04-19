@@ -5,7 +5,7 @@ from django.contrib import messages
 from os import *
 
 from Email.views import Email
-from .models import Users # Users model
+#from .models import Users # Users model
 
 
 # Create your views here.
