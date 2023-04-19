@@ -10,7 +10,7 @@ def index_admin(request):
     return render(request,'index-admin.html')
 
 """ USER """
-def view_users(request):
+def view_customers(request):
     customers = Customers.objects.all()
 
     p = Paginator(customers, 10)
