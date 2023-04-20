@@ -3,17 +3,15 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
 from os import *
+from Vendor.models import *
 
 from Email.views import Email
-<<<<<<< HEAD
-#from .models import Users # Users model
-=======
->>>>>>> main
 
 
 # Create your views here.
 def indexPage(request):
-    return render(request, 'index.html')
+    games = Games.objects.all()
+    return render(request, 'index.html',context = {'games':games})
 
 def render_account_page(request):
     return render(request, 'user_account.html')

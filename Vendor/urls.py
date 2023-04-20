@@ -6,5 +6,5 @@ urlpatterns = [
    
    # Games
    path('game',views.view_game,name="view_game"),
-   path('insert-game',views.insert_game,name='insert_game')
+   path('insert_game',views.insert_game,name='insert_game')
 ]

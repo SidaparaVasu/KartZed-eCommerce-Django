@@ -49,87 +49,30 @@
                 <button class="outline-btn">View all</button>
             </div>
             <div class="slider-card">
-                <div class="product-card">
-                    <div class="card-img-box">
-                        <img src="{% static 'images/flash-banner/flash-banner-1.jpg' %}" alt="" srcset="" />
+                {% for games in games %}
+                    <div class="product-card">
+                        <div class="card-img-box">
+                            <img src="{% static 'images/flash-banner/flash-banner-1.jpg' %}" alt="" srcset="" />
+                        </div>
+                        <div class="card-details">
+                            <h2>{{ games.game_name }}</h2>
+                            <div class="grid-col-2">
+                                <div class="ratings">★★★☆☆</div>
+                                <div class="price">₹{{ games.game_price }}</div>
+                            </div>
+                            <div class="grid-col-2">
+                                <div class="flex-row">Developer: <span>{{ games.game_developer }}</span></div>
+                                <div class="flex-row">Publisher: <span>{{ games.game_publisher }}</span></div>
+                            </div>
+                            <div class="card-btn-box">
+                                <button class="filled-btn">Add to Cart</button>
+                                <button class="outline-btn">♡</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-details">
-                        <h2>Game Name</h2>
-                        <div class="grid-col-2">
-                            <div class="ratings">★★★☆☆</div>
-                            <div class="price">₹1,500</div>
-                        </div>
-                        <div class="grid-col-2">
-                            <div class="flex-row">Developer: <span>Developer name</span></div>
-                            <div class="flex-row">Publisher: <span>Publisher name</span></div>
-                        </div>
-                        <div class="card-btn-box">
-                            <button class="filled-btn">Add to Cart</button>
-                            <button class="outline-btn">♡</button>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="product-card">
-                    <div class="card-img-box">
-                        <img src="{% static 'images/flash-banner/flash-banner-1.jpg' %}" alt="" srcset="" />
-                    </div>
-                    <div class="card-details">
-                        <h2>Game Name</h2>
-                        <div class="grid-col-2">
-                            <div class="ratings">★★★☆☆</div>
-                            <div class="price">₹1,500</div>
-                        </div>
-                        <div class="grid-col-2">
-                            <div class="flex-row">Developer: <span>Developer name</span></div>
-                            <div class="flex-row">Publisher: <span>Publisher name</span></div>
-                        </div>
-                        <div class="card-btn-box">
-                            <button class="filled-btn">Add to Cart</button>
-                            <button class="outline-btn">♡</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="card-img-box">
-                        <img src="{% static 'images/flash-banner/flash-banner-1.jpg' %}" alt="" srcset="" />
-                    </div>
-                    <div class="card-details">
-                        <h2>Game Name</h2>
-                        <div class="grid-col-2">
-                            <div class="ratings">★★★☆☆</div>
-                            <div class="price">₹1,500</div>
-                        </div>
-                        <div class="grid-col-2">
-                            <div class="flex-row">Developer: <span>Developer name</span></div>
-                            <div class="flex-row">Publisher: <span>Publisher name</span></div>
-                        </div>
-                        <div class="card-btn-box">
-                            <button class="filled-btn">Add to Cart</button>
-                            <button class="outline-btn">♡</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="card-img-box">
-                        <img src="{% static 'images/flash-banner/flash-banner-1.jpg' %}" alt="" srcset="" />
-                    </div>
-                    <div class="card-details">
-                        <h2>Game Name</h2>
-                        <div class="grid-col-2">
-                            <div class="ratings">★★★☆☆</div>
-                            <div class="price">₹1,500</div>
-                        </div>
-                        <div class="grid-col-2">
-                            <div class="flex-row">Developer: <span>Developer name</span></div>
-                            <div class="flex-row">Publisher: <span>Publisher name</span></div>
-                        </div>
-                        <div class="card-btn-box">
-                            <button class="filled-btn">Add to Cart</button>
-                            <button class="outline-btn">♡</button>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
+                
                 
             </div>
         </div>

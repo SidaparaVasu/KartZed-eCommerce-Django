@@ -44,16 +44,136 @@
                 <div class="card shadow p-3 mb-5 bg-white rounded">
                     <div class="card-body">
                         <h5 class="card-title fw-semibold mb-4">Add Game</h5>
-                        <form action="insert-game" method="post" enctype="multipart/form-data" class="content-area-form">
+                        <form action="insert_game" method="get" enctype="multipart/form-data" class="content-area-form">
                             {% csrf_token %}
                             <div class="mb-3 ">
                                 <label for="inputGameName" class="form-label">Enter Game Name</label>
-                                <input type="text" name="game_name" class="form-control" placeholder="Enter Game Name" required/>
+                                <input type="text" name="game_name" class="form-control" placeholder="Enter Game Name" />
                             </div>
 
                             <div class="mb-3">
                                 <label for="inputGameName" class="form-label">Enter Game Developer</label>
-                                <input type="text" name="game_developer" class="form-control" placeholder="Enter Game Developer" required/>
+                                <input type="text" name="game_developer" class="form-control" placeholder="Enter Game Developer" />
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="inputGamePublisher" class="form-label">Enter Game Publisher</label>
+                                <input type="text" name="game_publisher" class="form-control" placeholder="Enter Game Publisher" />
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="inputGameDescription" class="form-label">Enter Game Descrption</label>
+                                <input type="text" name="game_description" class="form-control" placeholder="Enter Game Description" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="inputPlatform" class="form-label">Choose Platform</label>
+                                <br>
+                                    {% for platform in platform %}
+                                    <input type="checkbox" name = "platform_name" value="{{ platform.platform_name }}" >
+                                    <label class="form-label">{{ platform.platform_name }}</label>
+                                    {% endfor %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="inputGameFeature" class="form-label">Choose Game Features</label>
+                                <br>
+                                    {% for gamefeature in game_feature %}
+                                    <input type="checkbox" name= "game_feature" value="{{ gamefeature.game_feature_name }}" />
+                                    <label class="form-label">{{ gamefeature.game_feature_name }}</label>
+                                    {% endfor %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="inputGameModes" class="form-label">Choose Game modes</label>
+                                <br>
+                                    {% for gamemodes in game_modes %}
+                                    <input type="checkbox" name="game_mode" value="{{ gamemodes.game_mode_name }}" />
+                                    <label class="form-label">{{ gamemodes.game_mode_name }}</label>
+                                    {% endfor %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="inputGameCategory" class="form-label">Choose Game Category</label>
+                                <br>
+                                    {% for gamecategory in game_category %}
+                                    <input type="checkbox" name="game_category" value="{{ gamecategory.game_category_name }}" />
+                                    <label class="form-label">{{ gamecategory.game_category_name }}</label>
+                                    {% endfor %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="inputOperatingSystem" class="form-label">Choose Operating System</label>
+                                <br>
+                                    {% for os in os %}
+                                    <input type="checkbox" name="os_name" value="{{ os.os_name }}" />
+                                    <label class="form-label">{{ os.os_name }}</label>
+                                    {% endfor %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="inputOSVersion" class="form-label">Choose Operating System Version</label>
+                                <br>
+                                    {% for osv in osv %}
+                                    <input type="checkbox" name = "os_version" value="{{ osv.version }}" />
+                                    <label class="form-label">{{ osv.version }}</label>
+                                    {% endfor %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="inputProcessors" class="form-label">Choose Processors</label>
+                                <br>
+                                    {% for processor in processors %}
+                                    <input type="checkbox" name="processors_name" value="{{ processor.processor_name }}" />
+                                    <label class="form-label">{{ processor.processor_name }}</label>
+                                    {% endfor %}
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="inputVideoCards" class="form-label">Choose Video Cards</label>
+                                <br>
+                                    {% for vc in vc %}
+                                    <input type="checkbox" name="vc_name" value="{{ vc.vc_name }}" />
+                                    <label class="form-label">{{ vc.vc_name }}</label>
+                                    {% endfor %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="inputVCVersion" class="form-label">Choose Video Cards Version</label>
+                                <br>
+                                    {% for vcv in vcv %}
+                                    <input type="checkbox" name="vc_version" value="{{ vcv.vc_version_name }}" />
+                                    <label class="form-label">{{ vcv.vc_version_name }}</label>
+                                    {% endfor %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="inputGamePrice" class="form-label">Enter Game Price</label>
+                                <input type="number"  name="game_price" class="form-control" placeholder="Enter Game Price" />
+                            </div>
+                             
+                            <div class="mb-3">
+                                <label for="inputAvailableStock" class="form-label">Enter Available Stock</label>
+                                <input type="number"  name="avail_stock" class="form-control" placeholder="Enter Available Stock" />
+                            </div>
+                             
+                             <div class="mb-3">
+                                <label for="inputDiscount" class="form-label">Enter Discount</label>
+                                <input type="number"  name="discount" class="form-control" placeholder="Enter Discount" />
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">add game</button>
+                        </form> 
+                        {% comment %} <form action="insert_game" method="get" enctype="multipart/form-data" class="content-area-form">
+                            {% csrf_token %}
+                            <div class="mb-3 ">
+                                <label for="inputGameName" class="form-label">Enter Game Name</label>
+                                <input type="text" name="game_name" class="form-control" placeholder="Enter Game Name" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="inputGameName" class="form-label">Enter Game Developer</label>
+                                <input type="text" name="game_developer" class="form-control" placeholder="Enter Game Developer" />
                             </div>
                             
                             <div class="mb-3">
@@ -70,7 +190,7 @@
                                 <label for="inputPlatform" class="form-label">Choose Platform</label>
                                 <br>
                                     {% for platform in platform %}
-                                    <input type="checkbox" name="{{ platform.platform_name }}" required/>
+                                    <input type="checkbox" name = "platform_name" value="{{ platform.platform_name }}" required/>
                                     <label class="form-label">{{ platform.platform_name }}</label>
                                     {% endfor %}
                             </div>
@@ -79,7 +199,7 @@
                                 <label for="inputGameFeature" class="form-label">Choose Game Features</label>
                                 <br>
                                     {% for gamefeature in game_feature %}
-                                    <input type="checkbox" name="{{ gamefeature.game_feature_name }}" required/>
+                                    <input type="checkbox" name= "game_feature" value"{{ gamefeature.game_feature_name }}" required/>
                                     <label class="form-label">{{ gamefeature.game_feature_name }}</label>
                                     {% endfor %}
                             </div>
@@ -88,7 +208,7 @@
                                 <label for="inputGameModes" class="form-label">Choose Game modes</label>
                                 <br>
                                     {% for gamemodes in game_modes %}
-                                    <input type="checkbox" name="{{ platform.game_mode_name }}" required/>
+                                    <input type="checkbox" name="game_mode" value="{{ platform.game_mode_name }}" required/>
                                     <label class="form-label">{{ gamemodes.game_mode_name }}</label>
                                     {% endfor %}
                             </div>
@@ -97,7 +217,7 @@
                                 <label for="inputGameCategory" class="form-label">Choose Game Category</label>
                                 <br>
                                     {% for gamecategory in game_category %}
-                                    <input type="checkbox" name="{{ gamecategory.game_category_name }}" required/>
+                                    <input type="checkbox" name="game_category" value="{{ gamecategory.game_category_name }}" required/>
                                     <label class="form-label">{{ gamecategory.game_category_name }}</label>
                                     {% endfor %}
                             </div>
@@ -106,7 +226,7 @@
                                 <label for="inputOperatingSystem" class="form-label">Choose Operating System</label>
                                 <br>
                                     {% for os in os %}
-                                    <input type="checkbox" name="{{ os.os_name }}" required/>
+                                    <input type="checkbox" name="os_name" value="{{ os.os_name }}" required/>
                                     <label class="form-label">{{ os.os_name }}</label>
                                     {% endfor %}
                             </div>
@@ -115,7 +235,7 @@
                                 <label for="inputOSVersion" class="form-label">Choose Operating System Version</label>
                                 <br>
                                     {% for osv in osv %}
-                                    <input type="checkbox" name="{{ osv.version }}" required/>
+                                    <input type="checkbox" name = "os_version" value="{{ osv.version }}" required/>
                                     <label class="form-label">{{ osv.version }}</label>
                                     {% endfor %}
                             </div>
@@ -123,8 +243,8 @@
                             <div class="mb-3">
                                 <label for="inputProcessors" class="form-label">Choose Processors</label>
                                 <br>
-                                    {% for processor in processor %}
-                                    <input type="checkbox" name="{{ processor.processor_name }}" required/>
+                                    {% for processor in processors %}
+                                    <input type="checkbox" name="processors_name" value="{{ processor.processor_name }}" required/>
                                     <label class="form-label">{{ processor.processor_name }}</label>
                                     {% endfor %}
                             </div>
@@ -133,7 +253,7 @@
                                 <label for="inputVideoCards" class="form-label">Choose Video Cards</label>
                                 <br>
                                     {% for vc in vc %}
-                                    <input type="checkbox" name="{{ vc.vc_name }}" required/>
+                                    <input type="checkbox" name="vc_name" value="{{ vc.vc_name }}" required/>
                                     <label class="form-label">{{ vc.vc_name }}</label>
                                     {% endfor %}
                             </div>
@@ -142,7 +262,7 @@
                                 <label for="inputVCVersion" class="form-label">Choose Video Cards Version</label>
                                 <br>
                                     {% for vcv in vcv %}
-                                    <input type="checkbox" name="{{ vcv.vc_version_name }}" required/>
+                                    <input type="checkbox" name="vc_version" value="{{ vcv.vc_version_name }}" required/>
                                     <label class="form-label">{{ vcv.vc_version_name }}</label>
                                     {% endfor %}
                             </div>
@@ -163,7 +283,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary">add game</button>
-                        </form>  
+                        </form>   {% endcomment %}
                     </div>
                 </div>
 
