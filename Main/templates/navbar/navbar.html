@@ -15,7 +15,7 @@
         <div class="links">
             <a href="#">Discover</a>
             <a href="#">Browse</a>
-            <a href="#">Distribution</a>
+            <a href="{% url 'render_vendor_register_page' %}">Become a Seller</a>
             {% if request.session.is_session %}
                 <a href="{% url 'render_account_page' %}">Account</a>
             {% endif %}

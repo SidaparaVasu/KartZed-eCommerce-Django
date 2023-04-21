@@ -8,8 +8,9 @@ from .models import Admins, Customers, Vendors
 from Email.views import Email
 from Administrator.views import index_admin
 from Main.views import indexPage, render_account_page
+from Vendor.views import render_vendor_login_page, render_vendor_register_page
 
-# Create your views here.
+# Create your views here.   
 def render_admin_login_page(request):
     return render(request, 'admin-login.html')
 
@@ -220,9 +221,81 @@ def update_customer_profile(request):
             messages.success(request, "Profile Updated!")
             return redirect(reverse('render_account_page'))
         except Exception as e:
-            messages.success(request, "Try again! an error occured")
+            messages.error(request, "Try again! an error occured")
             return redirect(reverse('render_account_page'))
         
         return HttpResponse(email_id)
     pass
 """ UPDATE CUSTOMER PROFILE """
+
+""" REGISTRATION OF VENDOR """
+def register_vendor(request):
+    if request.method == "POST":
+        vendor_fullname      = request.POST.get('vendor_fullname')
+        vendor_email         = request.POST.get('vendor_email')
+        vendor_password      = request.POST.get('vendor_password')
+        vendor_phone_number  = request.POST.get('vendor_phone_number')
+        company_name         = request.POST.get('company_name')
+        company_phone_number = request.POST.get('company_phone_number')
+        company_address      = request.POST.get('company_address')
+        gstin                = request.POST.get('GSTIN')
+        pickup_pincode       = request.POST.get('pickup_pincode')
+        pickup_address       = request.POST.get('pickup_address')
+        
+        try:
+            Vendors.objects.create(
+                vendor_fullname      = vendor_fullname,     
+                vendor_email         = vendor_email, 
+                vendor_password      = make_password(vendor_password),    
+                vendor_phone_number  = vendor_phone_number,
+                company_name         = company_name,
+                company_address      = company_address,
+                company_phone_number = company_phone_number, 
+                GSTIN                = gstin,    
+                pickup_pincode       = pickup_pincode,
+                pickup_address       = pickup_address     
+            )
+            messages.success(request, "Registration Successfully!")
+            messages.success(request, "One Last step to GO LIVE!!!")
+            return redirect(reverse('render_vendor_login_page'))
+        except:
+            messages.error(request, "Something went wrong! try again later!")
+            return redirect(reverse('render_vendor_register_page'))
+    messages.error(request, "Something went wrong! try again later!")
+    return redirect(reverse('render_vendor_register_page'))
+
+
+def vendor_login(request):
+    if request.method == "POST":    
+        email = request.POST.get("vendor_email")
+        password = request.POST.get("vendor_password")
+
+        row_counter = Vendors.objects.all().count()
+        # return HttpResponse(row_counter)
+        if row_counter == 0:
+            messages.error(request, "You are not registered! do registration first!")
+            return redirect(reverse('render_vendor_register_page'))
+        else:
+            flag = 0
+            try:
+                vendor_data = Vendors.objects.all()
+                # return HttpResponse(admin_data)
+                for i in range(len(vendor_data)):
+                    if vendor_data[i].vendor_email == email:
+                        
+                        is_password_match = check_password(password, vendor_data[i].vendor_password)
+                        
+                        if is_password_match == True:
+                            return redirect(reverse('index_vendor'))
+                        else:
+                            messages.error(request, "Password is incorrect!")
+                            return redirect(reverse('render_vendor_login_page'))
+                    else:
+                        flag = 1
+                if flag == 1:
+                    messages.error(request, "Invalid Credentials, try again!")
+                    return redirect(reverse('render_vendor_login_page'))
+            except Exception as e:
+                messages.error(request, "An error occured, try again later!")
+                return redirect(reverse('render_vendor_login_page'))
+    return redirect(reverse('render_vendor_login_page'))

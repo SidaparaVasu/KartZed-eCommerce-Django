@@ -13,6 +13,12 @@ from Administrator.models import *
 def index_vendor(request):
     return render(request,'index-vendor.html')
 
+def render_vendor_register_page(request):
+    return render(request, 'vendor-register.html')
+
+def render_vendor_login_page(request):
+    return render(request, 'vendor-login.html')
+
 # Games CRUD
 def view_game(request):
     context = {

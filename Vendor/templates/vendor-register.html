@@ -1,0 +1,149 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Become a Vendor</title>
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/root.css' %}">
+    <link rel="stylesheet" href="{% static 'css/plugins.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard-styles.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/vendor-register.css' %}">
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags %}
+                <script>alert("{{ message }}")</script> 
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <nav class="nav">
+        <div class="logo-box">
+            <a href="{% url 'indexPage' %}">
+                <img src="{% static 'images/logos/logo_light.png' %}" width="180" alt="Logo" srcset="" />
+            </a>
+        </div>
+        <div class="nav-text"><a href="{% url 'render_vendor_login_page' %}">Already Registered? login</a></div>
+    </nav>
+    <div class="banner">
+        Register to Sell Games Online
+    </div>
+    <div class="form-container">
+        <form action="register-vendor" method="post" class="form-box" id="register-vendor-form">
+            {% csrf_token %} 
+            <h1>Vendor Contact Information</h1>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-floating mb-3">
+                        <input type="text" name="vendor_fullname" class="form-control" id="displayname" required/>
+                        <label for="displayname">Display name</label>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="form-floating mb-3">
+                        <input type="tel" name="vendor_phone_number" class="form-control" id="mobileno"
+                            pattern="[0-9]+" maxlength="10" required/>
+                        <label for="mobileno">Mobile number</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-floating mb-3">
+                        <input type="email" name="vendor_email" class="form-control" id="emailid" required/>
+                        <label for="emailid">Email address</label>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="form-floating mb-3">
+                        <input type="password" name="vendor_password" class="form-control" id="password" 
+                            oninput="checkPassword()" minlength="8" maxlength="12" required/>
+                        <label for="password" class="password-message">Create Password</label>
+                    </div>
+                </div>
+            </div>
+            <h1>Company Details</h1>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-floating mb-3">
+                        <input type="text" name="company_name" class="form-control" id="companyname" required/>
+                        <label for="companyname">Company name</label>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="form-floating mb-3">
+                        <input type="tel" name="company_phone_number" class="form-control" id="companymobileno"
+                            pattern="[0-9]+" maxlength="10" required/>
+                        <label for="companymobileno">Company contact number</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-floating mb-3">
+                        <!-- <input type="text" name="company_address" class="form-control" id="companyaddr" />
+                        <label for="companyaddr">Company address</label> -->
+                        <textarea name="company_address"  id="companyaddr" cols="50" rows="3" required></textarea>
+                        <label for="companyaddr" class="addr_label" style="width: 100%;">Company address</label>
+                    </div>
+                </div>
+            </div>
+            <h1>GSTIN no.</h1>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-floating mb-3">
+                        <input type="text" name="GSTIN" class="form-control w-15" id="gstinno" 
+                            maxlength="15" required/>
+                        <label for="gstinno">GSTIN no.</label>
+                    </div>
+                </div>
+            </div>
+            <h1>Pickup Details</h1>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-floating mb-3">
+                        <input type="tel" name="pickup_pincode" class="form-control w-15" id="pickuppincode" 
+                            pattern="[0-9]+" maxlength="6" required/>
+                        <label for="pickuppincode">Pickup pincode</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-floating mb-3">
+                        <textarea name="pickup_address"  id="pickupaddr" cols="50" rows="3" required></textarea>
+                        <label for="pickupaddr" class="addr_label">Pickup address</label>
+                    </div>
+                </div>
+            </div>
+            <div class="captcha-box">
+                <div class="flex-dir-col">
+                    <div class="grid-col-3">
+                        <div class="show-captcha" id="show-captcha"></div>
+                        <div class="refresh-icon">
+                            <img src="{% static 'images/icons/regenerate-captcha.png' %}" width="25px" alt="" srcset=""
+                            onclick="generateCaptcha()" />
+                        </div>
+                        <div class="enter-captcha">
+                            <input type="text" class="form-control" name="input-captcha" id="input-captcha" 
+                                placeholder="enter captcha" maxlength="6" required/>
+                        </div>
+                        <span class="form-control btn btn-primary" onclick="checkCaptcha()">verify</span>
+                    </div>
+                    <span class="captcha-message" id="captcha-message"></span>
+                </div>
+            </div>
+            <button type="submit" class="form-control btn btn-primary" 
+                id="submit-btn" style="padding: 10px;" onclick="checkPassword()" disabled>Register</button>
+        </form>
+    </div>
+
+    <script src="{% static 'js/valid-password-check.js' %}"></script>
+    <script src="{% static 'js/captcha.js' %}"></script>
+</body>
+</html>
