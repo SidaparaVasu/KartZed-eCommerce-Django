@@ -65,7 +65,7 @@
                                 <div class="flex-row">Publisher: <span>{{ games.game_publisher }}</span></div>
                             </div>
                             <div class="card-btn-box">
-                                <button class="filled-btn">Add to Cart</button>
+                                <a href = "{% url 'add_to_cart' games.product_key %}"><button class="filled-btn">Add to Cart</button></a>
                                 <button class="outline-btn">♡</button>
                             </div>
                         </div>

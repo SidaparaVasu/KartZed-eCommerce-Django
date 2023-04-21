@@ -15,3 +15,9 @@ def indexPage(request):
 
 def render_account_page(request):
     return render(request, 'user_account.html')
+
+def view_cart(request):
+    return render(request, 'Cart/viewcart.html')
+
+def add_to_cart(request,id):
+    game = Games.objects.get(product_key = id)

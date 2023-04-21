@@ -27,7 +27,7 @@
         {% else %}
             <a href="{% url 'render_customer_login_page' %}">Login</a>
         {% endif %}
-        <a href="#" class="cart-btn">
+        <a href="view_cart" class="cart-btn">
             Cart
             {% if not is_empty_cart %}
                 <span></span>

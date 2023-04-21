@@ -20,5 +20,8 @@ urlpatterns = [
     
     # Update User profile
     path('update_customer_profile', update_customer_profile, name="update_customer_profile"),
-    
+
+    # Cart
+    path('view_cart',views.view_cart,name="view_cart"),
+    path('add_to_cart/<id>',views.add_to_cart,name="add_to_cart")
 ]
