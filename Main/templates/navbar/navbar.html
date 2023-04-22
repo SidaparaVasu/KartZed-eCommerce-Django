@@ -16,13 +16,13 @@
             <a href="#">Discover</a>
             <a href="#">Browse</a>
             <a href="{% url 'render_vendor_register_page' %}">Become a Seller</a>
-            {% if request.session.is_session %}
+            {% if request.session.is_authenticated %}
                 <a href="{% url 'render_account_page' %}">Account</a>
             {% endif %}
         </div>
     </div>
     <div class="right-nav">
-        {% if request.session.is_session %}
+        {% if request.session.is_authenticated %}
             <a href="{% url 'customer_logout_handle' %}">Logout</a>
         {% else %}
             <a href="{% url 'render_customer_login_page' %}">Login</a>

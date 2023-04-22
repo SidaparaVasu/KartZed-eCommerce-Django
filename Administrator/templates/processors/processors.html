@@ -44,9 +44,17 @@
                         <form action="insert-processor" method="get" enctype="multipart/form-data" class="content-area-form">
                             {% csrf_token %}
                             <div class="mb-3">
+                                <label for="os-dropdown" class="form-label">Select OS</label>
+                                <select name="os_name" class="form-control" id="os-dropdown">
+                                    <option value="disabeld" selected disabled>-- select operating system --</option>
+                                    {% for os in operating_system %}
+                                        <option value="{{ os.os_id }}">{{ os.os_name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <br/>
                                 <label for="inputprocessor" class="form-label">Enter Processor</label>
                                 <input type="text" name="processor_name" class="form-control" id="inputprocessor" 
-                                    placeholder="Intel Core i3-10100F, AMD Ryzen 3 3100, etc." required/>
+                                    placeholder="Intel's Core i7, AMD's Ryzen 9, and Apple's M1 etc." required/>
                             </div>
                             <button type="submit" class="btn btn-primary">add processor</button>
                         </form>  

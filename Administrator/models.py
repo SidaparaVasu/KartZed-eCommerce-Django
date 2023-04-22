@@ -31,6 +31,7 @@ class OSVersions(models.Model):
 
 class Processors(models.Model):
     processor_id = models.AutoField(primary_key=True)
+    os_name = models.ForeignKey(OperatingSystems, on_delete=models.CASCADE)
     processor_name = models.CharField(max_length=50,unique=True)
 
 class VideoCards(models.Model):
