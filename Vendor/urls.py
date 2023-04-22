@@ -3,7 +3,8 @@ from Vendor import views
 from Authapp.views import register_vendor, admin_login, vendor_login
 
 urlpatterns = [
-   path('', views.index_vendor, name='index_vendor'),
+   path('', views.render_vendor_login_page, name='render_vendor_login_page'), 
+   path('dashboard', views.index_vendor, name='index_vendor'), 
    
    # Vendor Register Form
    path('become-a-seller', views.render_vendor_register_page, name='render_vendor_register_page'),
