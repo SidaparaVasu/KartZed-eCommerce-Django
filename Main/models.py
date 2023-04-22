@@ -4,6 +4,8 @@ from Vendor.models import *
 
 # Create your models here.
 
+
+
 class Cart(models.Model):
     cart_id = models.AutoField(primary_key=True)
     cust_id = models.ForeignKey(Customers, on_delete=models.CASCADE)
