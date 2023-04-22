@@ -49,4 +49,3 @@ def add_to_cart(request,id):
         return redirect(reverse(indexPage))
     else:
         return redirect(reverse('render_customer_login_page'))
-        
