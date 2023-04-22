@@ -101,11 +101,11 @@
     margin-left: 5px;
     display: flex;align-items: center;
     justify-content: space-between;
-    gap: 5px;
+    gap: 10px;
 }
 
 .navbar > .center-nav > .links > a{
-    width: 100%;
+    width: max-content;
     text-align: center;
     color: var(--white);
     padding: 5px;
