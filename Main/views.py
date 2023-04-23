@@ -32,7 +32,16 @@ def render_account_page(request):
 
 def view_cart(request):
     if request.session.get('is_authenticated', False):
-        return render(request, 'Cart/viewcart.html')
+        user = request.session['cust_email']
+        user_id = Customers.objects.get(cust_email = user)
+        cart = Cart.objects.filter(cust_id=user_id.cust_id)
+        return HttpResponse(cart[0].cart_id)
+         
+        cartitem = CartItems.objects.get(cart_id=cart.cart_id)
+
+        #game = Games.objects.filter(gid = cartitem.game.gid)
+
+        return render(request, 'Cart/viewcart.html',context = {'game':game,})
     else:
         return redirect(reverse('render_customer_login_page'))
 
@@ -42,7 +51,7 @@ def add_to_cart(request,id):
         game = Games.objects.get(product_key = id)
         user = request.session['cust_email']
         user_id = Customers.objects.get(cust_email = user)
-        #return HttpResponse(user_id.cust_id)
+        
         try:
             cart = Cart.objects.create(
                 cust_id = user_id,
