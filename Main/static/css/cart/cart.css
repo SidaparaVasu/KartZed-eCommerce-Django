@@ -79,9 +79,11 @@ body{
 }
 .flex-2 > .item-details > h2{
     font-size: 16px;
+    text-overflow: ellipsis;
 }
 .flex-2 > .item-details > p{
     font-size: 14px;
+    text-overflow: ellipsis;
 }
 
 .cart-item{

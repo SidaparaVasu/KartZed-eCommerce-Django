@@ -33,28 +33,42 @@ def render_account_page(request):
 
 def view_cart(request):
     if request.session.get('is_authenticated', False):
-        # user = request.session['cust_email']
-        # user_id = Customers.objects.get(cust_email = user)
-        # cart = Cart.objects.filter(cust_id=user_id.cust_id)
-        # return HttpResponse(cart[0].cart_id)
-         
-        # cartitem = CartItems.objects.get(cart_id=cart.cart_id)
-
-        #game = Games.objects.filter(gid = cartitem.game.gid)
-
-        # return render(request, 'Cart/viewcart.html',context = {'game':game,})
-        return render(request, 'Cart/cart.html')
+        user = Customers.objects.get(cust_unique_keyid = request.session['cust_unique_keyid'])
+        cart_data = Cart.objects.filter(cust_id = user.cust_id)
+        cartIDs = []
+        for data in cart_data:
+            cartIDs.append(data.cart_id)
+            # print(data.cart_id)
+        
+        cartItemsList = []
+        for id in cartIDs:
+            cart_items = CartItems.objects.filter(cart_id = id)
+            # return HttpResponse(cart_items)
+            for citem in cart_items:
+                cartItemsList.append(citem.game_id)
+        
+        print(len(cartItemsList))
+        GameList = []
+        for c_item_id in cartItemsList:
+            games = Games.objects.filter(gid = c_item_id)
+            for game in games:
+                GameList.append(game)
+        print(GameList)
+        # return HttpResponse("hello")
+        return render(request, 'Cart/cart.html', context={'Games': GameList})
+        """ net puru  """
     else:
         return redirect(reverse('render_customer_login_page'))
 
 def add_to_cart(request,id):
-    
+    # return HttpResponse(id)
     if request.session.get('is_authenticated', False):
         game = Games.objects.get(product_key = id)
         user = request.session['cust_unique_keyid']
         user_id = Customers.objects.get(cust_unique_keyid = user)
         #return HttpResponse(user_id.cust_id)
         try:
+            # if user_id.cust_id == 
             cart = Cart.objects.create(
                 cust_id = user_id,
                 is_paid = False

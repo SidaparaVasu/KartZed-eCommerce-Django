@@ -34,20 +34,20 @@
                     <h2>REMOVE</h2>
                 </div>
                 <div class="cart-item-body">
-
+                    {% for item in Games %}
                     <div class="row">
                         <div class="cart-item">
                             <div class="flex-2">
                                 <div class="item-img">
-
+                                    <img src="Media/{{ item.game_logo }}" alt="" srcset="">
                                 </div>
                                 <div class="item-details">
-                                    <h2>Product name</h2>
-                                    <p>Product description</p>
+                                    <h2>{{ item.game_name }}</h2>
+                                    <p>{{ item.game_description }}</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="cart-item">̥₹3200</div>
+                        <div class="cart-item">₹{{ item.game_price }}</div>
                         <div class="cart-item">
                             <div class="qty-selest-box">
                                 <button class="incr-btn">+</button>
@@ -57,7 +57,7 @@
                         </div>
                         <div class="cart-item">remove</div>
                     </div>
-
+                    {% endfor %}
                 </div>
             </div>
 

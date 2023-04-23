@@ -97,7 +97,7 @@ def insert_game(request):
             Games.objects.create(
                 product_key           = generate_product_key(request),
                 game_logo             = game_logo_path,
-                vendor_company_name   = vendors, 
+                vendor_reference      = vendors, 
                 game_name             = request.GET.get('game_name'),
                 game_description      = request.GET.get('game_description'),
                 game_images           = request.FILES.getlist('game_images'),
@@ -118,6 +118,7 @@ def insert_game(request):
             messages.success(request, "Game Added successfully!")
             return redirect(reverse(add_game_page))
         except Exception as e:
+            return HttpResponse(e)
             messages.success(request, "Game Insertion failed!")
             return redirect(reverse(add_game_page))
     messages.error(request, "Bad request of form! Try again later!")
