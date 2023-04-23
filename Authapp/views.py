@@ -282,6 +282,7 @@ def vendor_login(request):
                         is_password_match = check_password(password, vendor_data[i].vendor_password)
                         
                         if is_password_match == True:
+                            request.session['company_email'] = vendor_data[i].vendor_email
                             return redirect(reverse('index_vendor'))
                         else:
                             messages.error(request, "Password is incorrect!")

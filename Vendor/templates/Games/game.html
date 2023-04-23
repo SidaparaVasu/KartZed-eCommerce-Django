@@ -99,6 +99,7 @@
                         <h5 class="card-title fw-semibold mb-4">Add Game</h5>
 
                         <form action="insert_game" method="GET">
+                            <input type="hidden" name="vendor_company_email" value="{{ request.session.company_email }}" />
                             <div class="row">
                                 <div class="col-sm">
                                     <h5>choose image of game Logo</h5>
