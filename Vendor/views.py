@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from .models import Games
+from Authapp.models import Vendors
 from Administrator.models import *
 from Administrator.views import get_os_by_category
 
@@ -75,10 +76,13 @@ def check_image_format(file):
 
 def insert_game(request):
     if request.method == 'GET': 
+        vendor_email = request.GET.get('vendor_company_email')
+        vendors = Vendors.objects.get(vendor_email = vendor_email)
         try:
             Games.objects.create(
                 product_key           = generate_product_key(request),
-                game_logo             = request.GET.get('game_logo'), 
+                game_logo             = request.GET.get('game_logo'),
+                vendor_company_name   = vendors, 
                 game_name             = request.GET.get('game_name'),
                 game_description      = request.GET.get('game_description'),
                 game_images           = request.FILES.getlist('game_images'),
