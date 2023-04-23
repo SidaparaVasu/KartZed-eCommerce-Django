@@ -1,8 +1,10 @@
 import os, random, string, imghdr
+from PIL import Image
 from django.shortcuts import get_object_or_404, render, redirect, HttpResponse
 from django.urls import reverse
 from django.shortcuts import render
 from django.contrib import messages
+from django.core.exceptions import ValidationError
 from .models import Games
 from Administrator.models import *
 from Administrator.views import get_os_by_category
@@ -60,63 +62,44 @@ def generate_product_key(request):
     key = ''.join(random.choice(letters_and_digits) for i in range(length))
     return key
 
-def insert_game(request):
-    if request.method == 'GET':
-        prod_key              = generate_product_key(request)
-        game_logo             = request.GET.get('game_logo')
-        game_name             = request.GET.get('game_name')
-        game_desc             = request.GET.get('game_description')
-        game_developer        = request.GET.get('game_developer')
-        game_publisher        = request.GET.get('game_publisher')
-        game_release_date     = request.GET.get('game_release_date')
-        avail_stock           = request.GET.get('avail_stock')
-        game_price            = request.GET.get('game_price')
-        discount              = request.GET.get('discount')
-        game_storage          = request.GET.get('game_storage')
-        game_ram              = request.GET.get('game_ram')
-        game_feature          = ','.join(request.GET.getlist('game_feature'))
-        game_modes            = ','.join(request.GET.getlist('game_modes'))
-        game_category         = ','.join(request.GET.getlist('game_category'))
-        platform_name         = request.GET.get('platform_name')
-        # os_name               = request.GET.get('os_name')
-        # os_version            = request.GET.get('os_version')
-        # processors_name       = request.GET.get('processors_name')
-        # vc_name               = request.GET.get('vc_name')
-        # vc_version            = request.GET.get('vc_version')
-        
-        # gamefeatures  = GameFeatures.objects.get(game_feature_name=game_feature)
-        # gamemodes     = GameModes.objects.get(game_mode_name=game_modes)
-        # gamecategory  = GameCategory.objects.get(game_category_name=game_category)
-        platforms     = Platform.objects.get(platform_name = platform_name)
-        # osname        = OperatingSystems.objects.get(os_name=os_name)
-        # osversion     = OSVersions.objects.get(version=os_version)
-        # processorsname= Processors.objects.get(processor_name=processors_name)
-        # vcname        = VideoCards.objects.get(vc_name=vc_name)
-        # vcversion     = VCVersions.objects.get(vc_version_name=vc_version)
+def check_image_format(file):
+    try:
+        # open the file and check if it's an image
+        image = Image.open(file)
+        if image.format.lower() not in ['jpeg', 'jpg', 'png', 'gif']:
+            raise ValidationError('File must be in image format.')
+        else:
+            return image
+    except IOError:
+        raise ValidationError('File is not an image.')
 
+def insert_game(request):
+    if request.method == 'GET': 
         try:
             Games.objects.create(
-                product_key           = prod_key, 
-                game_name             = game_name,
-                game_description      = game_desc,
-                game_developer        = game_developer,
-                game_publisher        = game_publisher,
-                game_release_date     = game_release_date,
-                avail_stock           = avail_stock,
-                game_price            = game_price,
-                discount              = discount,
-                game_storage          = game_storage,
-                game_ram              = game_ram,
-                game_feature          = game_feature,
-                game_modes            = game_modes,
-                game_category         = game_category,
-                platform_name         = platforms
+                product_key           = generate_product_key(request),
+                game_logo             = request.GET.get('game_logo'), 
+                game_name             = request.GET.get('game_name'),
+                game_description      = request.GET.get('game_description'),
+                game_images           = request.FILES.getlist('game_images'),
+                game_developer        = request.GET.get('game_developer'),
+                game_publisher        = request.GET.get('game_publisher'),
+                game_release_date     = request.GET.get('game_release_date'),
+                avail_stock           = request.GET.get('avail_stock'),
+                game_price            = request.GET.get('game_price'),
+                discount              = request.GET.get('discount'),
+                game_storage          = request.GET.get('game_storage'),
+                game_ram              = request.GET.get('game_ram'),
+                game_features         = ','.join(request.GET.getlist('game_features')),
+                game_modes            = ','.join(request.GET.getlist('game_modes')),
+                game_categories       = ','.join(request.GET.getlist('game_categories')),
+                platform_names        = ','.join(request.GET.getlist('platform_names')),
+                game_languages        = ','.join(request.GET.getlist('game_languages')),
             )
             messages.success(request, "Game Added successfully!")
             return redirect(reverse(view_game))
         except Exception as e:
-            #messages.error(request, "")
-            #return redirect(reverse(view_game))
-            return HttpResponse(e)
-    messages.error(request, "Game Insertion failed!")
+            messages.success(request, "Game Insertion failed!")
+            return redirect(reverse(view_game))
+    messages.error(request, "An unexpected error occured! Try again later!")
     return redirect(reverse(view_game))
