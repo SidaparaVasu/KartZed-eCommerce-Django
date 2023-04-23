@@ -6,7 +6,7 @@ class GamesForm(forms.ModelForm):
         model = Games
         fields = [
             'product_key',
-            'vendor_company_name',
+            'vendor_reference',
             'game_logo',
             'game_name',
             'game_description',

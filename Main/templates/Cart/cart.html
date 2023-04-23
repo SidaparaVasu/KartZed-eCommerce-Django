@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart | KartZed</title>
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon_logo.png' %}" />
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/root.css' %}">
+    <link rel="stylesheet" href="{% static 'css/plugins.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cart/cart.css' %}">
+    <!-- Ion Icons CDN -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <!-- Include Navigation Bar -->
+    {% include 'navbar/navbar.html' %}
+
+    <div class="cart-container">
+
+        <div class="show-cart-box">
+
+            <div class="cart-item-box">
+                <div class="cart-item-header">
+                    <h2>PRODUCT</h2>
+                    <h2>PRICE</h2>
+                    <h2>QUANTITY</h2>
+                    <h2>REMOVE</h2>
+                </div>
+                <div class="cart-item-body">
+
+                    <div class="row">
+                        <div class="cart-item">
+                            <div class="flex-2">
+                                <div class="item-img">
+
+                                </div>
+                                <div class="item-details">
+                                    <h2>Product name</h2>
+                                    <p>Product description</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cart-item">̥₹3200</div>
+                        <div class="cart-item">
+                            <div class="qty-selest-box">
+                                <button class="incr-btn">+</button>
+                                <input type="number" class="qty-input" pattern="[0-9]+" maxlength="3"/>
+                                <button class="decr-btn">-</button>
+                            </div>
+                        </div>
+                        <div class="cart-item">remove</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="checkout-box">
+                <div class="coupon-box">
+                    <div class="header-box">COUPON CODE</div>
+                    <p>If you have a coupon code, please enter it in the box below</p>
+                    <div class="input-box">
+                        <input type="text" name="" id="coupon_code" />
+                        <button>Apply Coupon</button>
+                    </div>
+                </div>
+                <div class="bill-box">
+                    <div class="header-box">ORDER SUMMARY</div>
+                    <p>Shipping and additional costs are calculated based on values you have entered.</p>
+                    <div class="flex-2">
+                        <p>Order Subtotal</p>
+                        <p>₹390.00</p>
+                    </div>
+                    <button type="submit" class="checkout-btn">PROCCEED TO CHECKOUT</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,209 @@
+body{
+    background-color: #efefef;
+}
+
+.cart-container{
+    width: 100%;
+    min-height: 85vh;
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 50px 90px 50px 90px;
+    font-family: var(--ff-montserrat);
+}
+
+.cart-container .show-cart-box{
+    width: 100%;
+    height: auto;
+    padding: 30px;
+}
+
+.cart-item-box{
+    width: 100%;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.cart-item-header, .cart-item-body > .row{
+    width: 100%;
+    background-color: #F8F9FA;
+    height: 70px;
+    display: grid;
+    grid-template-columns: 40% 20% 20% 20%;
+    align-items: center;
+    justify-content: space-around;
+}
+.cart-item-header > h2{
+    font-size: 18px;
+    text-align: center;
+}
+
+.cart-item-body{
+    margin-top: 30px;
+    background-color: var(--white);
+}
+
+.cart-item-body .row{
+    height: auto;
+    padding: 10px 0 10px 0;
+    /* background-color: rgb(47, 184, 184); */
+    background-color: var(--white);
+    border-bottom: 2px solid #F8F9FA;
+}
+
+.flex-2{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.flex-2 > .item-img{
+    width: 100px;
+    height: 100px;
+    background-color: #F8F9FA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 20px;
+}
+.flex-2 > .item-img > img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.flex-2 > .item-details{
+    text-align: left;
+}
+.flex-2 > .item-details > h2{
+    font-size: 16px;
+}
+.flex-2 > .item-details > p{
+    font-size: 14px;
+}
+
+.cart-item{
+    text-align: center;
+}
+.cart-item > .qty-selest-box{
+    display: flex;
+    justify-content: center;
+}
+
+.cart-item > .qty-selest-box > button{
+    background-color: white;
+    border: 1px solid #343A40;
+    padding: 6px 10px;
+    font-size: 16px;
+}
+.qty-input{
+    width: 50px;
+    text-align: center;
+}
+.qty-input{
+    border: 1px solid #343A40;
+}
+.qty-input:focus{
+    border: 1px solid #343A40;
+    border-radius: 0;
+}
+
+.incr-btn{
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+.decr-btn{
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.cart-item > .qty-selest-box > .incr-btn:hover,
+.cart-item > .qty-selest-box > .decr-btn:hover{
+    background-color: #343A40;
+    color: var(--white);
+    cursor: pointer;
+}
+
+.checkout-box{
+    height: auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin-top: 40px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--white);
+}
+
+.coupon-box, .bill-box{
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+}
+.header-box{
+    width: 100%;
+    padding: 20px;
+    border-radius: 50px;
+    text-align: center;
+    background-color: #F8F9FA;
+    font-weight: 600;
+}
+
+.coupon-box p, .bill-box p{
+    padding: 20px 30px;
+}
+
+.input-box{
+    display: flex;
+    padding: 10px;
+    border: 2px solid #F8F9FA;
+    border-radius: 50px;
+}
+.input-box input[type="text"]{
+    width: 60%;
+    outline: none;
+    border: 1px solid #121212;
+    padding: 14px 30px;
+    text-align: center;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+.input-box > button{
+    width: 40%;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    outline: none;
+    background-color: #343A40;
+    color: var(--white);
+}
+
+.input-box > button:hover{
+    background-color: #121212;
+    cursor: pointer;
+}
+
+.bill-box > .flex-2{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 6px 5px 6px;
+}
+.bill-box > .flex-2 > p:last-child{
+    font-weight: bold;
+}
+
+.checkout-btn{
+    width: 100%;
+    border-radius: 50px;
+    outline: none;
+    background-color: #343A40;
+    color: var(--white);
+    padding: 15px;
+    margin-top: 25px;
+}
+.checkout-btn:hover{
+    background-color: #121212;
+    cursor: pointer;
+}

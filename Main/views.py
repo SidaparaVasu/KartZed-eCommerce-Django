@@ -9,20 +9,20 @@ from Email.views import Email
 
 # Create your views here.
 def indexPage(request):
-    if 'cust_email' not in request.session:
+    if request.session.get('is_authenticated', False):
+        cust_unique_keyid = request.session['cust_unique_keyid']
+        user_id = Customers.objects.get(cust_unique_keyid = cust_unique_keyid)
+        Cart.objects.filter(cust_id = user_id).count()
+        context = {
+            'games' : Games.objects.all(),
+            'cart_count' : Cart.objects.filter(cust_id = user_id).count()
+        }
+        return render(request, 'index.html',context)
+    else:
         context = {
             'games' : Games.objects.all()
         }
         return render(request, 'index.html', context)
-    else:
-        user = request.session['cust_email']
-        user_id = Customers.objects.get(cust_email = user)
-    
-        context = {
-            'games' : Games.objects.all(),
-            'cart_count' : Cart.objects.filter(cust_id = user_id).count()
-            }
-        return render(request, 'index.html',context)
 
 def render_account_page(request):
     if request.session.get('is_authenticated', False):
@@ -33,7 +33,17 @@ def render_account_page(request):
 
 def view_cart(request):
     if request.session.get('is_authenticated', False):
-        return render(request, 'Cart/viewcart.html')
+        # user = request.session['cust_email']
+        # user_id = Customers.objects.get(cust_email = user)
+        # cart = Cart.objects.filter(cust_id=user_id.cust_id)
+        # return HttpResponse(cart[0].cart_id)
+         
+        # cartitem = CartItems.objects.get(cart_id=cart.cart_id)
+
+        #game = Games.objects.filter(gid = cartitem.game.gid)
+
+        # return render(request, 'Cart/viewcart.html',context = {'game':game,})
+        return render(request, 'Cart/cart.html')
     else:
         return redirect(reverse('render_customer_login_page'))
 
@@ -41,8 +51,8 @@ def add_to_cart(request,id):
     
     if request.session.get('is_authenticated', False):
         game = Games.objects.get(product_key = id)
-        user = request.session['cust_email']
-        user_id = Customers.objects.get(cust_email = user)
+        user = request.session['cust_unique_keyid']
+        user_id = Customers.objects.get(cust_unique_keyid = user)
         #return HttpResponse(user_id.cust_id)
         try:
             cart = Cart.objects.create(

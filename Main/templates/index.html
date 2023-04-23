@@ -49,23 +49,23 @@
                 <button class="outline-btn">View all</button>
             </div>
             <div class="slider-card">
-                {% for games in games %}
+                {% for game in games %}
                     <div class="product-card">
                         <div class="card-img-box">
-                            <img src="{% static 'images/flash-banner/flash-banner-1.jpg' %}" alt="" srcset="" />
+                            <img src="Media/{{ game.game_logo }}" alt="{{ game.game_logo }}" srcset="" />
                         </div>
                         <div class="card-details">
-                            <h2>{{ games.game_name }}</h2>
+                            <h2>{{ game.game_name }}</h2>
                             <div class="grid-col-2">
                                 <div class="ratings">★★★☆☆</div>
-                                <div class="price">₹{{ games.game_price }}</div>
+                                <div class="price">₹{{ game.game_price }}</div>
                             </div>
                             <div class="grid-col-2">
-                                <div class="flex-row">Developer: <span>{{ games.game_developer }}</span></div>
-                                <div class="flex-row">Publisher: <span>{{ games.game_publisher }}</span></div>
+                                <div class="flex-row">Developer: <span>{{ game.game_developer }}</span></div>
+                                <div class="flex-row">Publisher: <span>{{ game.game_publisher }}</span></div>
                             </div>
                             <div class="card-btn-box">
-                                <a href = "{% url 'add_to_cart' games.product_key %}"><button class="filled-btn">Add to Cart</button></a>
+                                <a href = "{% url 'add_to_cart' game.product_key %}"><button class="filled-btn">Add to Cart</button></a>
                                 <button class="outline-btn">♡</button>
                             </div>
                         </div>
