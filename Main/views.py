@@ -12,11 +12,32 @@ def indexPage(request):
     if request.session.get('is_authenticated', False):
         cust_unique_keyid = request.session['cust_unique_keyid']
         user_id = Customers.objects.get(cust_unique_keyid = cust_unique_keyid)
-        Cart.objects.filter(cust_id = user_id).count()
+        chk = Cart.objects.filter(cust_id = user_id).count()
+        if chk > 0:
+            chk1 = CartItems.objects.all()   
+            c_items_id = []         
+            for data1 in chk1:
+                c_items_id.append(data1.game.gid)
+            print(c_items_id)
+
+            chk2 = Games.objects.all()
+            imp = []
+            for data2 in c_items_id:
+                #print(data2)
+                c_g_items = Games.objects.filter(gid = data2)
+                for data3 in c_g_items:
+                    imp.append(data3.gid)
+                    #print(imp)
+            #return HttpResponse()
+                
+        else :
+            pass    
         context = {
+            'imp' : imp,
             'games' : Games.objects.all(),
             'cart_count' : Cart.objects.filter(cust_id = user_id).count()
         }
+        
         return render(request, 'index.html',context)
     else:
         context = {
@@ -64,20 +85,23 @@ def add_to_cart(request,id):
     # return HttpResponse(id)
     if request.session.get('is_authenticated', False):
         game = Games.objects.get(product_key = id)
+        # chk = CartItems.objects.filter(game = game.gid)
+        # if len(chk) > 0:
+        #     is_added = True
+        #     return redirect(reverse(indexPage),context = {'is_added':is_added}) 
+        # else :
         user = request.session['cust_unique_keyid']
         user_id = Customers.objects.get(cust_unique_keyid = user)
-        #return HttpResponse(user_id.cust_id)
         try:
-            # if user_id.cust_id == 
             cart = Cart.objects.create(
                 cust_id = user_id,
                 is_paid = False
             )
             cartitem = CartItems.objects.create(cart = cart, game = game)
-            
         except Exception as e:
             return HttpResponse(e)
-        return redirect(reverse(indexPage))
+        return redirect(reverse(indexPage)) 
+            
     else:
         return redirect(reverse('render_customer_login_page'))
         
