@@ -162,7 +162,7 @@ def delete_game_category(request, id):
 
 """ Operating System CRUD Starts """
 
-def view_os(request):
+def get_os_by_category(request):
     os_data = OperatingSystems.objects.all()
     versions_data = OSVersions.objects.all().select_related('os_name')
     # print(versions_data)
@@ -173,10 +173,14 @@ def view_os(request):
         versions_for_os = versions_data.filter(os_name_id = os.os_id)
         categorized_version_data[os_name] = [v['version'] for v in list(list(versions_for_os.values()))]
         
+    return categorized_version_data
+    # for key, value in categorized_version_data.items():
+    #     print(key, " => ", value)
+    # print(categorized_version_data)
 
-    for key, value in categorized_version_data.items():
-        print(key, " => ", value)
-    print(categorized_version_data)
+def view_os(request):
+    os_data = OperatingSystems.objects.all()
+    categorized_version_data = get_os_by_category(request)
 
     return render(request,'OperatingSystems/os.html', context={'operating_system': os_data, 'categorized_version_data': categorized_version_data})
 
@@ -199,6 +203,7 @@ def insert_os_version(request):
         os_id  = request.GET.get('os_name')
         os_version  = request.GET.get('version')
         
+        # return HttpResponse(os_id)
         os_data = OperatingSystems.objects.get(os_id = os_id)
         
         try:
@@ -216,15 +221,25 @@ def insert_os_version(request):
 """ Processors CRUD Start """
 
 def view_processor(request):
+    os_data = OperatingSystems.objects.all()
     processor = Processors.objects.all()
-    return render(request,'Processors/processors.html',context ={'processor':processor})
+    return render(request,'Processors/processors.html',context ={
+        'operating_system':os_data,
+        'processor':processor
+    })
 
 def insert_processor(request):
     if request.method == 'GET':
+        os_name  = request.GET.get('os_name')
+        # return HttpResponse(os_name)
+        os_data = OperatingSystems.objects.get(os_id=os_name)
         processor_name  = request.GET.get('processor_name')
         
         try:
-            Processors.objects.create( processor_name = processor_name )
+            Processors.objects.create( 
+                os_name = os_data,
+                processor_name = processor_name 
+            )
             messages.success(request, "Processor Added successfully!")
             return redirect(reverse(view_processor))
         except Exception as e:

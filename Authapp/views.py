@@ -1,4 +1,4 @@
-import random, string
+from functools import wraps
 from django.shortcuts import render,redirect,HttpResponse, get_object_or_404, HttpResponseRedirect
 from django.contrib.auth.hashers import make_password, check_password
 from django.urls import reverse
@@ -157,7 +157,7 @@ def customer_login_handle(request):
         request.session['cust_state'] = user_data.cust_state
         request.session['cust_city'] = user_data.cust_city
         request.session['cust_address'] = user_data.cust_address
-        request.session['is_session'] = True
+        request.session['is_authenticated'] = True
         
         messages.success(request, "You are Logged in successfully!")
         return HttpResponseRedirect('/')
@@ -177,7 +177,7 @@ def customer_logout_handle(request):
         del request.session['cust_state']
         del request.session['cust_city']
         del request.session['cust_address']
-        del request.session['is_session']
+        del request.session['is_authenticated']
     except KeyError:
         pass
     messages.success(request, "You are Logged out!")
@@ -187,22 +187,18 @@ def customer_logout_handle(request):
 """ UPDATE CUSTOMER PROFILE """
 def update_customer_profile(request):
     if request.method == 'GET':
-        first_name = request.GET.get('cust_first_name')
-        last_name = request.GET.get('cust_last_name')
-        email_id = request.GET.get('cust_email')
-        phone_number = request.GET.get('cust_phone_number')
-        gender = request.GET.get('cust_gender')
-        
-        user_data = Customers.objects.get(cust_email=email_id)
-        
-        if gender == "" or gender == None:
-            gender = user_data.cust_gender
         
         try:
-            user_data.cust_first_name = first_name
-            user_data.cust_last_name = last_name
-            user_data.cust_email = email_id
-            user_data.cust_phone_number = phone_number
+            user_data = Customers.objects.get(cust_email = request.session['cust_email'])
+            # return HttpResponse(user_data.is_phone_verified)
+            
+            user_data.cust_first_name = request.GET.get('cust_first_name')
+            user_data.cust_last_name = request.GET.get('cust_last_name')
+            user_data.cust_email = request.GET.get('cust_email')
+            user_data.cust_phone_number = request.GET.get('cust_phone_number')
+            gender = request.GET.get('cust_gender')
+            if gender == "" or gender == None:
+                gender = user_data.cust_gender
             user_data.cust_gender = gender
             user_data.save()
             
@@ -216,7 +212,7 @@ def update_customer_profile(request):
             request.session['cust_state'] = user_data.cust_state
             request.session['cust_city'] = user_data.cust_city
             request.session['cust_address'] = user_data.cust_address
-            request.session['is_session'] = True
+            request.session['is_authenticated'] = True
             
             messages.success(request, "Profile Updated!")
             return redirect(reverse('render_account_page'))

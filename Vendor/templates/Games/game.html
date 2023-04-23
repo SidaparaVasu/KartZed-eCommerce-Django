@@ -1,7 +1,7 @@
-
 {% load static %}
 
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,20 +9,73 @@
     <!-- Favicon Icon -->
     <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon.png' %}" />
     <!-- CSS Styling -->
-    <link rel="stylesheet" href="{% static 'css/styles.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/root.css' %}" />
     <link rel="stylesheet" href="{% static 'css/global.css' %}" />
-  <link rel="stylesheet" href="{% static 'css/dashboard-styles.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/dashboard-styles.min.css' %}" />
 
     <!-- Ion Icon CDN -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <style>
+        textarea {
+            resize: none;
+            width: 100%;
+            font-size: 13px;
+            padding-top: 8px;
+            padding-left: 16px;
+            border-color: #DFE5EF;
+            border-radius: 8px;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #5D87FF;
+        }
+
+        .grid-checkbox {
+            display: grid;
+            grid-template-columns: auto auto auto auto auto;
+        }
+
+        .grid-3 {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 33.33% 33.33% 33.33%;
+        }
+
+        .grid-3>.grid-items {
+            text-align: center;
+        }
+
+        .grid-3>.grid-items>.col {
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: #eee;
+        }
+
+        .grid-3>.grid-items>.item-value {
+            background-color: white;
+        }
+
+        .grid-3>.grid-items>.item-value>col {
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border-bottom: 2px solid #eee;
+        }
+    </style>
 </head>
+
 <body>
     {% if messages %}
         {% for message in messages %}
             {% if message.tags %}
-                <script>alert("{{ message }}")</script> 
+                <script>alert("{{ message }}")</script>
             {% endif %}
         {% endfor %}
     {% endif %}
@@ -44,327 +97,269 @@
                 <div class="card shadow p-3 mb-5 bg-white rounded">
                     <div class="card-body">
                         <h5 class="card-title fw-semibold mb-4">Add Game</h5>
-                        <form action="insert_game" method="get" enctype="multipart/form-data" class="content-area-form">
-                            {% csrf_token %}
-                            <div class="mb-3 ">
-                                <label for="inputGameName" class="form-label">Enter Game Name</label>
-                                <input type="text" name="game_name" class="form-control" placeholder="Enter Game Name" />
-                            </div>
 
-                            <div class="mb-3">
-                                <label for="inputGameName" class="form-label">Enter Game Developer</label>
-                                <input type="text" name="game_developer" class="form-control" placeholder="Enter Game Developer" />
+                        <form action="insert_game" method="GET">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <h5>choose image of game Logo</h5>
+                                    <input type="file" name="game_logo" class="form-control" id="gamename" required />
+                                </div>
                             </div>
-                            
-                            <div class="mb-3">
-                                <label for="inputGamePublisher" class="form-label">Enter Game Publisher</label>
-                                <input type="text" name="game_publisher" class="form-control" placeholder="Enter Game Publisher" />
+                            <br />
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" name="game_name" class="form-control" id="displayname"
+                                            required />
+                                        <label for="displayname">Enter Game name</label>
+                                    </div>
+                                </div>
                             </div>
-                            
-                            <div class="mb-3">
-                                <label for="inputGameDescription" class="form-label">Enter Game Descrption</label>
-                                <input type="text" name="game_description" class="form-control" placeholder="Enter Game Description" />
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="form-floating mb-3">
+                                        <textarea name="game_description" id="gamedesc" cols="50" rows="5"
+                                            placeholder="Enter Game Description" required></textarea>
+                                        <!-- <label for="gamedesc" class="addr_label" style="width: 100%; font-size: 14px;">Company address</label> -->
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="mb-3">
-                                <label for="inputPlatform" class="form-label">Choose Platform</label>
-                                <br>
-                                    {% for platform in platform %}
-                                    <input type="checkbox" name = "platform_name" value="{{ platform.platform_name }}" >
-                                    <label class="form-label">{{ platform.platform_name }}</label>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <h5>choose game image</h5>
+                                    <input type="file" name="game_images[]" class="form-control" id="gameimage" 
+                                        multiple required />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" name="game_developer" class="form-control" id="developername"
+                                            required />
+                                        <label for="developername">Enter Developer name</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" name="game_publisher" class="form-control" id="publishername"
+                                            required />
+                                        <label for="publishername">Enter Publisher name</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="form-floating mb-3">
+                                        <input type="date" name="game_release_date" class="form-control"
+                                            id="releasedate" required />
+                                        <label for="releasedate">Enter Game Release date</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="form-floating mb-3">
+                                        <input type="tel" name="avail_stock" class="form-control" id="availstock"
+                                            pattern="[0-9]+" required />
+                                        <label for="availstock">Enter Available Stock</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="form-floating mb-3">
+                                        <input type="tel" name="game_price" class="form-control" id="gameprice"
+                                            pattern="[0-9]+" required />
+                                        <label for="gameprice">Enter Game Price</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="form-floating mb-3">
+                                        <input type="tel" name="discount" class="form-control" id="discount"
+                                            pattern="[0-9]+" required />
+                                        <label for="discount">Enter Discount(%)</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Game Features, Modes and Categories -->
+                            <div class="row">
+                                <h5>Select Game Features</h5>
+                                <div class="grid-checkbox">
+                                    {% for feature in game_features %}
+                                    <div class="col" style="display: flex; gap: 8px;">
+                                        <input type="checkbox" id="feature_cb" name="game_features"
+                                            value="{{ feature.game_feature_name }}" />
+                                        <label for="feature_cb">{{ feature.game_feature_name }}</label>
+                                    </div>
                                     {% endfor %}
+                                </div>
                             </div>
-
-                            <div class="mb-3">
-                                <label for="inputGameFeature" class="form-label">Choose Game Features</label>
-                                <br>
-                                    {% for gamefeature in game_feature %}
-                                    <input type="checkbox" name= "game_feature" value="{{ gamefeature.game_feature_name }}" />
-                                    <label class="form-label">{{ gamefeature.game_feature_name }}</label>
+                            <br />
+                            <div class="row">
+                                <h5>Select Game Modes</h5>
+                                <div class="grid-checkbox">
+                                    {% for mode in game_modes %}
+                                    <div class="col" style="display: flex; gap: 8px;">
+                                        <input type="checkbox" id="mode_cb" name="game_modes"
+                                            value="{{ mode.game_mode_name }}" />
+                                        <label for="mode_cb">{{ mode.game_mode_name }}</label>
+                                    </div>
                                     {% endfor %}
+                                </div>
                             </div>
-
-                            <div class="mb-3">
-                                <label for="inputGameModes" class="form-label">Choose Game modes</label>
-                                <br>
-                                    {% for gamemodes in game_modes %}
-                                    <input type="checkbox" name="game_mode" value="{{ gamemodes.game_mode_name }}" />
-                                    <label class="form-label">{{ gamemodes.game_mode_name }}</label>
+                            <br />
+                            <div class="row">
+                                <h5>Select Game Categories</h5>
+                                <div class="grid-checkbox">
+                                    {% for category in game_categories %}
+                                    <div class="col" style="display: flex; gap: 8px;">
+                                        <input type="checkbox" id="category_cb" name="game_categories"
+                                            value="{{ category.game_category_name }}" />
+                                        <label for="category_cb">{{ category.game_category_name }}</label>
+                                    </div>
                                     {% endfor %}
+                                </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="inputGameCategory" class="form-label">Choose Game Category</label>
-                                <br>
-                                    {% for gamecategory in game_category %}
-                                    <input type="checkbox" name="game_category" value="{{ gamecategory.game_category_name }}" />
-                                    <label class="form-label">{{ gamecategory.game_category_name }}</label>
+                            <br />
+
+                            <!-- Minimum Requirements -->
+                            <div class="row">
+                                <h5>Minimum Requirements</h5>
+                                <div class="col-sm">
+                                    <label for="gameram">Select RAM</label>
+                                    <select name="game_ram" class="form-control" id="gameram">
+                                        <option value="disabled" selected disabled>-- select ram --</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="form-floating mb-3">
+                                        <input type="tel" name="game_storage" class="form-control" id="storage"
+                                            pattern="[0-9]+" required />
+                                        <label for="storage">Enter Game Storage</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Platform -->
+                            <div class="row">
+                                <h5>Select supported platforms</h5>
+                                <div class="grid-checkbox">
+                                    {% for platform in platforms %}
+                                    <div class="col" style="display: flex; gap: 8px;">
+                                        <input type="checkbox" name="platform_names" id="platform_cb"
+                                            value="{{ platform.platform_name }}" />
+                                        <label for="platform_cb">{{ platform.platform_name }}</label>
+                                    </div>
                                     {% endfor %}
+                                </div>
                             </div>
-
-                            <div class="mb-3">
-                                <label for="inputOperatingSystem" class="form-label">Choose Operating System</label>
-                                <br>
-                                    {% for os in os %}
-                                    <input type="checkbox" name="os_name" value="{{ os.os_name }}" />
-                                    <label class="form-label">{{ os.os_name }}</label>
+                            <br />
+                            <!-- Supported Languages -->
+                            <div class="row">
+                                <h5>Select Supported Languages for (Audio & Video)</h5>
+                                <div class="grid-checkbox" id="displayCBLang"></div>
+                            </div>
+                            <br />
+                            <!-- <div class="row">
+                                <h5>Select supported Operatin System and versions</h5>
+                                <div class="grid-3">
+                                    {% for os in operatingsys %}
+                                        <div class="grid-items">
+                                            <div class="col">
+                                                <input type="checkbox" id="osname" value="{{ os.os_name }}"/>
+                                                <h5 id="osname">{{ os.os_name }}</h5>
+                                            </div>
+                                            <div class="item-value">
+                                            {% for keys, values in categorized_version_data.items %}
+                                                {% if keys == os.os_name %}
+                                                    {% for val in values %}
+                                                        <div class="col">
+                                                            <input type="checkbox" id="os_version" value="{{ val }}"/>
+                                                            <label for="os_version">{{ val }}</label>
+                                                        </div>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            </div>
+                                        </div>
                                     {% endfor %}
+                                </div>
                             </div>
+                            <br/> -->
 
-                            <div class="mb-3">
-                                <label for="inputOSVersion" class="form-label">Choose Operating System Version</label>
-                                <br>
-                                    {% for osv in osv %}
-                                    <input type="checkbox" name = "os_version" value="{{ osv.version }}" />
-                                    <label class="form-label">{{ osv.version }}</label>
-                                    {% endfor %}
-                            </div>
+                            <button type="submit" class="form-control btn btn-primary"
+                                style="padding: 12px;">Submit</button>
+                        </form>
 
-                            <div class="mb-3">
-                                <label for="inputProcessors" class="form-label">Choose Processors</label>
-                                <br>
-                                    {% for processor in processors %}
-                                    <input type="checkbox" name="processors_name" value="{{ processor.processor_name }}" />
-                                    <label class="form-label">{{ processor.processor_name }}</label>
-                                    {% endfor %}
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="inputVideoCards" class="form-label">Choose Video Cards</label>
-                                <br>
-                                    {% for vc in vc %}
-                                    <input type="checkbox" name="vc_name" value="{{ vc.vc_name }}" />
-                                    <label class="form-label">{{ vc.vc_name }}</label>
-                                    {% endfor %}
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="inputVCVersion" class="form-label">Choose Video Cards Version</label>
-                                <br>
-                                    {% for vcv in vcv %}
-                                    <input type="checkbox" name="vc_version" value="{{ vcv.vc_version_name }}" />
-                                    <label class="form-label">{{ vcv.vc_version_name }}</label>
-                                    {% endfor %}
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="inputGamePrice" class="form-label">Enter Game Price</label>
-                                <input type="number"  name="game_price" class="form-control" placeholder="Enter Game Price" />
-                            </div>
-                             
-                            <div class="mb-3">
-                                <label for="inputAvailableStock" class="form-label">Enter Available Stock</label>
-                                <input type="number"  name="avail_stock" class="form-control" placeholder="Enter Available Stock" />
-                            </div>
-                             
-                             <div class="mb-3">
-                                <label for="inputDiscount" class="form-label">Enter Discount</label>
-                                <input type="number"  name="discount" class="form-control" placeholder="Enter Discount" />
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">add game</button>
-                        </form> 
-                        {% comment %} <form action="insert_game" method="get" enctype="multipart/form-data" class="content-area-form">
-                            {% csrf_token %}
-                            <div class="mb-3 ">
-                                <label for="inputGameName" class="form-label">Enter Game Name</label>
-                                <input type="text" name="game_name" class="form-control" placeholder="Enter Game Name" />
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="inputGameName" class="form-label">Enter Game Developer</label>
-                                <input type="text" name="game_developer" class="form-control" placeholder="Enter Game Developer" />
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="inputGamePublisher" class="form-label">Enter Game Publisher</label>
-                                <input type="text" name="game_publisher" class="form-control" placeholder="Enter Game Publisher" required/>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="inputGameDescription" class="form-label">Enter Game Descrption</label>
-                                <input type="text" name="game_description" class="form-control" placeholder="Enter Game Description" required/>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="inputPlatform" class="form-label">Choose Platform</label>
-                                <br>
-                                    {% for platform in platform %}
-                                    <input type="checkbox" name = "platform_name" value="{{ platform.platform_name }}" required/>
-                                    <label class="form-label">{{ platform.platform_name }}</label>
-                                    {% endfor %}
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="inputGameFeature" class="form-label">Choose Game Features</label>
-                                <br>
-                                    {% for gamefeature in game_feature %}
-                                    <input type="checkbox" name= "game_feature" value"{{ gamefeature.game_feature_name }}" required/>
-                                    <label class="form-label">{{ gamefeature.game_feature_name }}</label>
-                                    {% endfor %}
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="inputGameModes" class="form-label">Choose Game modes</label>
-                                <br>
-                                    {% for gamemodes in game_modes %}
-                                    <input type="checkbox" name="game_mode" value="{{ platform.game_mode_name }}" required/>
-                                    <label class="form-label">{{ gamemodes.game_mode_name }}</label>
-                                    {% endfor %}
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="inputGameCategory" class="form-label">Choose Game Category</label>
-                                <br>
-                                    {% for gamecategory in game_category %}
-                                    <input type="checkbox" name="game_category" value="{{ gamecategory.game_category_name }}" required/>
-                                    <label class="form-label">{{ gamecategory.game_category_name }}</label>
-                                    {% endfor %}
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="inputOperatingSystem" class="form-label">Choose Operating System</label>
-                                <br>
-                                    {% for os in os %}
-                                    <input type="checkbox" name="os_name" value="{{ os.os_name }}" required/>
-                                    <label class="form-label">{{ os.os_name }}</label>
-                                    {% endfor %}
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="inputOSVersion" class="form-label">Choose Operating System Version</label>
-                                <br>
-                                    {% for osv in osv %}
-                                    <input type="checkbox" name = "os_version" value="{{ osv.version }}" required/>
-                                    <label class="form-label">{{ osv.version }}</label>
-                                    {% endfor %}
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="inputProcessors" class="form-label">Choose Processors</label>
-                                <br>
-                                    {% for processor in processors %}
-                                    <input type="checkbox" name="processors_name" value="{{ processor.processor_name }}" required/>
-                                    <label class="form-label">{{ processor.processor_name }}</label>
-                                    {% endfor %}
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="inputVideoCards" class="form-label">Choose Video Cards</label>
-                                <br>
-                                    {% for vc in vc %}
-                                    <input type="checkbox" name="vc_name" value="{{ vc.vc_name }}" required/>
-                                    <label class="form-label">{{ vc.vc_name }}</label>
-                                    {% endfor %}
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="inputVCVersion" class="form-label">Choose Video Cards Version</label>
-                                <br>
-                                    {% for vcv in vcv %}
-                                    <input type="checkbox" name="vc_version" value="{{ vcv.vc_version_name }}" required/>
-                                    <label class="form-label">{{ vcv.vc_version_name }}</label>
-                                    {% endfor %}
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="inputGamePrice" class="form-label">Enter Game Price</label>
-                                <input type="text" name="game_price" class="form-control" placeholder="Enter Game Price" required/>
-                            </div>
-                             
-                            <div class="mb-3">
-                                <label for="inputAvailableStock" class="form-label">Enter Available Stock</label>
-                                <input type="text" name="avail_stock" class="form-control" placeholder="Enter Available Stock" required/>
-                            </div>
-                             
-                             <div class="mb-3">
-                                <label for="inputDiscount" class="form-label">Enter Discount</label>
-                                <input type="text" name="discount" class="form-control" placeholder="Enter Discount" required/>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">add game</button>
-                        </form>   {% endcomment %}
                     </div>
                 </div>
 
-                <!-- Display Products -->
-                <!-- <div class="card shadow p-3 mb-5 bg-white rounded">
-                    <div class="card-body">
-                        <h5 class="card-title fw-semibold mb-4">View Products</h5>
-                        <div class="row">
-                            <div class="white-box">
-                                <table class="show-data-box">
-                                    <thead>
-                                        <th>#srno.</th>
-                                        <th>product image</th>
-                                        <th>product name</th>
-                                        <th>product description</th>
-                                        <th>price</th>
-                                        <th>discount(%)</th>
-                                        <th>edit</th>
-                                        <th>delete</th>
-                                    </thead>
-                                    <tbody>
-                                        {% for data in product %}
-                                        <tr>
-                                            <td>{{ forloop.counter }}</td>
-                                            {% if data.prodimage %}
-                                                <td class="img-size"><img src="{{ data.prodimage.url }}" alt="" class="table-img"/></td>
-                                            {% else %}
-                                                <td>defaultimg</td>
-                                            {% endif %}
-                                            <td>{{ data.prodname }}</td>
-                                            <td>{{ data.proddescription }}</td>
-                                            <td>{{ data.prodprice }}</td>
-                                            <td>{{ data.discount }}</td>
-                                            <td>
-                                                <a href="{% url 'update_product' data.product_key %}">
-                                                    <span class="icon-box gr-icon">
-                                                        <ion-icon name="create-outline" class="icon"></ion-icon>
-                                                    </span> 
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="{% url 'delete_product' data.product_key %}" onclick="return confirm('Are you sure you want to delete this?')">
-                                                    <span class="icon-box rd-icon">
-                                                        <ion-icon name="trash-outline" class="icon"></ion-icon>
-                                                    </span>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        {% empty %}
-                                            <center>No data found</center>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                                <div class="pagination">
-                                    {%if category.has_previous %} {# whether the previous page exists #}
-                                        <a href="?page={{category.previous_page_number}}" class="pagination-btn">prev</a> {# link to the prev page #}
-                                    {% endif %}
-                    
-                                    {% if category.number == 1 %}
-                                        <p></p>
-                                    {% else %}
-                                        <span>page: {{category.number}}</span> {# the current page number #}
-                                    {% endif %}
-                                    
-                                    {%if category.has_next %} {# whether the next page exists #}
-                                        <a href="?page={{category.next_page_number}}" class="pagination-btn">next</a> {# link to the next page #}
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
+
+    <script>
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', "{% static 'json/ram.json' %}");
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                var data = JSON.parse(xhr.responseText);
+                var dropdown = document.getElementById('gameram');
+                for (var i = 0; i < data.RAM.length; i++) {
+                    var option = document.createElement('option');
+                    option.text = data.RAM[i];
+                    option.value = data.RAM[i];
+                    dropdown.add(option);
+                }
+            }
+        };
+        xhr.send();
+    </script>
+    <script>
+        // Read JSON file
+        fetch("{% static 'json/languages.json' %}")
+            .then(response => response.json())
+            .then(data => {
+                // Get the languages array from the JSON data
+                const languages = data.languages;
+
+                // Get the div element where the checkboxes will be displayed
+                const displayCBLang = document.getElementById('displayCBLang');
+
+                // Loop through each language in the array
+                languages.forEach(language => {
+                    // Create a div element with a "col" class
+                    const colDiv = document.createElement('div');
+                    colDiv.classList.add('col');
+                    colDiv.style.display = "flex";
+                    colDiv.style.gap = "8px";
+
+                    // Create a checkbox element
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = language;
+                    checkbox.value = language;
+                    checkbox.name = 'game_languages'
+
+                    // Create a label element for the checkbox
+                    const label = document.createElement('label');
+                    label.htmlFor = language;
+                    label.appendChild(document.createTextNode(language));
+
+                    // Add the checkbox and label to the "col" div
+                    colDiv.appendChild(checkbox);
+                    colDiv.appendChild(label);
+
+                    // Add the "col" div to the parent div
+                    displayCBLang.appendChild(colDiv);
+                });
+            });
+    </script>
+
     <script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script>
     <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/sidebarmenu.js' %}"></script>
     <script src="{% static 'js/app.min.js' %}"></script>
-    <!-- <script src="{% static 'libs/apexcharts/dist/apexcharts.min.js' %}"></script> -->
     <script src="{% static 'libs/simplebar/dist/simplebar.js' %}"></script>
-    <!-- <script src="{% static 'js/dashboard.js' %}"></script> -->
 </body>
+
 </html>

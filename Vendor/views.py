@@ -1,11 +1,13 @@
+import os, random, string, imghdr
+from PIL import Image
 from django.shortcuts import get_object_or_404, render, redirect, HttpResponse
 from django.urls import reverse
 from django.shortcuts import render
 from django.contrib import messages
-import random
-import string
+from django.core.exceptions import ValidationError
 from .models import Games
 from Administrator.models import *
+from Administrator.views import get_os_by_category
 
 # Create your views here.
 
@@ -19,80 +21,85 @@ def render_vendor_register_page(request):
 def render_vendor_login_page(request):
     return render(request, 'vendor-login.html')
 
+""" Check Image is in Image formt or not? """
+def is_image(file):
+    """
+    Returns True if the selected file is an image, False otherwise.
+    """
+    image_formats = ('.jpg', '.jpeg', '.png', '.gif')
+    file_extension = os.path.splitext(file.name)[1]
+    if file_extension.lower() in image_formats:
+        return True
+    elif imghdr.what(file) in image_formats:
+        return True
+    else:
+        return False
+
 # Games CRUD
 def view_game(request):
+    categorized_os_version_data = get_os_by_category(request)
     context = {
-        'platform'         : Platform.objects.all(),
-        'game_feature'    : GameFeatures.objects.all(),
-        'game_modes'       : GameModes.objects.all(),
-        'game_category'    : GameCategory.objects.all(),
-        'os'               : OperatingSystems.objects.all(),
-        'osv'              : OSVersions.objects.all(),
-        'processors'       : Processors.objects.all(),
-        'vc'               : VideoCards.objects.all(),
-        'vcv'              : VCVersions.objects.all(),
-
+        'platforms'                   : Platform.objects.order_by('platform_name'),
+        'game_features'               : GameFeatures.objects.order_by('game_feature_name'),
+        'game_modes'                  : GameModes.objects.order_by('game_mode_name'),
+        'game_categories'             : GameCategory.objects.order_by('game_category_name'),
+        'operatingsys'                : OperatingSystems.objects.all(),
+        # 'operatingsysversion'       : OSVersions.objects.all(),
+        'categorized_version_data'    : categorized_os_version_data,
+        'processors'                  : Processors.objects.all(),
+        'vc'                          : VideoCards.objects.all(),
+        'vcv'                         : VCVersions.objects.all(),
     }
+    # return HttpResponse(context['categorized_version_data'])
     return render(request,'Games/game.html',context)
 
-def insert_game(request):
-    if request.method == 'GET':
-        game_name      = request.GET.get('game_name')
-        game_developer = request.GET.get('game_developer')
-        game_publisher = request.GET.get('game_publisher')
-        game_desc      = request.GET.get('game_description')
-        platform_name  = request.GET.get('platform_name')
-        game_feature   = request.GET.get('game_feature')
-        game_modes     = request.GET.get('game_mode')
-        game_category  = request.GET.get('game_category')
-        os_name        = request.GET.get('os_name')
-        os_version     = request.GET.get('os_version')
-        processors_name= request.GET.get('processors_name')
-        vc_name        = request.GET.get('vc_name')
-        vc_version     = request.GET.get('vc_version')
-        game_price     = request.GET.get('game_price')
-        avail_stock    = request.GET.get('avail_stock')
-        discount       = request.GET.get('discount')
-        #print(type(game_price))
-        #return HttpResponse(game_price)
-        
-        platforms     = Platform.objects.get(platform_name = platform_name)
-        gamefeatures  = GameFeatures.objects.get(game_feature_name=game_feature)
-        gamemodes     = GameModes.objects.get(game_mode_name=game_modes)
-        gamecategory  = GameCategory.objects.get(game_category_name=game_category)
-        osname        = OperatingSystems.objects.get(os_name=os_name)
-        osversion     = OSVersions.objects.get(version=os_version)
-        processorsname= Processors.objects.get(processor_name=processors_name)
-        vcname        = VideoCards.objects.get(vc_name=vc_name)
-        vcversion     = VCVersions.objects.get(vc_version_name=vc_version)
+def generate_product_key(request):
+    """
+    Generates a random product key of the specified length.
+    """
+    length=16
+    letters_and_digits = string.ascii_uppercase + string.ascii_lowercase + string.digits
+    key = ''.join(random.choice(letters_and_digits) for i in range(length))
+    return key
 
+def check_image_format(file):
+    try:
+        # open the file and check if it's an image
+        image = Image.open(file)
+        if image.format.lower() not in ['jpeg', 'jpg', 'png', 'gif']:
+            raise ValidationError('File must be in image format.')
+        else:
+            return image
+    except IOError:
+        raise ValidationError('File is not an image.')
+
+def insert_game(request):
+    if request.method == 'GET': 
         try:
-            Games.objects.create( 
-                game_developer  =  game_developer,
-                game_name       =  game_name,
-                game_publisher  =  game_publisher,
-                game_description=  game_desc,
-                platform_name   =  platforms,
-                game_feature    =  gamefeatures,
-                game_modes      =  gamemodes,
-                game_category   =  gamecategory,
-                os_name         =  osname,
-                os_version      =  osversion,
-                processors_name =  processorsname,
-                vc_name         =  vcname,
-                vc_version      =  vcversion,
-                game_ram        =  "",
-                game_languages  =  "",
-                game_regions    =  "",
-                game_price      =  game_price,
-                avail_stock     =  avail_stock,
-                discount        =  discount,
-             )
+            Games.objects.create(
+                product_key           = generate_product_key(request),
+                game_logo             = request.GET.get('game_logo'), 
+                game_name             = request.GET.get('game_name'),
+                game_description      = request.GET.get('game_description'),
+                game_images           = request.FILES.getlist('game_images'),
+                game_developer        = request.GET.get('game_developer'),
+                game_publisher        = request.GET.get('game_publisher'),
+                game_release_date     = request.GET.get('game_release_date'),
+                avail_stock           = request.GET.get('avail_stock'),
+                game_price            = request.GET.get('game_price'),
+                discount              = request.GET.get('discount'),
+                game_storage          = request.GET.get('game_storage'),
+                game_ram              = request.GET.get('game_ram'),
+                game_features         = ','.join(request.GET.getlist('game_features')),
+                game_modes            = ','.join(request.GET.getlist('game_modes')),
+                game_categories       = ','.join(request.GET.getlist('game_categories')),
+                platform_names        = ','.join(request.GET.getlist('platform_names')),
+                game_languages        = ','.join(request.GET.getlist('game_languages')),
+            )
             messages.success(request, "Game Added successfully!")
             return redirect(reverse(view_game))
         except Exception as e:
-            #messages.error(request, "")
-            #return redirect(reverse(view_game))
-            return HttpResponse(e)
-    messages.error(request, "Game Insertion failed!")
+            messages.success(request, "Game Insertion failed!")
+            return redirect(reverse(view_game))
+    messages.error(request, "An unexpected error occured! Try again later!")
     return redirect(reverse(view_game))

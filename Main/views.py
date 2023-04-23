@@ -25,14 +25,20 @@ def indexPage(request):
         return render(request, 'index.html',context)
 
 def render_account_page(request):
-    return render(request, 'user_account.html')
+    if request.session.get('is_authenticated', False):
+        return render(request, 'user_account.html')
+    else:
+        return redirect(reverse('render_customer_login_page'))
 
 def view_cart(request):
-    return render(request, 'Cart/viewcart.html')
+    if request.session.get('is_authenticated', False):
+        return render(request, 'Cart/viewcart.html')
+    else:
+        return redirect(reverse('render_customer_login_page'))
 
 def add_to_cart(request,id):
     
-    if 'is_session' in request.session:
+    if request.session.get('is_authenticated', False):
         game = Games.objects.get(product_key = id)
         user = request.session['cust_email']
         user_id = Customers.objects.get(cust_email = user)
