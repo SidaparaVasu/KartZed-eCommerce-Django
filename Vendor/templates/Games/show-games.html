@@ -1,0 +1,113 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Games | Vender | Dashboard</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon_logo.png' %}" />
+    <link rel="stylesheet" href="{% static 'css/dashboard-styles.min.css' %}" />
+</head>
+
+<body>
+    <!--  Body Wrapper -->
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed">
+
+        <!-- Including Sidebar -->
+        {% include 'sidebar-vendor.html' %}
+
+        <!--  Main wrapper -->
+        <div class="body-wrapper">
+
+            <!-- Including Header -->
+            {% include 'navbar-vendor.html' %}
+
+            <div class="container-fluid">
+                <section style="background-color: #eee;">
+                    <div class="container py-5">
+                        {% for game in Games %}
+                        <div class="row justify-content-center mb-0">
+                            <div class="col-md-12 col-xl-10">
+                                <div class="card shadow-0 border rounded-3">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                                                <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                                                    <img src="Media/{{ game.game_logo }}" class="w-100" />
+                                                    <a href="#!">
+                                                        <div class="hover-overlay">
+                                                            <div class="mask"
+                                                                style="background-color: rgba(253, 253, 253, 0.15);">
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-xl-6">
+                                                <h5>{{ game.game_name }}</h5>
+
+                                                <div class="mb-2 text-muted small">
+                                                    <span class="text-primary">• Features: </span>
+                                                    <span>{{ game.game_features }}</span>
+                                                </div>
+                                                <div class="mb-2 text-muted small">
+                                                    <span class="text-primary">• Modes: </span>
+                                                    <span>{{ game.game_modes }}</span>
+                                                </div>
+                                                <div class="mb-2 text-muted small">
+                                                    <span class="text-primary">• Categories: </span>
+                                                    <span>{{ game.game_categories }}</span>
+                                                </div>
+
+                                                <p class="text-truncate mb-4 mb-md-0">
+                                                    Description:
+                                                    {{ game.game_description }}
+                                                </p>
+                                            </div>
+                                            <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                                                <div class="d-flex flex-row align-items-center mb-1">
+                                                    <h4 class="mb-1 me-1">₹{{ game.game_price }}</h4>
+                                                    <span class="text-danger">discount: {{ game.discount }} %</span>
+                                                </div>
+                                                <h6 class="text-success">Free shipping</h6>
+                                                <div class="mb-2 text-muted small">
+                                                    <span class="text-primary">• Developer: </span>
+                                                    <span>{{ game.game_developer }}</span>
+                                                </div>
+                                                <div class="mb-2 text-muted small">
+                                                    <span class="text-primary">• Publisher: </span>
+                                                    <span>{{ game.game_publisher }}</span>
+                                                </div>
+                                                <div class="d-flex flex-column mt-4">
+                                                    <button class="btn btn-primary btn-sm" type="button">Details</button>
+                                                    <!-- <button class="btn btn-outline-primary btn-sm mt-2" type="button">
+                                                      Add to wishlist
+                                                    </button> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/sidebarmenu.js' %}"></script>
+    <script src="{% static 'js/app.min.js' %}"></script>
+    <script src="{% static 'libs/apexcharts/dist/apexcharts.min.js' %}"></script>
+    <script src="{% static 'libs/simplebar/dist/simplebar.js' %}"></script>
+    <script src="{% static 'js/dashboard.js' %}"></script>
+</body>
+
+</html>

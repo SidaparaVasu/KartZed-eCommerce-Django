@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from .models import Games
+from .forms import GamesForm
 from Authapp.models import Vendors
 from Administrator.models import *
 from Administrator.views import get_os_by_category
@@ -14,13 +15,24 @@ from Administrator.views import get_os_by_category
 
 #call main page
 def index_vendor(request):
-    return render(request,'index-vendor.html')
+    if request.session.get('is_vendor_authenticated', False):
+        return render(request,'index-vendor.html')
+    else:
+        return render(request, 'vendor-login.html')    
 
 def render_vendor_register_page(request):
     return render(request, 'vendor-register.html')
 
 def render_vendor_login_page(request):
     return render(request, 'vendor-login.html')
+
+def show_games_page(request):
+    if request.session.get('is_vendor_authenticated', False):
+        vendor = Vendors.objects.get(vendor_unique_keyid = request.session['vendor_unique_keyid'])
+        games = Games.objects.filter(vendor_reference = vendor.vendor_id)
+        return render(request, 'Games/show-games.html', context = {'Games':games})
+    else:
+        return render(request, 'vendor-login.html') 
 
 """ Check Image is in Image formt or not? """
 def is_image(file):
@@ -37,7 +49,7 @@ def is_image(file):
         return False
 
 # Games CRUD
-def view_game(request):
+def add_game_page(request):
     categorized_os_version_data = get_os_by_category(request)
     context = {
         'platforms'                   : Platform.objects.order_by('platform_name'),
@@ -52,7 +64,7 @@ def view_game(request):
         'vcv'                         : VCVersions.objects.all(),
     }
     # return HttpResponse(context['categorized_version_data'])
-    return render(request,'Games/game.html',context)
+    return render(request,'Games/game.html', context)
 
 def generate_product_key(request):
     """
@@ -76,13 +88,17 @@ def check_image_format(file):
 
 def insert_game(request):
     if request.method == 'GET': 
-        vendor_email = request.GET.get('vendor_company_email')
-        vendors = Vendors.objects.get(vendor_email = vendor_email)
+        vendor_unique_id = request.GET.get('vendor_unique_keyid')
+        vendors = Vendors.objects.get(vendor_unique_keyid = vendor_unique_id)
+        
+        game_logo_path = request.GET.get('game_logo')
+        game_logo_path = "product_img/game_logos/"+str(game_logo_path)
+        # return HttpResponse(game_logo_path)
         try:
             Games.objects.create(
                 product_key           = generate_product_key(request),
-                game_logo             = request.GET.get('game_logo'),
-                vendor_company_name   = vendors, 
+                game_logo             = game_logo_path,
+                vendor_reference      = vendors, 
                 game_name             = request.GET.get('game_name'),
                 game_description      = request.GET.get('game_description'),
                 game_images           = request.FILES.getlist('game_images'),
@@ -101,9 +117,10 @@ def insert_game(request):
                 game_languages        = ','.join(request.GET.getlist('game_languages')),
             )
             messages.success(request, "Game Added successfully!")
-            return redirect(reverse(view_game))
+            return redirect(reverse(add_game_page))
         except Exception as e:
+            return HttpResponse(e)
             messages.success(request, "Game Insertion failed!")
-            return redirect(reverse(view_game))
-    messages.error(request, "An unexpected error occured! Try again later!")
-    return redirect(reverse(view_game))
+            return redirect(reverse(add_game_page))
+    messages.error(request, "Bad request of form! Try again later!")
+    return redirect(reverse(add_game_page))

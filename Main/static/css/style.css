@@ -81,7 +81,7 @@ body{
     display: none;
 }
 .slilder-sl > .slider-card .product-card{
-    height: 320px;
+    height: 350px;
     width: 300px;
     color: var(--white);
     border: 1px solid var(--white);
@@ -105,6 +105,7 @@ body{
     height: 100%;
     width: 100%;
     object-fit: cover;
+    background-position: 50% 50%;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     transition: all 0.45s ease-in-out;
@@ -129,6 +130,7 @@ body{
 }
 .slilder-sl .slider-card .product-card .card-details > h2{
     font-size: 20px;
+    text-overflow: ellipsis;
 }
 .slilder-sl .slider-card .product-card .card-details .grid-col-2{
     display: flex;
