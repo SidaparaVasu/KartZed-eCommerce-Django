@@ -1,0 +1,783 @@
+{
+    "country": "India",
+    "states": [
+        {
+            "state_name": "Andaman and Nicobar Islands",
+            "cities": [
+                {
+                    "city_name": "Port Blair",
+                    "pincode": "744101"
+                },
+                {
+                    "city_name": "Garacharma",
+                    "pincode": "744105"
+                },
+                {
+                    "city_name": "Bombooflat",
+                    "pincode": "744103"
+                },
+                {
+                    "city_name": "Prothrapur",
+                    "pincode": "744104"
+                }
+            ]
+        },
+        {
+            "state_name": "Andhra Pradesh",
+            "cities": [
+                {
+                    "city_name": "Visakhapatnam",
+                    "pincode": "530001"
+                },
+                {
+                    "city_name": "Vijayawada",
+                    "pincode": "520001"
+                },
+                {
+                    "city_name": "Guntur",
+                    "pincode": "522001"
+                },
+                {
+                    "city_name": "Rajahmundry",
+                    "pincode": "533101"
+                }
+            ]
+        },
+        {
+            "state_name": "Arunachal Pradesh",
+            "cities": [
+                {
+                    "city_name": "Itanagar",
+                    "pincode": "791111"
+                },
+                {
+                    "city_name": "Pasighat",
+                    "pincode": "791102"
+                },
+                {
+                    "city_name": "Naharlagun",
+                    "pincode": "791110"
+                },
+                {
+                    "city_name": "Ziro",
+                    "pincode": "791120"
+                }
+            ]
+        },
+        {
+            "state_name": "Andaman and Nicobar Islands",
+            "cities": [
+                {
+                    "city_name": "Port Blair",
+                    "pincode": "744101"
+                },
+                {
+                    "city_name": "Garacharma",
+                    "pincode": "744105"
+                },
+                {
+                    "city_name": "Bombooflat",
+                    "pincode": "744103"
+                },
+                {
+                    "city_name": "Prothrapur",
+                    "pincode": "744104"
+                }
+            ]
+        },
+        {
+            "state_name": "Andhra Pradesh",
+            "cities": [
+                {
+                    "city_name": "Visakhapatnam",
+                    "pincode": "530001"
+                },
+                {
+                    "city_name": "Vijayawada",
+                    "pincode": "520001"
+                },
+                {
+                    "city_name": "Guntur",
+                    "pincode": "522001"
+                },
+                {
+                    "city_name": "Rajahmundry",
+                    "pincode": "533101"
+                }
+            ]
+        },
+        {
+            "state_name": "Arunachal Pradesh",
+            "cities": [
+                {
+                    "city_name": "Itanagar",
+                    "pincode": "791111"
+                },
+                {
+                    "city_name": "Pasighat",
+                    "pincode": "791102"
+                },
+                {
+                    "city_name": "Naharlagun",
+                    "pincode": "791110"
+                },
+                {
+                    "city_name": "Ziro",
+                    "pincode": "791120"
+                }
+            ]
+        },
+        {
+            "state_name": "Assam",
+            "cities": [
+                {
+                    "city_name": "Guwahati",
+                    "pincode": "781001"
+                },
+                {
+                    "city_name": "Silchar",
+                    "pincode": "788001"
+                },
+                {
+                    "city_name": "Jorhat",
+                    "pincode": "785001"
+                },
+                {
+                    "city_name": "Dibrugarh",
+                    "pincode": "786001"
+                }
+            ]
+        },
+        {
+            "state_name": "Bihar",
+            "cities": [
+                {
+                    "city_name": "Patna",
+                    "pincode": "800001"
+                },
+                {
+                    "city_name": "Gaya",
+                    "pincode": "823001"
+                },
+                {
+                    "city_name": "Bhagalpur",
+                    "pincode": "812001"
+                },
+                {
+                    "city_name": "Muzaffarpur",
+                    "pincode": "842001"
+                }
+            ]
+        },
+        {
+            "state_name": "Chandigarh",
+            "cities": [
+                {
+                    "city_name": "Chandigarh",
+                    "pincode": "160001"
+                }
+            ]
+        },
+        {
+            "state_name": "Chhattisgarh",
+            "cities": [
+                {
+                    "city_name": "Raipur",
+                    "pincode": "492001"
+                },
+                {
+                    "city_name": "Bhilai",
+                    "pincode": "490001"
+                },
+                {
+                    "city_name": "Bilaspur",
+                    "pincode": "495001"
+                },
+                {
+                    "city_name": "Korba",
+                    "pincode": "495677"
+                }
+            ]
+        },
+        {
+            "state_name": "Dadra and Nagar Haveli",
+            "cities": [
+                {
+                    "city_name": "Silvassa",
+                    "pincode": "396230"
+                },
+                {
+                    "city_name": "Naroli",
+                    "pincode": "396235"
+                },
+                {
+                    "city_name": "Khanvel",
+                    "pincode": "396230"
+                },
+                {
+                    "city_name": "Amli",
+                    "pincode": "396230"
+                }
+            ]
+        },
+        {
+            "state_name": "Daman and Diu",
+            "cities": [
+                {
+                    "city_name": "Daman",
+                    "pincode": "396210"
+                },
+                {
+                    "city_name": "Diu",
+                    "pincode": "362520"
+                }
+            ]
+        },
+        {
+            "state_name": "Delhi",
+            "cities": [
+                {
+                    "city_name": "New Delhi",
+                    "pincode": "110001"
+                },
+                {
+                    "city_name": "North Delhi",
+                    "pincode": "110009"
+                },
+                {
+                    "city_name": "South Delhi",
+                    "pincode": "110049"
+                },
+                {
+                    "city_name": "East Delhi",
+                    "pincode": "110092"
+                }
+            ]
+        },
+        {
+            "state_name": "Goa",
+            "cities": [
+                {
+                    "city_name": "Panaji",
+                    "pincode": "403001"
+                },
+                {
+                    "city_name": "Margao",
+                    "pincode": "403601"
+                },
+                {
+                    "city_name": "Vasco da Gama",
+                    "pincode": "403802"
+                },
+                {
+                    "city_name": "Mapusa",
+                    "pincode": "403507"
+                }
+            ]
+        },
+        {
+            "state_name": "Gujarat",
+            "cities": [
+                {
+                    "city_name": "Ahmedabad",
+                    "pincode": "380001"
+                },
+                {
+                    "city_name": "Surat",
+                    "pincode": "395001"
+                },
+                {
+                    "city_name": "Vadodara",
+                    "pincode": "390001"
+                },
+                {
+                    "city_name": "Rajkot",
+                    "pincode": "360001"
+                }
+            ]
+        },
+        {
+            "state_name": "Haryana",
+            "cities": [
+                {
+                    "city_name": "Gurgaon",
+                    "pincode": "122001"
+                },
+                {
+                    "city_name": "Faridabad",
+                    "pincode": "121001"
+                },
+                {
+                    "city_name": "Panipat",
+                    "pincode": "132103"
+                },
+                {
+                    "city_name": "Karnal",
+                    "pincode": "132001"
+                }
+            ]
+        },
+        {
+            "state_name": "Himachal Pradesh",
+            "cities": [
+                {
+                    "city_name": "Shimla",
+                    "pincode": "171001"
+                },
+                {
+                    "city_name": "Mandi",
+                    "pincode": "175001"
+                },
+                {
+                    "city_name": "Solan",
+                    "pincode": "173205"
+                },
+                {
+                    "city_name": "Dharamshala",
+                    "pincode": "176215"
+                }
+            ]
+        },
+        {
+            "state_name": "Jammu and Kashmir",
+            "cities": [
+                {
+                    "city_name": "Srinagar",
+                    "pincode": "190001"
+                },
+                {
+                    "city_name": "Jammu",
+                    "pincode": "180001"
+                },
+                {
+                    "city_name": "Anantnag",
+                    "pincode": "192101"
+                },
+                {
+                    "city_name": "Baramulla",
+                    "pincode": "193101"
+                }
+            ]
+        },
+        {
+            "state_name": "Jharkhand",
+            "cities": [
+                {
+                    "city_name": "Ranchi",
+                    "pincode": "834001"
+                },
+                {
+                    "city_name": "Jamshedpur",
+                    "pincode": "831001"
+                },
+                {
+                    "city_name": "Dhanbad",
+                    "pincode": "826001"
+                },
+                {
+                    "city_name": "Bokaro Steel City",
+                    "pincode": "827001"
+                }
+            ]
+        },
+        {
+            "state_name": "Karnataka",
+            "cities": [
+                {
+                    "city_name": "Bangalore",
+                    "pincode": "560001"
+                },
+                {
+                    "city_name": "Mysore",
+                    "pincode": "570001"
+                },
+                {
+                    "city_name": "Hubli",
+                    "pincode": "580020"
+                },
+                {
+                    "city_name": "Mangalore",
+                    "pincode": "575001"
+                }
+            ]
+        },
+        {
+            "state_name": "Kerala",
+            "cities": [
+                {
+                    "city_name": "Thiruvananthapuram",
+                    "pincode": "695001"
+                },
+                {
+                    "city_name": "Kochi",
+                    "pincode": "682001"
+                },
+                {
+                    "city_name": "Kozhikode",
+                    "pincode": "673001"
+                },
+                {
+                    "city_name": "Thrissur",
+                    "pincode": "680001"
+                }
+            ]
+        },
+        {
+            "state_name": "Madhya Pradesh",
+            "cities": [
+                {
+                    "city_name": "Bhopal",
+                    "pincode": "462001"
+                },
+                {
+                    "city_name": "Indore",
+                    "pincode": "452001"
+                },
+                {
+                    "city_name": "Jabalpur",
+                    "pincode": "482001"
+                },
+                {
+                    "city_name": "Gwalior",
+                    "pincode": "474001"
+                }
+            ]
+        },
+        {
+            "state_name": "Maharashtra",
+            "cities": [
+                {
+                    "city_name": "Mumbai",
+                    "pincode": "400001"
+                },
+                {
+                    "city_name": "Pune",
+                    "pincode": "411001"
+                },
+                {
+                    "city_name": "Nagpur",
+                    "pincode": "440001"
+                },
+                {
+                    "city_name": "Nashik",
+                    "pincode": "422001"
+                }
+            ]
+        },
+        {
+            "state_name": "Manipur",
+            "cities": [
+                {
+                    "city_name": "Imphal",
+                    "pincode": "795001"
+                },
+                {
+                    "city_name": "Thoubal",
+                    "pincode": "795138"
+                },
+                {
+                    "city_name": "Churachandpur",
+                    "pincode": "795128"
+                },
+                {
+                    "city_name": "Senapati",
+                    "pincode": "795106"
+                }
+            ]
+        },
+        {
+            "state_name": "Meghalaya",
+            "cities": [
+                {
+                    "city_name": "Shillong",
+                    "pincode": "793001"
+                },
+                {
+                    "city_name": "Tura",
+                    "pincode": "794001"
+                },
+                {
+                    "city_name": "Nongstoin",
+                    "pincode": "793119"
+                },
+                {
+                    "city_name": "Jowai",
+                    "pincode": "793150"
+                }
+            ]
+        },
+        {
+            "state_name": "Mizoram",
+            "cities": [
+                {
+                    "city_name": "Aizawl",
+                    "pincode": "796001"
+                },
+                {
+                    "city_name": "Lunglei",
+                    "pincode": "796701"
+                },
+                {
+                    "city_name": "Champhai",
+                    "pincode": "796321"
+                },
+                {
+                    "city_name": "Serchhip",
+                    "pincode": "796181"
+                }
+            ]
+        },
+        {
+            "state_name": "Nagaland",
+            "cities": [
+                {
+                    "city_name": "Dimapur",
+                    "pincode": "797112"
+                },
+                {
+                    "city_name": "Kohima",
+                    "pincode": "797001"
+                },
+                {
+                    "city_name": "Wokha",
+                    "pincode": "797111"
+                },
+                {
+                    "city_name": "Mokokchung",
+                    "pincode": "798601"
+                }
+            ]
+        },
+        {
+            "state_name": "Odisha",
+            "cities": [
+                {
+                    "city_name": "Bhubaneswar",
+                    "pincode": "751001"
+                },
+                {
+                    "city_name": "Cuttack",
+                    "pincode": "753001"
+                },
+                {
+                    "city_name": "Rourkela",
+                    "pincode": "769001"
+                },
+                {
+                    "city_name": "Berhampur",
+                    "pincode": "760001"
+                }
+            ]
+        },
+        {
+            "state_name": "Puducherry",
+            "cities": [
+                {
+                    "city_name": "Pondicherry",
+                    "pincode": "605001"
+                },
+                {
+                    "city_name": "Karaikal",
+                    "pincode": "609602"
+                },
+                {
+                    "city_name": "Mahe",
+                    "pincode": "673310"
+                },
+                {
+                    "city_name": "Yanam",
+                    "pincode": "533464"
+                }
+            ]
+        },
+        {
+            "state_name": "Punjab",
+            "cities": [
+                {
+                    "city_name": "Chandigarh",
+                    "pincode": "160001"
+                },
+                {
+                    "city_name": "Ludhiana",
+                    "pincode": "141001"
+                },
+                {
+                    "city_name": "Amritsar",
+                    "pincode": "143001"
+                },
+                {
+                    "city_name": "Jalandhar",
+                    "pincode": "144001"
+                }
+            ]
+        },
+        {
+            "state_name": "Rajasthan",
+            "cities": [
+                {
+                    "city_name": "Jaipur",
+                    "pincode": "302001"
+                },
+                {
+                    "city_name": "Jodhpur",
+                    "pincode": "342001"
+                },
+                {
+                    "city_name": "Udaipur",
+                    "pincode": "313001"
+                },
+                {
+                    "city_name": "Kota",
+                    "pincode": "324001"
+                }
+            ]
+        },
+        {
+            "state_name": "Sikkim",
+            "cities": [
+                {
+                    "city_name": "Gangtok",
+                    "pincode": "737101"
+                },
+                {
+                    "city_name": "Namchi",
+                    "pincode": "737126"
+                },
+                {
+                    "city_name": "Jorethang",
+                    "pincode": "737121"
+                },
+                {
+                    "city_name": "Rangpo",
+                    "pincode": "737132"
+                }
+            ]
+        },
+        {
+            "state_name": "Tamil Nadu",
+            "cities": [
+                {
+                    "city_name": "Chennai",
+                    "pincode": "600001"
+                },
+                {
+                    "city_name": "Coimbatore",
+                    "pincode": "641001"
+                },
+                {
+                    "city_name": "Madurai",
+                    "pincode": "625001"
+                },
+                {
+                    "city_name": "Tiruchirappalli",
+                    "pincode": "620001"
+                }
+            ]
+        },
+        {
+            "state_name": "Telangana",
+            "cities": [
+                {
+                    "city_name": "Hyderabad",
+                    "pincode": "500001"
+                },
+                {
+                    "city_name": "Warangal",
+                    "pincode": "506002"
+                },
+                {
+                    "city_name": "Karimnagar",
+                    "pincode": "505001"
+                },
+                {
+                    "city_name": "Khammam",
+                    "pincode": "507001"
+                }
+            ]
+        },
+        {
+            "state_name": "Tripura",
+            "cities": [
+                {
+                    "city_name": "Agartala",
+                    "pincode": "799001"
+                },
+                {
+                    "city_name": "Udaipur",
+                    "pincode": "799120"
+                },
+                {
+                    "city_name": "Dharmanagar",
+                    "pincode": "799250"
+                },
+                {
+                    "city_name": "Kailasahar",
+                    "pincode": "799277"
+                }
+            ]
+        },
+        {
+            "state_name": "Uttar Pradesh",
+            "cities": [
+                {
+                    "city_name": "Lucknow",
+                    "pincode": "226001"
+                },
+                {
+                    "city_name": "Kanpur",
+                    "pincode": "208001"
+                },
+                {
+                    "city_name": "Varanasi",
+                    "pincode": "221001"
+                },
+                {
+                    "city_name": "Agra",
+                    "pincode": "282001"
+                }
+            ]
+        },
+        {
+            "state_name": "Uttarakhand",
+            "cities": [
+                {
+                    "city_name": "Dehradun",
+                    "pincode": "248001"
+                },
+                {
+                    "city_name": "Haridwar",
+                    "pincode": "249401"
+                },
+                {
+                    "city_name": "Rishikesh",
+                    "pincode": "249201"
+                },
+                {
+                    "city_name": "Nainital",
+                    "pincode": "263001"
+                }
+            ]
+        },
+        {
+            "state_name": "West Bengal",
+            "cities": [
+                {
+                    "city_name": "Kolkata",
+                    "pincode": "700001"
+                },
+                {
+                    "city_name": "Asansol",
+                    "pincode": "713301"
+                },
+                {
+                    "city_name": "Darjeeling",
+                    "pincode": "734101"
+                },
+                {
+                    "city_name": "Siliguri",
+                    "pincode": "734001"
+                }
+            ]
+        }
+    ]
+}
