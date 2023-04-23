@@ -26,7 +26,8 @@ def indexPage(request):
 
 def render_account_page(request):
     if request.session.get('is_authenticated', False):
-        return render(request, 'user_account.html')
+        user_data = Customers.objects.get(cust_unique_keyid = request.session['cust_unique_keyid'])
+        return render(request, 'user_account.html', context={'user_data': user_data})
     else:
         return redirect(reverse('render_customer_login_page'))
 

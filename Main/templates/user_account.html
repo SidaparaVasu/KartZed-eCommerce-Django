@@ -36,32 +36,32 @@
                 <img src="{% static 'images/profile/default-user.jpg' %}" alt="" srcset="">
             </div>
             <div class="profile-form">
-                <h1>Hello, {% if request.session.first_name %} {{ request.session.first_name }} {% endif %}
+                <h1>Hello, {% if user_data.cust_first_name %} {{ user_data.cust_first_name }} {% endif %}
                     <span id="edit-btn" onclick="enable_username_form()">Edit</span>
                 </h1>
                 <div class="personal-info">
                     <form action="update_customer_profile" method="get" class="first-form">
-                        {% csrf_token %}
+                        <input type="hidden" name="cust_unique_keyid" value="{{ user_data.cust_unique_keyid }}" />
                         <label for="input-group" class="form-label">Personal Information</label>
                         <div class="input-group" id="input-group">
                             <input type="text" name="cust_first_name" placeholder="First Name" id="first-name-input" 
-                                class="form-control" value="{{ request.session.cust_first_name }}" disabled required/>
+                                class="form-control" value="{{ user_data.cust_first_name }}" disabled required/>
                             <input type="text" name="cust_last_name" placeholder="Last Name" id="last-name-input" 
-                                class="form-control" value="{{ request.session.cust_last_name }}" disabled required/>
+                                class="form-control" value="{{ user_data.cust_last_name }}" disabled required/>
                         </div>
                         <div class="col-2-group">
                             <div class="col">
                                 <label for="input-group" class="form-label">Email Address</label>
                                 <div class="input-group" id="input-group">
                                     <input type="email" name="cust_email" placeholder="kartzed@mail.com" id="email-input" 
-                                    value="{{ request.session.cust_email }}" class="form-control" disabled required/>
+                                    value="{{ user_data.cust_email }}" class="form-control" disabled required/>
                                 </div>
                             </div>
                             <div class="col">
                                 <label for="input-group" class="form-label">Phone Number</label>
                                 <div class="input-group" id="input-group">
                                     <input type="tel" name="cust_phone_number" placeholder="e.g. 9874561230" id="phone-number-input" class="form-control" 
-                                    value="{{ request.session.cust_phone_number }}"  maxlength="10" pattern="[0-9]+" disabled required/>
+                                    value="{{ user_data.cust_phone_number }}"  maxlength="10" pattern="[0-9]+" disabled required/>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
 
                             <label for="radio-group" class="form-label">Gender:</label>
                             <div class="radio-group" id="input-group">
-                                <input type="hidden" id="user_gender" value="{{ request.session.cust_gender }}" />
+                                <input type="hidden" id="user_gender" value="{{ user_data.cust_gender }}" />
                                 <label for="gender-input-1">
                                     <input type="radio" name="cust_gender" id="gender-input-1" 
                                     class="form-control" value="Male" disabled/>
@@ -141,10 +141,10 @@
                 genderRadio2.disabled = true;
                 genderRadio3.disabled = true;
 
-                firstNameInput.value = '{{ request.session.cust_first_name }}';
-                lastNameInput.value = '{{ request.session.cust_last_name }}';
-                emailInput.value = '{{ request.session.cust_email }}';
-                phoneNumberInput.value = '{{ request.session.cust_phone_number }}';
+                firstNameInput.value = '{{ user_data.cust_first_name }}';
+                lastNameInput.value = '{{ user_data.cust_last_name }}';
+                emailInput.value = '{{ user_data.cust_email }}';
+                phoneNumberInput.value = '{{ user_data.cust_phone_number }}';
                 saveBtn.style.display = 'none';
             }
         }

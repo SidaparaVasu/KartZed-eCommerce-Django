@@ -21,7 +21,7 @@ class Games(models.Model):
     gid                = models.AutoField(primary_key=True)
     product_key        = models.CharField(unique=True, max_length=16)
     
-    vendor_company_name = models.ForeignKey(Vendors, on_delete=models.CASCADE)
+    vendor_reference = models.ForeignKey(Vendors, on_delete=models.CASCADE)
     
     game_logo          = models.ImageField(upload_to=game_logo_filepath, null=True, blank=True) 
     game_name          = models.CharField(max_length=25)

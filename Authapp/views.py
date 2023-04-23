@@ -1,3 +1,4 @@
+import random, string
 from functools import wraps
 from django.shortcuts import render,redirect,HttpResponse, get_object_or_404, HttpResponseRedirect
 from django.contrib.auth.hashers import make_password, check_password
@@ -17,6 +18,12 @@ def render_admin_login_page(request):
 def render_customer_login_page(request):
     return render(request, 'customer-login.html')
 
+""" Generates a random unique key of the specified length. """
+def generate_unique_key(request):
+    length=16
+    letters_and_digits = string.ascii_uppercase + string.ascii_lowercase + string.digits
+    key = ''.join(random.choice(letters_and_digits) for i in range(length))
+    return key
 
 """  ADMIN LOGIN  """
 def set_default_admin(request):
@@ -37,6 +44,7 @@ def admin_login(request):
         # return HttpResponse(row_counter)
         if row_counter == 0:
             form = Admins(
+                admin_unique_keyid = generate_unique_key(request),
                 admin_name = 'administrator',
                 admin_role = 'super_admin',
                 admin_email = 'admin@gmail.com',
@@ -104,6 +112,7 @@ def customer_login(request):
             # return HttpResponse(email)
             try: 
                 Customers.objects.create(
+                    cust_unique_keyid = generate_unique_key(request),
                     cust_first_name = '',
                     cust_last_name = '',
                     cust_gender = '',
@@ -147,16 +156,7 @@ def customer_login_handle(request):
     if verified:
         Customers.objects.filter(cust_email=email).update(otp='null')
         # Storing Customers data into session
-        request.session['cust_first_name'] = user_data.cust_first_name
-        request.session['cust_last_name'] = user_data.cust_last_name
-        request.session['cust_gender'] = user_data.cust_gender
-        request.session['cust_email'] = user_data.cust_email
-        request.session['cust_phone_number'] = user_data.cust_phone_number
-        request.session['is_phone_verified'] = user_data.is_phone_verified
-        request.session['cust_country'] = user_data.cust_country
-        request.session['cust_state'] = user_data.cust_state
-        request.session['cust_city'] = user_data.cust_city
-        request.session['cust_address'] = user_data.cust_address
+        request.session['cust_unique_keyid'] = user_data.cust_unique_keyid
         request.session['is_authenticated'] = True
         
         messages.success(request, "You are Logged in successfully!")
@@ -167,16 +167,7 @@ def customer_login_handle(request):
     
 def customer_logout_handle(request):
     try:
-        del request.session['cust_first_name']
-        del request.session['cust_last_name']
-        del request.session['cust_gender']
-        del request.session['cust_email']
-        del request.session['cust_phone_number']
-        del request.session['is_phone_verified']
-        del request.session['cust_country']
-        del request.session['cust_state']
-        del request.session['cust_city']
-        del request.session['cust_address']
+        del request.session['cust_unique_keyid']
         del request.session['is_authenticated']
     except KeyError:
         pass
@@ -189,8 +180,9 @@ def update_customer_profile(request):
     if request.method == 'GET':
         
         try:
-            user_data = Customers.objects.get(cust_email = request.session['cust_email'])
-            # return HttpResponse(user_data.is_phone_verified)
+            # return HttpResponse(request.GET.get('cust_unique_keyid'))
+            user_data = Customers.objects.get(cust_unique_keyid = request.GET.get('cust_unique_keyid'))
+            # return HttpResponse(user_data.cust_unique_keyid)
             
             user_data.cust_first_name = request.GET.get('cust_first_name')
             user_data.cust_last_name = request.GET.get('cust_last_name')
@@ -202,16 +194,7 @@ def update_customer_profile(request):
             user_data.cust_gender = gender
             user_data.save()
             
-            request.session['cust_first_name'] = user_data.cust_first_name
-            request.session['cust_last_name'] = user_data.cust_last_name
-            request.session['cust_gender'] = user_data.cust_gender
-            request.session['cust_email'] = user_data.cust_email
-            request.session['cust_phone_number'] = user_data.cust_phone_number
-            request.session['is_phone_verified'] = user_data.is_phone_verified
-            request.session['cust_country'] = user_data.cust_country
-            request.session['cust_state'] = user_data.cust_state
-            request.session['cust_city'] = user_data.cust_city
-            request.session['cust_address'] = user_data.cust_address
+            request.session['cust_unique_keyid'] = user_data.cust_unique_keyid
             request.session['is_authenticated'] = True
             
             messages.success(request, "Profile Updated!")
@@ -227,29 +210,19 @@ def update_customer_profile(request):
 """ REGISTRATION OF VENDOR """
 def register_vendor(request):
     if request.method == "POST":
-        vendor_fullname      = request.POST.get('vendor_fullname')
-        vendor_email         = request.POST.get('vendor_email')
-        vendor_password      = request.POST.get('vendor_password')
-        vendor_phone_number  = request.POST.get('vendor_phone_number')
-        company_name         = request.POST.get('company_name')
-        company_phone_number = request.POST.get('company_phone_number')
-        company_address      = request.POST.get('company_address')
-        gstin                = request.POST.get('GSTIN')
-        pickup_pincode       = request.POST.get('pickup_pincode')
-        pickup_address       = request.POST.get('pickup_address')
-        
         try:
             Vendors.objects.create(
-                vendor_fullname      = vendor_fullname,     
-                vendor_email         = vendor_email, 
-                vendor_password      = make_password(vendor_password),    
-                vendor_phone_number  = vendor_phone_number,
-                company_name         = company_name,
-                company_address      = company_address,
-                company_phone_number = company_phone_number, 
-                GSTIN                = gstin,    
-                pickup_pincode       = pickup_pincode,
-                pickup_address       = pickup_address     
+                vendor_unique_keyid  = generate_unique_key(request),
+                vendor_fullname      = request.POST.get('vendor_fullname'),     
+                vendor_email         = request.POST.get('vendor_email'), 
+                vendor_password      = make_password(request.POST.get('vendor_password')),    
+                vendor_phone_number  = request.POST.get('vendor_phone_number'),
+                company_name         = request.POST.get('company_name'),
+                company_address      = request.POST.get('company_address'),
+                company_phone_number = request.POST.get('company_phone_number'), 
+                GSTIN                = request.POST.get('GSTIN'),    
+                pickup_pincode       = request.POST.get('pickup_pincode'),
+                pickup_address       = request.POST.get('pickup_address')     
             )
             messages.success(request, "Registration Successfully!")
             messages.success(request, "One Last step to GO LIVE!!!")
@@ -282,7 +255,8 @@ def vendor_login(request):
                         is_password_match = check_password(password, vendor_data[i].vendor_password)
                         
                         if is_password_match == True:
-                            request.session['company_email'] = vendor_data[i].vendor_email
+                            request.session['vendor_unique_keyid'] = vendor_data[i].vendor_unique_keyid
+                            request.session['is_vendor_authenticated'] = True
                             return redirect(reverse('index_vendor'))
                         else:
                             messages.error(request, "Password is incorrect!")
@@ -295,4 +269,13 @@ def vendor_login(request):
             except Exception as e:
                 messages.error(request, "An error occured, try again later!")
                 return redirect(reverse('render_vendor_login_page'))
+    return redirect(reverse('render_vendor_login_page'))
+
+def vendor_logout_handle(request):
+    try:
+        del request.session['vendor_unique_keyid']
+        del request.session['is_vendor_authenticated']
+    except KeyError:
+        pass
+    messages.success(request, "You are Logged out!")
     return redirect(reverse('render_vendor_login_page'))

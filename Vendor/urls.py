@@ -1,9 +1,10 @@
 from django.urls import path, include
 from Vendor import views
-from Authapp.views import register_vendor, admin_login, vendor_login
+from Authapp.views import register_vendor, admin_login, vendor_login, vendor_logout_handle
 
 urlpatterns = [
    path('', views.render_vendor_login_page, name='render_vendor_login_page'), 
+   path('vendor_logout_handle', vendor_logout_handle, name="vendor_logout_handle"),
    path('dashboard', views.index_vendor, name='index_vendor'), 
    
    # Vendor Register Form
@@ -13,6 +14,7 @@ urlpatterns = [
    path('vendor-login', vendor_login, name="vendor_login"),
    
    # Games
-   path('game',views.view_game,name="view_game"),
-   path('insert_game',views.insert_game,name='insert_game')
+   path('add-game',views.add_game_page,name="add_game_page"),
+   path('insert_game',views.insert_game,name='insert_game'),
+   path('show-games', views.show_games_page, name="show_games_page")
 ]

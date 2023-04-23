@@ -34,7 +34,15 @@
                     <span class="hide-menu">Games</span>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="{% url 'view_game' %}" aria-expanded="false">
+                    <a class="sidebar-link" href="{% url 'show_games_page' %}" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-eye"></i>
+                        </span>
+                        <span class="hide-menu">View Games</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{% url 'add_game_page' %}" aria-expanded="false">
                         <span>
                             <i class="ti ti-plus"></i>
                         </span>
