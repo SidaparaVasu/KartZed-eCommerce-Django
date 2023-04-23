@@ -52,7 +52,7 @@
                 {% for game in games %}
                     <div class="product-card">
                         <div class="card-img-box">
-                            <img src="Media/{{ game.game_logo }}" alt="{{ game.game_logo }}" srcset="" />
+                            <img src="Media/{{ game.game_logo }}" alt="" srcset="" />
                         </div>
                         <div class="card-details">
                             <h2>{{ game.game_name }}</h2>
@@ -65,6 +65,7 @@
                                 <div class="flex-row">Publisher: <span>{{ game.game_publisher }}</span></div>
                             </div>
                             <div class="card-btn-box">
+                                {% comment %} <a href = "{% url 'view_cart' %}"><button class="filled-btn" style="backgroung-color:purple;">View in Cart</button></a> {% endcomment %}
                                 <a href = "{% url 'add_to_cart' game.product_key %}"><button class="filled-btn">Add to Cart</button></a>
                                 <button class="outline-btn">♡</button>
                             </div>
