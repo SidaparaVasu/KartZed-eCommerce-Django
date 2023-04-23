@@ -1,0 +1,79 @@
+
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Games | Vendor | Dashboard</title>
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon.png' %}" />
+    <!-- CSS Styling -->
+    <link rel="stylesheet" href="{% static 'css/styles.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/root.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/global.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/dashboard-styles.min.css' %}" />
+
+    <!-- Ion Icon CDN -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags %}
+                <script>alert("{{ message }}")</script> 
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <!--  Body Wrapper -->
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed">
+
+        <!-- Including Sidebar -->
+        {% include 'sidebar-vendor.html' %}
+
+        <!--  Main wrapper -->
+        <div class="body-wrapper">
+
+            <!-- Including Header -->
+            {% include 'navbar-vendor.html' %}
+
+            <div class="container-fluid">
+                <!-- Product Form -->
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold mb-4">Contact Us</h5>
+                        <form action="insert_game_contact" method="post" enctype="multipart/form-data" class="content-area-form">
+                            {% csrf_token %}
+                            <div class="mb-3 ">
+                                <label for="inputContactName" class="form-label">Enter Name</label>
+                                <input type="text" name="contact_name" class="form-control" placeholder="Enter your Name" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="inputGamePublisher" class="form-label">Enter Email</label>
+                                <input type="email" name="contact_email" class="form-control" placeholder="Enter email address" />
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="inputGamePublisher" class="form-label">Enter your text</label>
+                                <textarea id="message" name="contact_message" style="width: 300px; height: 100px;" placeholder="Please enter your message" class="form-control"></textarea>
+                            </div>
+                           
+                            <button type="submit" class="btn btn-primary">Send</button>
+                        </form> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/sidebarmenu.js' %}"></script>
+    <script src="{% static 'js/app.min.js' %}"></script>
+    <!-- <script src="{% static 'libs/apexcharts/dist/apexcharts.min.js' %}"></script> -->
+    <script src="{% static 'libs/simplebar/dist/simplebar.js' %}"></script>
+    <!-- <script src="{% static 'js/dashboard.js' %}"></script> -->
+</body>
+</html>

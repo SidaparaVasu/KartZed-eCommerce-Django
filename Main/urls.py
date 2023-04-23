@@ -23,5 +23,14 @@ urlpatterns = [
 
     # Cart
     path('view_cart',views.view_cart,name="view_cart"),
-    path('add_to_cart/<id>',views.add_to_cart,name="add_to_cart")
+    path('add_to_cart/<id>',views.add_to_cart,name="add_to_cart"),
+
+    #product details
+    path('view_game/<str:product_key>',views.view_game,name="view_game"),
+
+    #contact
+    path('contact_view/', views.contact_view, name="contact_view"),
+    path('contact_view/insert_contact', views.insert_contact, name="insert_contact"),
+    path('contact_view/<id>', views.delete_contact, name="delete_contact"),
+
 ]

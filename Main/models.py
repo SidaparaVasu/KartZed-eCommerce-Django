@@ -15,3 +15,8 @@ class CartItems(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     game = models.ForeignKey(Games, on_delete=models.SET_NULL, null=True,blank=True)
     
+class Contact(models.Model):
+    contact_id = models.AutoField(primary_key=True)
+    contact_name = models.CharField(max_length=100)
+    contact_email = models.EmailField()
+    contact_message = models.TextField()

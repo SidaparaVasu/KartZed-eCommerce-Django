@@ -5,6 +5,8 @@ from django.urls import reverse
 from django.shortcuts import render
 from django.contrib import messages
 from django.core.exceptions import ValidationError
+
+from Main.models import Contact
 from .models import Games
 from .forms import GamesForm
 from Authapp.models import Vendors
@@ -124,3 +126,24 @@ def insert_game(request):
             return redirect(reverse(add_game_page))
     messages.error(request, "Bad request of form! Try again later!")
     return redirect(reverse(add_game_page))
+
+
+def contact_game_view(request):
+    return render(request, 'contact.html')
+
+def insert_game_contact(request):
+    #return HttpResponse("yo")
+    if request.method == 'POST':
+        contact_name    = request.POST.get('contact_name')
+        contact_email   = request.POST.get('contact_email')
+        contact_message = request.POST.get('contact_message')
+        try:
+            Contact.objects.create( 
+                contact_name    = contact_name,   
+                contact_email   = contact_email,  
+                contact_message = contact_message,
+            )
+        except Exception as e:
+            return HttpResponse(e)
+                
+    return render(request, 'contact.html')

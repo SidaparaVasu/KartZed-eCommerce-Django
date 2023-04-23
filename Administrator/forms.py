@@ -29,7 +29,7 @@ class OperatingSystemsForm(forms.ModelForm):
 
 class OSVersionForm(forms.ModelForm):
     class Meta:
-        model  = OSVersion
+        model  = OSVersions
         fields = ('version_id','os_name','version')
 
 class ProcessorForm(forms.ModelForm):
@@ -46,3 +46,8 @@ class VCVersionsForm(forms.ModelForm):
     class Meta:
         model  = VCVersions
         fields = ('vc_version_id','vc_name','vc_version_name')
+
+class OfferForm(forms.ModelForm):
+    class Meta:
+        model  = Offer 
+        fields = ('offer_id', 'offer_name', 'offer_description', 'offer_tc')
