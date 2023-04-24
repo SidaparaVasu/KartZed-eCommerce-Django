@@ -23,7 +23,7 @@ class Games(models.Model):
     
     vendor_reference = models.ForeignKey(Vendors, on_delete=models.CASCADE)
     
-    game_logo          = models.ImageField(upload_to="games/game_logos", null=True, blank=True) 
+    game_logo          = models.ImageField(upload_to="games\game_logos", null=True, blank=True) 
     game_name          = models.CharField(max_length=25)
     game_description   = models.CharField(max_length=300)
     game_developer     = models.CharField(max_length=25)
@@ -37,7 +37,7 @@ class Games(models.Model):
     avail_stock        = models.IntegerField() 
     discount           = models.CharField(max_length=3) 
     
-    game_images        = models.ImageField(upload_to="games/game_images", null=True, blank=True)
+    game_images        = models.ImageField(upload_to="games\game_images", null=True, blank=True)
     
     # features
     game_features      = models.CharField(max_length=100)

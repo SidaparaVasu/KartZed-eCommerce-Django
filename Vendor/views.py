@@ -13,6 +13,8 @@ from Authapp.models import Vendors
 from Administrator.models import *
 from Administrator.views import get_os_by_category
 
+from KartZed.settings import MEDIA_ROOT
+
 # Create your views here.
 
 #call main page
@@ -52,6 +54,7 @@ def is_image(file):
 
 # Games CRUD
 def add_game_page(request):
+    # return HttpResponse(MEDIA_ROOT)
     categorized_os_version_data = get_os_by_category(request)
     context = {
         'platforms'                   : Platform.objects.order_by('platform_name'),
@@ -101,27 +104,49 @@ def insert_game(request):
 
         game_logo_path = str(g_form.game_logo)
         try:
-            Games.objects.create(
-                product_key           = generate_product_key(request),
-                game_logo             = game_logo_path,
-                vendor_reference      = vendors, 
-                game_name             = request.POST.get('game_name'),
-                game_description      = request.POST.get('game_description'),
-                game_images           = request.FILES.getlist('game_images'),
-                game_developer        = request.POST.get('game_developer'),
-                game_publisher        = request.POST.get('game_publisher'),
-                game_release_date     = request.POST.get('game_release_date'),
-                avail_stock           = request.POST.get('avail_stock'),
-                game_price            = request.POST.get('game_price'),
-                discount              = request.POST.get('discount'),
-                game_storage          = request.POST.get('game_storage'),
-                game_ram              = request.POST.get('game_ram'),
-                game_features         = ','.join(request.POST.getlist('game_features')),
-                game_modes            = ','.join(request.POST.getlist('game_modes')),
-                game_categories       = ','.join(request.POST.getlist('game_categories')),
-                platform_names        = ','.join(request.POST.getlist('platform_names')),
-                game_languages        = ','.join(request.POST.getlist('game_languages')),
-            )
+            game = Games()
+            
+            game.product_key           = generate_product_key(request)
+            game.game_logo             = game_logo_path
+            game.vendor_reference      = vendors 
+            game.game_name             = request.POST.get('game_name')
+            game.game_description      = request.POST.get('game_description')
+            game.game_images           = request.FILES.getlist('game_images')
+            game.game_developer        = request.POST.get('game_developer')
+            game.game_publisher        = request.POST.get('game_publisher')
+            game.game_release_date     = request.POST.get('game_release_date')
+            game.avail_stock           = request.POST.get('avail_stock')
+            game.game_price            = request.POST.get('game_price')
+            game.discount              = request.POST.get('discount')
+            game.game_storage          = request.POST.get('game_storage')
+            game.game_ram              = request.POST.get('game_ram')
+            game.game_features         = ','.join(request.POST.getlist('game_features'))
+            game.game_modes            = ','.join(request.POST.getlist('game_modes'))
+            game.game_categories       = ','.join(request.POST.getlist('game_categories'))
+            game.platform_names        = ','.join(request.POST.getlist('platform_names'))
+            game.game_languages        = ','.join(request.POST.getlist('game_languages'))
+            game.save()
+            # Games.objects.create(
+            #     product_key           = generate_product_key(request),
+            #     game_logo             = game_logo_path,
+            #     vendor_reference      = vendors, 
+            #     game_name             = request.POST.get('game_name'),
+            #     game_description      = request.POST.get('game_description'),
+            #     game_images           = request.FILES.getlist('game_images'),
+            #     game_developer        = request.POST.get('game_developer'),
+            #     game_publisher        = request.POST.get('game_publisher'),
+            #     game_release_date     = request.POST.get('game_release_date'),
+            #     avail_stock           = request.POST.get('avail_stock'),
+            #     game_price            = request.POST.get('game_price'),
+            #     discount              = request.POST.get('discount'),
+            #     game_storage          = request.POST.get('game_storage'),
+            #     game_ram              = request.POST.get('game_ram'),
+            #     game_features         = ','.join(request.POST.getlist('game_features')),
+            #     game_modes            = ','.join(request.POST.getlist('game_modes')),
+            #     game_categories       = ','.join(request.POST.getlist('game_categories')),
+            #     platform_names        = ','.join(request.POST.getlist('platform_names')),
+            #     game_languages        = ','.join(request.POST.getlist('game_languages')),
+            # )
             messages.success(request, "Game Added successfully!")
             return redirect(reverse(add_game_page))
         except Exception as e:
