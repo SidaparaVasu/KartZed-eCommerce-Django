@@ -1,4 +1,5 @@
 import os, random, string, imghdr
+from django.conf import settings
 from PIL import Image
 from django.shortcuts import get_object_or_404, render, redirect, HttpResponse
 from django.urls import reverse
@@ -93,10 +94,7 @@ def insert_game(request):
     if request.method == 'POST': 
         vendor_unique_id = request.POST.get('vendor_unique_keyid')
         vendors = Vendors.objects.get(vendor_unique_keyid = vendor_unique_id)
-        
-        # game_logo_path = request.GET.get('game_logo')
-        # game_logo_path = "product_img/game_logos/"+str(game_logo_path)
-        # return HttpResponse(game_logo_path)
+    
         try:
             features = list(request.POST.getlist('game_features'))
             modes = list(request.POST.getlist('game_modes'))
@@ -104,27 +102,26 @@ def insert_game(request):
             platforms = list(request.POST.getlist('platform_names'))
             languages = list(request.POST.getlist('game_languages'))
             
-            Games.objects.create(
-                product_key           = generate_product_key(request),
-                game_logo             = request.POST.get('game_logo'),
-                vendor_reference      = vendors, 
-                game_name             = request.POST.get('game_name'),
-                game_description      = request.POST.get('game_description'),
-                game_images           = request.FILES.getlist('game_images'),
-                game_developer        = request.POST.get('game_developer'),
-                game_publisher        = request.POST.get('game_publisher'),
-                game_release_date     = request.POST.get('game_release_date'),
-                avail_stock           = request.POST.get('avail_stock'),
-                game_price            = request.POST.get('game_price'),
-                discount              = request.POST.get('discount'),
-                game_storage          = request.POST.get('game_storage'),
-                game_ram              = request.POST.get('game_ram'),
-                game_features         = features,
-                game_modes            = modes,
-                game_categories       = categoires,
-                platform_names        = platforms,
-                game_languages        = languages,
-            )
+            game = Games()
+            game.product_key           = generate_product_key(request)
+            game.game_logo             = request.FILES['game_logo']
+            game.vendor_reference      = vendors 
+            game.game_name             = request.POST.get('game_name')
+            game.game_description      = request.POST.get('game_description')
+            game.game_developer        = request.POST.get('game_developer')
+            game.game_publisher        = request.POST.get('game_publisher')
+            game.game_release_date     = request.POST.get('game_release_date')
+            game.avail_stock           = request.POST.get('avail_stock')
+            game.game_price            = request.POST.get('game_price')
+            game.discount              = request.POST.get('discount')
+            game.game_storage          = request.POST.get('game_storage')
+            game.game_ram              = request.POST.get('game_ram')
+            game.game_features         = features
+            game.game_modes            = modes
+            game.game_categories       = categoires
+            game.platform_names        = platforms
+            game.game_languages        = languages
+            game.save()
             messages.success(request, "Game Added successfully!")
             return redirect(reverse(add_game_page))
         except Exception as e:

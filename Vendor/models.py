@@ -1,5 +1,5 @@
-import datetime
-import os
+import datetime, os, random
+from django.utils import timezone
 from django.db import models
 from Administrator.models import *
 from Authapp.models import Vendors
@@ -8,13 +8,21 @@ def game_logo_filepath(request, filename):
     old_filename = filename
     timeNow = datetime.datetime.now().strftime('%Y%m%d%H:%M:%S')
     filename = "%s%s" % (timeNow, old_filename)
-    return os.path.join('product_img/game_logos', filename)
+    return os.path.join('product_img/game_logos/', filename)
 
 def game_image_filepath(request, filename):
-    old_filename = filename
-    timeNow = datetime.datetime.now().strftime('%Y%m%d%H:%M:%S')
-    filename = "%s%s" % (timeNow, old_filename)
-    return os.path.join('product_img/game_images', filename)
+    while True:
+        folder_name = str(random.randint(100000, 999999))
+        folder_path = os.path.join('product_img/game_images/', folder_name)
+        # Check if the directory already exists
+        if not os.path.exists(folder_path):
+            break
+    
+    # Return the path to the file within the new directory
+    timestamp = timezone.now().strftime('%Y%m%d-%H%M%S')
+    filename = f"{timestamp}_{filename}"
+    
+    return os.path.join(folder_path, filename)
 
 # Create your models here.
 class Games(models.Model):
@@ -36,8 +44,6 @@ class Games(models.Model):
     game_price         = models.IntegerField() 
     avail_stock        = models.IntegerField() 
     discount           = models.CharField(max_length=3) 
-    
-    game_images        = models.ImageField(upload_to=game_image_filepath, null=True, blank=True)
     
     # features
     game_features      = models.JSONField(default=list)

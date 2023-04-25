@@ -154,7 +154,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # MEDIA FILES (Images, Videos, etc.)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'Media/')
-MEDIA_URL = '/media/'
+MEDIA_URL = '/Media/'
 
 
 # EMAIL
