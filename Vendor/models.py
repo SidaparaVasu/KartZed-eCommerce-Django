@@ -31,7 +31,7 @@ class Games(models.Model):
     
     game_storage       = models.CharField(max_length=6) 
     game_ram           = models.CharField(max_length=3)
-    game_languages     = models.CharField(max_length=25)
+    game_languages     = models.JSONField(default=list)
     game_release_date  = models.CharField(max_length=6) 
     game_price         = models.IntegerField() 
     avail_stock        = models.IntegerField() 
@@ -40,12 +40,12 @@ class Games(models.Model):
     game_images        = models.ImageField(upload_to=game_image_filepath, null=True, blank=True)
     
     # features
-    game_features      = models.CharField(max_length=100)
-    game_modes         = models.CharField(max_length=100)
-    game_categories    = models.CharField(max_length=100)
+    game_features      = models.JSONField(default=list)
+    game_modes         = models.JSONField(default=list)
+    game_categories    = models.JSONField(default=list)
     
     # Minimum Requirements (mr - minimum requirements)
-    platform_names     = models.CharField(max_length=100)
+    platform_names     = models.JSONField(default=list)
     os_names           = models.CharField(max_length=100)
     os_versions        = models.CharField(max_length=100)
     processors_names   = models.CharField(max_length=100)

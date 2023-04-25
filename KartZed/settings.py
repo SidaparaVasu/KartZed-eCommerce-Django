@@ -152,9 +152,9 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# IMAGES
-MEDIA_ROOT = os.path.join(BASE_DIR, 'Media')
-MEDIA_URL = '/Media/'
+# MEDIA FILES (Images, Videos, etc.)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'Media/')
+MEDIA_URL = '/media/'
 
 
 # EMAIL

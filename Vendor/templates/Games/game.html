@@ -98,7 +98,8 @@
                     <div class="card-body">
                         <h5 class="card-title fw-semibold mb-4">Add Game</h5>
 
-                        <form action="insert_game" method="GET">
+                        <form action="insert_game" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
                             <input type="hidden" name="vendor_unique_keyid" value="{{ request.session.vendor_unique_keyid }}" />
                             <div class="row">
                                 <div class="col-sm">

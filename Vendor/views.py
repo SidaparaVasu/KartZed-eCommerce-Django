@@ -90,34 +90,40 @@ def check_image_format(file):
         raise ValidationError('File is not an image.')
 
 def insert_game(request):
-    if request.method == 'GET': 
-        vendor_unique_id = request.GET.get('vendor_unique_keyid')
+    if request.method == 'POST': 
+        vendor_unique_id = request.POST.get('vendor_unique_keyid')
         vendors = Vendors.objects.get(vendor_unique_keyid = vendor_unique_id)
         
-        game_logo_path = request.GET.get('game_logo')
-        game_logo_path = "product_img/game_logos/"+str(game_logo_path)
+        # game_logo_path = request.GET.get('game_logo')
+        # game_logo_path = "product_img/game_logos/"+str(game_logo_path)
         # return HttpResponse(game_logo_path)
         try:
+            features = list(request.POST.getlist('game_features'))
+            modes = list(request.POST.getlist('game_modes'))
+            categoires = list(request.POST.getlist('game_categories'))
+            platforms = list(request.POST.getlist('platform_names'))
+            languages = list(request.POST.getlist('game_languages'))
+            
             Games.objects.create(
                 product_key           = generate_product_key(request),
-                game_logo             = game_logo_path,
+                game_logo             = request.POST.get('game_logo'),
                 vendor_reference      = vendors, 
-                game_name             = request.GET.get('game_name'),
-                game_description      = request.GET.get('game_description'),
+                game_name             = request.POST.get('game_name'),
+                game_description      = request.POST.get('game_description'),
                 game_images           = request.FILES.getlist('game_images'),
-                game_developer        = request.GET.get('game_developer'),
-                game_publisher        = request.GET.get('game_publisher'),
-                game_release_date     = request.GET.get('game_release_date'),
-                avail_stock           = request.GET.get('avail_stock'),
-                game_price            = request.GET.get('game_price'),
-                discount              = request.GET.get('discount'),
-                game_storage          = request.GET.get('game_storage'),
-                game_ram              = request.GET.get('game_ram'),
-                game_features         = ','.join(request.GET.getlist('game_features')),
-                game_modes            = ','.join(request.GET.getlist('game_modes')),
-                game_categories       = ','.join(request.GET.getlist('game_categories')),
-                platform_names        = ','.join(request.GET.getlist('platform_names')),
-                game_languages        = ','.join(request.GET.getlist('game_languages')),
+                game_developer        = request.POST.get('game_developer'),
+                game_publisher        = request.POST.get('game_publisher'),
+                game_release_date     = request.POST.get('game_release_date'),
+                avail_stock           = request.POST.get('avail_stock'),
+                game_price            = request.POST.get('game_price'),
+                discount              = request.POST.get('discount'),
+                game_storage          = request.POST.get('game_storage'),
+                game_ram              = request.POST.get('game_ram'),
+                game_features         = features,
+                game_modes            = modes,
+                game_categories       = categoires,
+                platform_names        = platforms,
+                game_languages        = languages,
             )
             messages.success(request, "Game Added successfully!")
             return redirect(reverse(add_game_page))
