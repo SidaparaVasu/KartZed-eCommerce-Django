@@ -1,6 +1,7 @@
 from django import forms
 from .models import *
 
+
 class GamesForm(forms.ModelForm):
     class Meta:
         model = Games
@@ -19,7 +20,6 @@ class GamesForm(forms.ModelForm):
             'game_price',
             'avail_stock',
             'discount',
-            'game_images',
             'game_features',
             'game_modes',
             'game_categories',

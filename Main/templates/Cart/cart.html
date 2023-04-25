@@ -47,12 +47,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="cart-item">₹{{ item.game_price }}</div>
+                        <div class="cart-item"><span>₹</span><p id="game-price">{{ item.game_price }}</p></div>
                         <div class="cart-item">
                             <div class="qty-selest-box">
-                                <button class="incr-btn">+</button>
-                                <input type="number" value = "1" class="qty-input" pattern="[0-9]+" maxlength="3"/>
-                                <button class="decr-btn">-</button>
+                                <button class="incr-btn" id="increment-btn">+</button>
+                                <input type="number" value = "1"id="quantity" class="qty-input" pattern="[0-9]+" maxlength="3"/>
+                                <button class="decr-btn" id="decrement-btn">-</button>
                             </div>
                         </div>
                         <div class="cart-item">remove</div>
@@ -84,5 +84,33 @@
         </div>
 
     </div>
+
+
+    <script>
+        const gamePrice = document.getElementById("game-price");
+        const quantityInput = document.getElementById("quantity");
+        const incrementBtn = document.getElementById("increment-btn");
+        const decrementBtn = document.getElementById("decrement-btn");
+
+        let price = parseInt(gamePrice.textContent);
+
+        incrementBtn.addEventListener("click", () => {
+        let currentValue = parseInt(quantityInput.value);
+        if (currentValue < 10) {
+            quantityInput.value = currentValue + 1;
+            price += price / currentValue;
+            gamePrice.textContent = price.toString(); 
+        }
+        });
+
+        decrementBtn.addEventListener("click", () => {
+        let currentValue = parseInt(quantityInput.value);
+        if (currentValue > 1) {
+            quantityInput.value = currentValue - 1;
+            price -= price / currentValue;
+            gamePrice.textContent = price.toString(); 
+        }
+        });
+    </script>
 </body>
 </html>
