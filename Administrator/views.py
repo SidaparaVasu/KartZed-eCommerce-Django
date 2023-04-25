@@ -30,7 +30,7 @@ def view_customers(request):
 
 """ Platform CRUD Start """
 def view_platform(request):  
-    platform = Platform.objects.all()
+    platform = Platform.objects.all().order_by('platform_name')
     return render(request,'platform/platform.html', context={'platforms':platform})
 
 # insertion of platform
@@ -65,7 +65,7 @@ def delete_platform(request, id):
 
 """ Game Features CRUD Start """
 def view_game_features(request):
-    features = GameFeatures.objects.all()
+    features = GameFeatures.objects.all().order_by('game_feature_name')
     return render(request,'gameFeatures/game_features.html',context={'features':features})
 
 def insert_game_feature(request):
@@ -98,7 +98,7 @@ def delete_game_feature(request, id):
 
 """ Game Modes CRUD Start """
 def view_game_modes(request):
-    modes = GameModes.objects.all()
+    modes = GameModes.objects.all().order_by('game_mode_name')
     return render(request,'gameModes/game_modes.html',context={'game_modes': modes})
 
 def insert_game_mode(request):
@@ -131,7 +131,7 @@ def delete_game_mode(request, id):
 
 """ Game Category CRUD Start """
 def view_game_category(request):
-    game_category = GameCategory.objects.all()
+    game_category = GameCategory.objects.all().order_by('game_category_name')
     return render(request,'gameCategory/game_category.html',context={'game_category': game_category})
 
 def insert_game_category(request):
