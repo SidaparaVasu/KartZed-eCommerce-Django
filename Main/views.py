@@ -13,6 +13,7 @@ def indexPage(request):
         cust_unique_keyid = request.session['cust_unique_keyid']
         user_id = Customers.objects.get(cust_unique_keyid = cust_unique_keyid)
         chk = Cart.objects.filter(cust_id = user_id).count()
+        imp = []
         if chk > 0:
             chk1 = CartItems.objects.all()   
             c_items_id = []         
@@ -21,7 +22,6 @@ def indexPage(request):
             print(c_items_id)
 
             chk2 = Games.objects.all()
-            imp = []
             for data2 in c_items_id:
                 #print(data2)
                 c_g_items = Games.objects.filter(gid = data2)

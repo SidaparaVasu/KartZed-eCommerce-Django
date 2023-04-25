@@ -50,21 +50,24 @@ def is_image(file):
 
 # Games CRUD
 def add_game_page(request):
-    categorized_os_version_data = get_os_by_category(request)
-    context = {
-        'platforms'                   : Platform.objects.order_by('platform_name'),
-        'game_features'               : GameFeatures.objects.order_by('game_feature_name'),
-        'game_modes'                  : GameModes.objects.order_by('game_mode_name'),
-        'game_categories'             : GameCategory.objects.order_by('game_category_name'),
-        'operatingsys'                : OperatingSystems.objects.all(),
-        # 'operatingsysversion'       : OSVersions.objects.all(),
-        'categorized_version_data'    : categorized_os_version_data,
-        'processors'                  : Processors.objects.all(),
-        'vc'                          : VideoCards.objects.all(),
-        'vcv'                         : VCVersions.objects.all(),
-    }
-    # return HttpResponse(context['categorized_version_data'])
-    return render(request,'Games/game.html', context)
+    if request.session.get('is_vendor_authenticated', False):
+        categorized_os_version_data = get_os_by_category(request)
+        context = {
+            'platforms'                   : Platform.objects.order_by('platform_name'),
+            'game_features'               : GameFeatures.objects.order_by('game_feature_name'),
+            'game_modes'                  : GameModes.objects.order_by('game_mode_name'),
+            'game_categories'             : GameCategory.objects.order_by('game_category_name'),
+            'operatingsys'                : OperatingSystems.objects.all(),
+            # 'operatingsysversion'       : OSVersions.objects.all(),
+            'categorized_version_data'    : categorized_os_version_data,
+            'processors'                  : Processors.objects.all(),
+            'vc'                          : VideoCards.objects.all(),
+            'vcv'                         : VCVersions.objects.all(),
+        }
+        # return HttpResponse(context['categorized_version_data'])
+        return render(request,'Games/game.html', context)
+    else:
+        return render(request, 'vendor-login.html') 
 
 def generate_product_key(request):
     """
