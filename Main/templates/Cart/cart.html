@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,6 +19,7 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
+
 <body>
     <!-- Include Navigation Bar -->
     {% include 'navbar/navbar.html' %}
@@ -39,20 +41,26 @@
                         <div class="cart-item">
                             <div class="flex-2">
                                 <div class="item-img">
-                                    <img src="Media/{{ item.game_logo }}" alt="" srcset="">
+                                    <img src="{{ item.game_logo.url }}" alt="" srcset="">
                                 </div>
                                 <div class="item-details">
                                     <h2>{{ item.game_name }}</h2>
-                                    <p>{{ item.game_description }}</p>
+                                    <p class="description">{{ item.game_description }}</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="cart-item"><span>₹</span><p id="game-price">{{ item.game_price }}</p></div>
+                        <div class="price-div cart-item">
+                            <p class="price" id="game-price-{{ forloop.counter }}">₹{{ item.game_price }}</p>
+                        </div>
                         <div class="cart-item">
-                            <div class="qty-selest-box">
-                                <button class="incr-btn" id="increment-btn">+</button>
-                                <input type="number" value = "1"id="quantity" class="qty-input" pattern="[0-9]+" maxlength="3"/>
-                                <button class="decr-btn" id="decrement-btn">-</button>
+                            <div class="qty-select-box">
+                                <button class="decr-btn" id="decrement-btn"
+                                data-product-id="{{ forloop.counter }}">-</button>
+                                <input type="number" value="1" id="quantity-{{ forloop.counter }}" class="qty-input"
+                                pattern="[0-9]+" maxlength="3" data-product-id="{{ forloop.counter }}"
+                                onKeyDown="return false" />
+                                <button class="incr-btn" id="increment-btn"
+                                    data-product-id="{{ forloop.counter }}">+</button>
                             </div>
                         </div>
                         <div class="cart-item">remove</div>
@@ -87,30 +95,70 @@
 
 
     <script>
-        const gamePrice = document.getElementById("game-price");
-        const quantityInput = document.getElementById("quantity");
-        const incrementBtn = document.getElementById("increment-btn");
-        const decrementBtn = document.getElementById("decrement-btn");
+        // Get all the increment buttons and add a click event listener to each one
+        var incrementButtons = document.querySelectorAll(".incr-btn");
+        incrementButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                // Get the ID of the product associated with this increment button
+                var productId = this.dataset.productId;
 
-        let price = parseInt(gamePrice.textContent);
+                // Get the input element for the product with this ID
+                var quantityInput = document.querySelector("#quantity-" + productId);
 
-        incrementBtn.addEventListener("click", () => {
-        let currentValue = parseInt(quantityInput.value);
-        if (currentValue < 10) {
-            quantityInput.value = currentValue + 1;
-            price += price / currentValue;
-            gamePrice.textContent = price.toString(); 
-        }
+                // Get the current value of the input element and increment it
+                var currentValue = parseInt(quantityInput.value);
+                var newValue = currentValue + 1;
+
+                // Update the input element with the new value
+                quantityInput.value = newValue;
+
+                // Get the price element for the product with this ID
+                var priceElement = document.querySelector("#game-price-" + productId);
+
+                // Get the current price of the product and update it based on the new quantity
+                var currentPrice = parseFloat(priceElement.innerText.replace("₹", ""));
+                var newPrice = (currentPrice / currentValue) * newValue;
+
+                // Update the price element with the new price, rounded to 2 decimal places
+                priceElement.innerText = "₹" + newPrice;
+            });
         });
 
-        decrementBtn.addEventListener("click", () => {
-        let currentValue = parseInt(quantityInput.value);
-        if (currentValue > 1) {
-            quantityInput.value = currentValue - 1;
-            price -= price / currentValue;
-            gamePrice.textContent = price.toString(); 
-        }
+        // Get all the decrement buttons and add a click event listener to each one
+        var decrementButtons = document.querySelectorAll(".decr-btn");
+        decrementButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                // Get the ID of the product associated with this decrement button
+                var productId = this.dataset.productId;
+
+                // Get the input element for the product with this ID
+                var quantityInput = document.querySelector("#quantity-" + productId);
+
+                // Get the current value of the input element and decrement it
+                var currentValue = parseInt(quantityInput.value);
+                var newValue = currentValue - 1;
+
+                // Make sure the new value is not less than 1
+                if (newValue < 1) {
+                    newValue = 1;
+                } 
+
+                // Update the input element with the new value
+                quantityInput.value = newValue;
+
+                // Get the price element for the product with this ID
+                var priceElement = document.querySelector("#game-price-" + productId);
+
+                // Get the current price of the product and update it based on the new quantity
+                var currentPrice = parseFloat(priceElement.innerText.replace("₹", ""));
+                var newPrice = (currentPrice / currentValue) * newValue;
+
+                // Update the price element with the new price, rounded to 2 decimal places
+                priceElement.innerText = "₹" + newPrice;
+            });
         });
+
     </script>
 </body>
+
 </html>
