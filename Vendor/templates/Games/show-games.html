@@ -9,6 +9,15 @@
     <title>Games | Vender | Dashboard</title>
     <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon_logo.png' %}" />
     <link rel="stylesheet" href="{% static 'css/dashboard-styles.min.css' %}" />
+<style>
+.card-tags{
+    padding: 3px 6px;
+    background-color: #372f51;
+    color: #fff;
+    font-size: 10px;
+    border-radius: 5px;
+}    
+</style>
 </head>
 
 <body>
@@ -48,30 +57,34 @@
                                             </div>
                                             <div class="col-md-6 col-lg-6 col-xl-6">
                                                 <h5>{{ game.game_name }}</h5>
-
-                                                <div class="mb-2 text-muted small">
-                                                    <p class="text-truncate mb-4 mb-md-0">
-                                                        <span class="text-primary">Features: </span>
-                                                        <span>{{ game.game_features }}</span>
-                                                    </p>
-                                                </div>
-                                                <div class="mb-2 text-muted small">
-                                                    <p class="text-truncate mb-4 mb-md-0">
-                                                        <span class="text-primary">Modes: </span>
-                                                        <span>{{ game.game_modes }}</span>
-                                                    </p>
-                                                </div>
-                                                <div class="mb-2 text-muted small">
-                                                    <p class="text-truncate mb-4 mb-md-0">
-                                                        <span class="text-primary">Categories: </span>
-                                                        <span>{{ game.game_categories }}</span>
-                                                    </p>
-                                                </div>
-
                                                 <p class="text-truncate mb-4 mb-md-0">
                                                     Description:
                                                     {{ game.game_description }}
                                                 </p>
+                                                <div class="mb-1 text-muted small">
+                                                    <p class="text-truncate mb-1 mb-md-0 pt-1 pb-1">
+                                                        <!-- <span class="text-primary">Features: </span> -->
+                                                        {% for feature in game.game_features %}
+                                                            <span class="card-tags">{{ feature }}</span>
+                                                        {% endfor %}
+                                                    </p>
+                                                </div>
+                                                <div class="mb-1 text-muted small">
+                                                    <p class="text-truncate mb-1 mb-md-0 pt-1 pb-1">
+                                                        <!-- <span class="text-primary">Modes: </span> -->
+                                                        {% for mode in game.game_modes %}
+                                                            <span class="card-tags">{{ mode }}</span>
+                                                        {% endfor %}
+                                                    </p>
+                                                </div>
+                                                <div class="mb-1 text-muted small">
+                                                    <p class="text-truncate mb-1 mb-md-0 pt-1 pb-1">
+                                                        <!-- <span class="text-primary">Categories: </span> -->
+                                                        {% for category in game.game_categories %}
+                                                            <span class="card-tags">{{ category }}</span>
+                                                        {% endfor %}
+                                                    </p>
+                                                </div>
                                             </div>
                                             <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
                                                 <div class="d-flex flex-row align-items-center mb-1">

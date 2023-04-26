@@ -32,7 +32,7 @@ def render_vendor_login_page(request):
 def show_games_page(request):
     if request.session.get('is_vendor_authenticated', False):
         vendor = Vendors.objects.get(vendor_unique_keyid = request.session['vendor_unique_keyid'])
-        games = Games.objects.filter(vendor_reference = vendor.vendor_id)
+        games = Games.objects.filter(vendor_reference = vendor.vendor_id).order_by('game_name')
         return render(request, 'Games/show-games.html', context = {'Games':games})
     else:
         return render(request, 'vendor-login.html') 
