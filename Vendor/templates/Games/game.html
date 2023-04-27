@@ -34,7 +34,7 @@
 
         .grid-checkbox {
             display: grid;
-            grid-template-columns: auto auto auto auto auto;
+            grid-template-columns: 25% 25% 25% 25%;
         }
 
         .grid-3 {
@@ -98,13 +98,13 @@
                     <div class="card-body">
                         <h5 class="card-title fw-semibold mb-4">Add Game</h5>
 
-                        <form action="insert_game" method="POST" enctype="multipart/form-data">
+                        <form action="insert_game" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <input type="hidden" name="vendor_unique_keyid" value="{{ request.session.vendor_unique_keyid }}" />
                             <div class="row">
                                 <div class="col-sm">
                                     <h5>choose image of game Logo</h5>
-                                    <input type="file" name="game_logo" class="form-control" id="gamename" required />
+                                    <input type="file" name="game_logo" class="form-control" id="gamename" />
                                 </div>
                             </div>
                             <br />
@@ -112,7 +112,7 @@
                                 <div class="col-sm">
                                     <div class="form-floating mb-3">
                                         <input type="text" name="game_name" class="form-control" id="displayname"
-                                            required />
+                                         />
                                         <label for="displayname">Enter Game name</label>
                                     </div>
                                 </div>
@@ -121,31 +121,22 @@
                                 <div class="col-sm">
                                     <div class="form-floating mb-3">
                                         <textarea name="game_description" id="gamedesc" cols="50" rows="5"
-                                            placeholder="Enter Game Description" required></textarea>
-                                        <!-- <label for="gamedesc" class="addr_label" style="width: 100%; font-size: 14px;">Company address</label> -->
+                                            placeholder="Enter Game Description"></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm">
-                                    <h5>choose game image</h5>
-                                    <input type="file" name="game_images[]" class="form-control" id="gameimage" 
-                                        multiple />
-                                </div>
-                            </div>
-                            <br />
-                            <div class="row">
-                                <div class="col-sm">
                                     <div class="form-floating mb-3">
                                         <input type="text" name="game_developer" class="form-control" id="developername"
-                                            required />
+                                         />
                                         <label for="developername">Enter Developer name</label>
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="form-floating mb-3">
                                         <input type="text" name="game_publisher" class="form-control" id="publishername"
-                                            required />
+                                         />
                                         <label for="publishername">Enter Publisher name</label>
                                     </div>
                                 </div>
@@ -154,14 +145,14 @@
                                 <div class="col-sm">
                                     <div class="form-floating mb-3">
                                         <input type="date" name="game_release_date" class="form-control"
-                                            id="releasedate" required />
+                                            id="releasedate" />
                                         <label for="releasedate">Enter Game Release date</label>
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="form-floating mb-3">
                                         <input type="tel" name="avail_stock" class="form-control" id="availstock"
-                                            pattern="[0-9]+" required />
+                                            pattern="[0-9]+" />
                                         <label for="availstock">Enter Available Stock</label>
                                     </div>
                                 </div>
@@ -170,14 +161,14 @@
                                 <div class="col-sm">
                                     <div class="form-floating mb-3">
                                         <input type="tel" name="game_price" class="form-control" id="gameprice"
-                                            pattern="[0-9]+" required />
+                                            pattern="[0-9]+" />
                                         <label for="gameprice">Enter Game Price</label>
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="form-floating mb-3">
                                         <input type="tel" name="discount" class="form-control" id="discount"
-                                            pattern="[0-9]+" required />
+                                            pattern="[0-9]+" />
                                         <label for="discount">Enter Discount(%)</label>
                                     </div>
                                 </div>
@@ -236,7 +227,7 @@
                                 <div class="col-sm">
                                     <div class="form-floating mb-3">
                                         <input type="tel" name="game_storage" class="form-control" id="storage"
-                                            pattern="[0-9]+" required />
+                                            pattern="[0-9]+" />
                                         <label for="storage">Enter Game Storage</label>
                                     </div>
                                 </div>

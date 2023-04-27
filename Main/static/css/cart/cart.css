@@ -86,43 +86,62 @@ body{
     text-overflow: ellipsis;
 }
 
+.description {
+    display: inline-block;
+    white-space: normal;
+    overflow: hidden;
+    max-height: 5em;
+    line-height: 1.2em;
+    text-overflow: ellipsis;
+  }
+
 .cart-item{
     text-align: center;
 }
-.cart-item > .qty-selest-box{
+.cart-item > .qty-select-box{
+    display: flex;
+    justify-content: center;
+}
+.cart-item:has(span, .game-price){
     display: flex;
     justify-content: center;
 }
 
-.cart-item > .qty-selest-box > button{
+.cart-item > .qty-select-box > button{
     background-color: white;
     border: 1px solid #343A40;
     padding: 6px 10px;
     font-size: 16px;
 }
-.qty-input{
+.cart-item > .qty-select-box > .qty-input{
     width: 50px;
     text-align: center;
 }
-.qty-input{
+.cart-item > .qty-select-box > .qty-input{
     border: 1px solid #343A40;
 }
-.qty-input:focus{
+.cart-item > .qty-select-box > .qty-input:focus{
     border: 1px solid #343A40;
     border-radius: 0;
 }
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
-.incr-btn{
+.decr-btn{
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
 }
-.decr-btn{
+.incr-btn{
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
 }
 
-.cart-item > .qty-selest-box > .incr-btn:hover,
-.cart-item > .qty-selest-box > .decr-btn:hover{
+.cart-item > .qty-select-box > .incr-btn:hover,
+.cart-item > .qty-select-box > .decr-btn:hover{
     background-color: #343A40;
     color: var(--white);
     cursor: pointer;
@@ -172,6 +191,7 @@ body{
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
 }
+
 .input-box > button{
     width: 40%;
     border-top-right-radius: 50px;

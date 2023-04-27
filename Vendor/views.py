@@ -1,19 +1,16 @@
 import os, random, string, imghdr
+from django.conf import settings
 from PIL import Image
 from django.shortcuts import get_object_or_404, render, redirect, HttpResponse
 from django.urls import reverse
 from django.shortcuts import render
 from django.contrib import messages
 from django.core.exceptions import ValidationError
-
-from Main.models import Contact
 from .models import Games
 from .forms import GamesForm
 from Authapp.models import Vendors
 from Administrator.models import *
 from Administrator.views import get_os_by_category
-
-from KartZed.settings import MEDIA_ROOT
 
 # Create your views here.
 
@@ -33,7 +30,7 @@ def render_vendor_login_page(request):
 def show_games_page(request):
     if request.session.get('is_vendor_authenticated', False):
         vendor = Vendors.objects.get(vendor_unique_keyid = request.session['vendor_unique_keyid'])
-        games = Games.objects.filter(vendor_reference = vendor.vendor_id)
+        games = Games.objects.filter(vendor_reference = vendor.vendor_id).order_by('game_name')
         return render(request, 'Games/show-games.html', context = {'Games':games})
     else:
         return render(request, 'vendor-login.html') 
@@ -54,22 +51,24 @@ def is_image(file):
 
 # Games CRUD
 def add_game_page(request):
-    # return HttpResponse(MEDIA_ROOT)
-    categorized_os_version_data = get_os_by_category(request)
-    context = {
-        'platforms'                   : Platform.objects.order_by('platform_name'),
-        'game_features'               : GameFeatures.objects.order_by('game_feature_name'),
-        'game_modes'                  : GameModes.objects.order_by('game_mode_name'),
-        'game_categories'             : GameCategory.objects.order_by('game_category_name'),
-        'operatingsys'                : OperatingSystems.objects.all(),
-        # 'operatingsysversion'       : OSVersions.objects.all(),
-        'categorized_version_data'    : categorized_os_version_data,
-        'processors'                  : Processors.objects.all(),
-        'vc'                          : VideoCards.objects.all(),
-        'vcv'                         : VCVersions.objects.all(),
-    }
-    # return HttpResponse(context['categorized_version_data'])
-    return render(request,'Games/game.html', context)
+    if request.session.get('is_vendor_authenticated', False):
+        categorized_os_version_data = get_os_by_category(request)
+        context = {
+            'platforms'                   : Platform.objects.order_by('platform_name'),
+            'game_features'               : GameFeatures.objects.order_by('game_feature_name'),
+            'game_modes'                  : GameModes.objects.order_by('game_mode_name'),
+            'game_categories'             : GameCategory.objects.order_by('game_category_name'),
+            'operatingsys'                : OperatingSystems.objects.all(),
+            # 'operatingsysversion'       : OSVersions.objects.all(),
+            'categorized_version_data'    : categorized_os_version_data,
+            'processors'                  : Processors.objects.all(),
+            'vc'                          : VideoCards.objects.all(),
+            'vcv'                         : VCVersions.objects.all(),
+        }
+        # return HttpResponse(context['categorized_version_data'])
+        return render(request,'Games/game.html', context)
+    else:
+        return render(request, 'vendor-login.html') 
 
 def generate_product_key(request):
     """
@@ -95,23 +94,20 @@ def insert_game(request):
     if request.method == 'POST': 
         vendor_unique_id = request.POST.get('vendor_unique_keyid')
         vendors = Vendors.objects.get(vendor_unique_keyid = vendor_unique_id)
-        
-        game_logo_path = ""
-        g_form = GamesForm(request.POST or None, request.FILES)
-        # return HttpResponse(len(request.FILES))
-        if len(request.FILES) != 0:
-            g_form.game_logo = request.FILES['game_logo']
-
-        game_logo_path = str(g_form.game_logo)
+    
         try:
-            game = Games()
+            features = list(request.POST.getlist('game_features'))
+            modes = list(request.POST.getlist('game_modes'))
+            categoires = list(request.POST.getlist('game_categories'))
+            platforms = list(request.POST.getlist('platform_names'))
+            languages = list(request.POST.getlist('game_languages'))
             
+            game = Games()
             game.product_key           = generate_product_key(request)
-            game.game_logo             = game_logo_path
+            game.game_logo             = request.FILES['game_logo']
             game.vendor_reference      = vendors 
             game.game_name             = request.POST.get('game_name')
             game.game_description      = request.POST.get('game_description')
-            game.game_images           = request.FILES.getlist('game_images')
             game.game_developer        = request.POST.get('game_developer')
             game.game_publisher        = request.POST.get('game_publisher')
             game.game_release_date     = request.POST.get('game_release_date')
@@ -120,33 +116,12 @@ def insert_game(request):
             game.discount              = request.POST.get('discount')
             game.game_storage          = request.POST.get('game_storage')
             game.game_ram              = request.POST.get('game_ram')
-            game.game_features         = ','.join(request.POST.getlist('game_features'))
-            game.game_modes            = ','.join(request.POST.getlist('game_modes'))
-            game.game_categories       = ','.join(request.POST.getlist('game_categories'))
-            game.platform_names        = ','.join(request.POST.getlist('platform_names'))
-            game.game_languages        = ','.join(request.POST.getlist('game_languages'))
+            game.game_features         = features
+            game.game_modes            = modes
+            game.game_categories       = categoires
+            game.platform_names        = platforms
+            game.game_languages        = languages
             game.save()
-            # Games.objects.create(
-            #     product_key           = generate_product_key(request),
-            #     game_logo             = game_logo_path,
-            #     vendor_reference      = vendors, 
-            #     game_name             = request.POST.get('game_name'),
-            #     game_description      = request.POST.get('game_description'),
-            #     game_images           = request.FILES.getlist('game_images'),
-            #     game_developer        = request.POST.get('game_developer'),
-            #     game_publisher        = request.POST.get('game_publisher'),
-            #     game_release_date     = request.POST.get('game_release_date'),
-            #     avail_stock           = request.POST.get('avail_stock'),
-            #     game_price            = request.POST.get('game_price'),
-            #     discount              = request.POST.get('discount'),
-            #     game_storage          = request.POST.get('game_storage'),
-            #     game_ram              = request.POST.get('game_ram'),
-            #     game_features         = ','.join(request.POST.getlist('game_features')),
-            #     game_modes            = ','.join(request.POST.getlist('game_modes')),
-            #     game_categories       = ','.join(request.POST.getlist('game_categories')),
-            #     platform_names        = ','.join(request.POST.getlist('platform_names')),
-            #     game_languages        = ','.join(request.POST.getlist('game_languages')),
-            # )
             messages.success(request, "Game Added successfully!")
             return redirect(reverse(add_game_page))
         except Exception as e:
@@ -155,24 +130,3 @@ def insert_game(request):
             return redirect(reverse(add_game_page))
     messages.error(request, "Bad request of form! Try again later!")
     return redirect(reverse(add_game_page))
-
-
-def contact_game_view(request):
-    return render(request, 'contact.html')
-
-def insert_game_contact(request):
-    #return HttpResponse("yo")
-    if request.method == 'POST':
-        contact_name    = request.POST.get('contact_name')
-        contact_email   = request.POST.get('contact_email')
-        contact_message = request.POST.get('contact_message')
-        try:
-            Contact.objects.create( 
-                contact_name    = contact_name,   
-                contact_email   = contact_email,  
-                contact_message = contact_message,
-            )
-        except Exception as e:
-            return HttpResponse(e)
-                
-    return render(request, 'contact.html')

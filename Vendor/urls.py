@@ -17,8 +17,5 @@ urlpatterns = [
    path('add-game',views.add_game_page,name="add_game_page"),
    path('insert_game',views.insert_game,name='insert_game'),
    path('show-games', views.show_games_page, name="show_games_page"),
-
-   # Contact
-   path('contact_game_view/', views.contact_game_view, name="contact_game_view"),
-   path('contact_game_view/insert_game_contact', views.insert_game_contact, name="insert_game_contact"),
+   
 ]
