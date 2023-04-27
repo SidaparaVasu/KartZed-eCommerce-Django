@@ -5,18 +5,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Game Details Page | User</title>
+    <title>Game Details Page | Vender</title>
     <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon_logo.png' %}" />
     <link rel="stylesheet" href="{% static 'css/dashboard-styles.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/game-details.css' %}">
     <link rel="stylesheet" href="{% static 'css/root.css' %}">
-    <link rel="stylesheet" href="{% static 'css/global.css' %}">
-    <link rel="stylesheet" href="{% static 'css/plugins.css' %}">
-    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/account.css' %}">
     <!-- Ion Icon CDN -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -36,26 +30,33 @@
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed">
 
+        <!-- Including Sidebar -->
+        {% include 'sidebar-vendor.html' %}
+
         <!--  Main wrapper -->
         <div class="body-wrapper">
 
-               <!-- Include Navigation Bar -->
-    {% include 'navbar/navbar.html' %}
+            <!-- Including Header -->
+            {% include 'navbar-vendor.html' %}
 
             <div class="container-fluid">
                 <div class="container py-5">
                     <div class="row">
+                        {% for gm in Game %}
                         <div class="grid-2">
                             <div class="lft-box" id="lft-box">
+                                <div class="edit-icon" id="edit-icon" onclick="show_edit_image()">
+                                    <ion-icon name="pencil-outline"></ion-icon>
+                                </div>
                                 <div class="img-box" id="img-box">
-                                    {% if games.game_logo %}
-                                        <img src="{{ games.game_logo.url }}" />
+                                    {% if gm.game_logo %}
+                                        <img src="{{ gm.game_logo.url }}" />
                                     {% else %}
                                         <p class="img-text">Upload Logo</p>
                                     {% endif %}
                                 </div>
                                 <div class="edit-img-box" id="edit-img-box">
-                                    <form action="{{games.product_key}}/upload_game_logo" method="post" class="img-form" id="img-form"
+                                    <form action="{{gm.product_key}}/upload_game_logo" method="post" class="img-form" id="img-form"
                                         enctype="multipart/form-data">
                                         {% csrf_token %}
                                         <input type="file" name="game_logo" id="game_logo" required/>
@@ -64,23 +65,23 @@
                                 </div>
                             </div>
                             <div class="rgt-box">
-                                <h2>{{ games.game_name }}</h2>
-                                <p>{{ games.game_description }}</p>
+                                <h2>{{ gm.game_name }}</h2>
+                                <p>{{ gm.game_description }}</p>
                                 <div class="flex-2">
-                                    <p>RAM: <span>{{ games.game_ram }}</span></p>
-                                    <p>Storage: <span>{{ games.game_storage }}</span></p>
+                                    <p>RAM: <span>{{ gm.game_ram }}</span></p>
+                                    <p>Storage: <span>{{ gm.game_storage }}</span></p>
                                 </div>
                                 <div class="flex-2">
-                                    <p>Developer: <span>{{ games.game_developer }}</span></p>
-                                    <p>Publisher: <span>{{ games.game_publisher }}</span></p>
+                                    <p>Developer: <span>{{ gm.game_developer }}</span></p>
+                                    <p>Publisher: <span>{{ gm.game_publisher }}</span></p>
                                 </div>
                                 <div class="flex-2">
-                                    <p>Price: <span>{{ games.game_price }}</span></p>
-                                    <p>Discount: <span>{{ games.discount }}%</span></p>
+                                    <p>Price: <span>{{ gm.game_price }}</span></p>
+                                    <p>Discount: <span>{{ gm.discount }}%</span></p>
                                 </div>
                                 <div class="flex-2">
-                                    <p>Available Stock: <span>{{ games.avail_stock }}</span></p>
-                                    <p>Release Date: <span>{{ games.game_release_date }}</span></p>
+                                    <p>Available Stock: <span>{{ gm.avail_stock }}</span></p>
+                                    <p>Release Date: <span>{{ gm.game_release_date }}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +89,7 @@
                             <div class="col-1 flex-col w-100">
                                 <header>Features</header>
                                 <p class="text-center">
-                                    {% for feature in games.game_features %}
+                                    {% for feature in gm.game_features %}
                                         <p>{{ feature }}</p>
                                     {% endfor %}
                                 </p>
@@ -96,7 +97,7 @@
                             <div class="col-2 flex-col w-100">
                                 <header>Modes</header>
                                 <p class="text-center">
-                                    {% for mode in games.game_modes %}
+                                    {% for mode in gm.game_modes %}
                                         <p>{{ mode }}</p>
                                     {% endfor %}
                                 </p>
@@ -104,7 +105,7 @@
                             <div class="col-3 flex-col w-100">
                                 <header>Categories</header>
                                 <p class="text-center">
-                                    {% for category in games.game_categories %}
+                                    {% for category in gm.game_categories %}
                                         <p>{{ category }}</p>
                                     {% endfor %}
                                 </p>
@@ -114,7 +115,7 @@
                             <div class="col-1 flex-col w-100">
                                 <header>Platforms</header>
                                 <p class="text-center">
-                                    {% for platform in games.platform_names %}
+                                    {% for platform in gm.platform_names %}
                                         <p>{{ platform }}</p>
                                     {% endfor %}
                                 </p>
@@ -122,12 +123,13 @@
                             <div class="col-2 flex-col w-100">
                                 <header>Languages</header>
                                 <p class="text-center">
-                                    {% for language in games.game_languages %}
+                                    {% for language in gm.game_languages %}
                                         <p>{{ language }}</p>
                                     {% endfor %}
                                 </p>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
