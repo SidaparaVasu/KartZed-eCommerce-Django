@@ -55,20 +55,22 @@
                             <img src="Media/{{ game.game_logo }}" alt="" srcset="" />
                         </div>
                         <div class="card-details">
-                            <h2>{{ game.game_name }}</h2>
-                            <div class="grid-col-2">
-                                <div class="ratings">★★★☆☆</div>
-                                <div class="price">₹{{ game.game_price }}</div>
-                            </div>
-                            <div class="grid-col-2">
-                                <div class="flex-row">Developer: <span>{{ game.game_developer }}</span></div>
-                                <div class="flex-row">Publisher: <span>{{ game.game_publisher }}</span></div>
-                            </div>
-                            <div class="card-btn-box">
-                                {% comment %} <a href = "{% url 'view_cart' %}"><button class="filled-btn" style="backgroung-color:purple;">View in Cart</button></a> {% endcomment %}
-                                <a href = "{% url 'add_to_cart' game.product_key %}"><button class="filled-btn">Add to Cart</button></a>
-                                <button class="outline-btn">♡</button>
-                            </div>
+                            <a href="/view_game_page/{{ game.gid }}">
+                                <h2>{{ game.game_name }}</h2>
+                                <div class="grid-col-2">
+                                    <div class="ratings">★★★☆☆</div>
+                                    <div class="price">₹{{ game.game_price }}</div>
+                                </div>
+                                <div class="grid-col-2">
+                                    <div class="flex-row">Developer: <span>{{ game.game_developer }}</span></div>
+                                    <div class="flex-row">Publisher: <span>{{ game.game_publisher }}</span></div>
+                                </div>
+                                <div class="card-btn-box">
+                                    {% comment %} <a href = "{% url 'view_cart' %}"><button class="filled-btn" style="backgroung-color:purple;">View in Cart</button></a> {% endcomment %}
+                                    <a href = "{% url 'add_to_cart' game.product_key %}"><button class="filled-btn">Add to Cart</button></a>
+                                    <button class="outline-btn">♡</button>
+                                </div>
+                            </a>
                         </div>
                     </div>
 

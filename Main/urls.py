@@ -25,8 +25,8 @@ urlpatterns = [
     path('view_cart',views.view_cart,name="view_cart"),
     path('add_to_cart/<id>',views.add_to_cart,name="add_to_cart"),
 
-    #product details
-    path('view_game/<str:product_key>',views.view_game,name="view_game"),
+    #view game page
+    path('view_game_page/<str:gid>', views.view_game_detail, name="game_details"), 
 
     #contact
     path('contact_view/', views.contact_view, name="contact_view"),
