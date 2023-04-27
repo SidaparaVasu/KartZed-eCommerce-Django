@@ -367,11 +367,23 @@ def delete_offer(request,id):
 def view_contact(request):
 
     contact = Contact.objects.all()
-    return render(request,'contact/viewcontact.html',context ={'contact':contact})
+    vcontact = Vendor_Contact.objects.all()
+    return render(request,'contact/viewcontact.html',context ={'contact':contact, 'vcontact':vcontact})
 
 def delete_contact(request,id):
     obj = get_object_or_404(Contact,contact_id=id)
+    
     #return HttpResponse(obj)
+    if request.method == "GET":
+        if obj.delete():
+            messages.success(request,"Offer deleted successfully!")
+            return redirect(reverse(view_contact))
+        else:
+            messages.error(request,"Offer couldn't delete!")
+            return redirect(reverse(view_contact))
+
+def delete_vcontact(request,id):
+    obj = get_object_or_404(Vendor_Contact,contact_id=id)    
     if request.method == "GET":
         if obj.delete():
             messages.success(request,"Offer deleted successfully!")

@@ -45,7 +45,12 @@
                                         <div class="row">
                                             <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
                                                 <div class="bg-image hover-zoom ripple rounded ripple-surface">
-                                                    <img src="{{ game.game_logo.url }}" alt="{{ game.game_logo }}" class="w-100" />
+                                                    {% if game.game_logo %}
+                                                        <img src="{{ game.game_logo.url }}" alt="{{ game.game_logo }}" class="w-100" />
+                                                    {% else %}
+                                                        Upload image for this game<br/>
+                                                        click 'Details' to modify game
+                                                    {% endif %}
                                                     <a href="#!">
                                                         <div class="hover-overlay">
                                                             <div class="mask"
@@ -102,10 +107,7 @@
                                                     <span>{{ game.game_publisher }}</span>
                                                 </div>
                                                 <div class="d-flex flex-column mt-4">
-                                                    <button class="btn btn-primary btn-sm" type="button">Details</button>
-                                                    <!-- <button class="btn btn-outline-primary btn-sm mt-2" type="button">
-                                                      Add to wishlist
-                                                    </button> -->
+                                                    <a href="{% url 'show_game_details' game.product_key %}" class="btn btn-primary btn-sm" type="button">Details</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -113,6 +115,8 @@
                                 </div>
                             </div>
                         </div>
+                        {% empty %}
+                        <center>No games are uploaded</center>
                         {% endfor %}
                     </div>
                 <!-- </section> -->

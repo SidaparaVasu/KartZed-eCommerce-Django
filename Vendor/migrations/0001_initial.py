@@ -16,6 +16,15 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='Vendor_Contact',
+            fields=[
+                ('contact_id', models.AutoField(primary_key=True, serialize=False)),
+                ('contact_name', models.CharField(max_length=100)),
+                ('contact_email', models.EmailField(max_length=254)),
+                ('contact_message', models.TextField()),
+            ],
+        ),
+        migrations.CreateModel(
             name='Games',
             fields=[
                 ('gid', models.AutoField(primary_key=True, serialize=False)),
