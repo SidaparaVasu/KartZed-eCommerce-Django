@@ -31,6 +31,5 @@ urlpatterns = [
     #contact
     path('contact_view/', views.contact_view, name="contact_view"),
     path('contact_view/insert_contact', views.insert_contact, name="insert_contact"),
-    path('contact_view/<id>', views.delete_contact, name="delete_contact"),
 
 ]

@@ -170,18 +170,6 @@ def insert_contact(request):
                 
     return render(request, 'Contact/contact.html')
 
-def delete_contact(request,id):
-    obj = get_object_or_404(Contact,contact_id=id)
-    #return HttpResponse(obj)
-    if request.method == "GET":
-        if obj.delete():
-            messages.success(request,"Offer deleted successfully!")
-            return redirect(reverse(contact_view))
-        else:
-            messages.error(request,"Offer couldn't delete!")
-            return redirect(reverse(contact_view))
-    #return HttpResponse(obj)
-
 
 """ Contact Us End """
 
