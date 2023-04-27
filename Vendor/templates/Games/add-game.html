@@ -96,7 +96,15 @@
                 <!-- Product Form -->
                 <div class="card shadow p-3 mb-5 bg-white rounded">
                     <div class="card-body">
-                        <h5 class="card-title fw-semibold mb-4">Add Game</h5>
+                        <div class="flex-2" style="display: flex; justify-content: space-between;">
+                            <h5 class="card-title fw-semibold mb-4">
+                                Add Game</h5>
+                            <form>
+                                <input type="hidden" name="vendor_unique_keyid" value="{{ request.session.vendor_unique_keyid }}" />
+                                <button class="upload-csv-btn btn btn-primary">Upload CSV</button>
+                                <!-- <ion-icon name="help-circle-outline" style="height: 25px; width: 25px;"></ion-icon> -->
+                            </form>
+                        </div>
 
                         <form action="insert_game" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
