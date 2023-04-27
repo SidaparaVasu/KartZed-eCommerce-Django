@@ -57,3 +57,11 @@ class Games(models.Model):
     processors_names   = models.CharField(max_length=100)
     vc_names           = models.CharField(max_length=100)
     vc_versions        = models.CharField(max_length=100)
+    
+    upload_date = models.DateTimeField(auto_now_add=True)
+    last_edited = models.DateTimeField(null=True, blank=True)
+    
+    def save(self, *args, **kwargs):
+        if self.pk is not None:
+            self.last_edited = timezone.now()
+        super().save(*args, **kwargs)

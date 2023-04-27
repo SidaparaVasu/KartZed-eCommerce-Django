@@ -186,8 +186,8 @@ def delete_contact(request,id):
 """ Contact Us End """
 
 """ View details Start """
-def view_game_detail(request, gid):
-    product = Games.objects.get(gid = gid)
+def view_game_detail(request, product_key):
+    product = Games.objects.get(product_key = product_key)
     #return HttpResponse(product.game_description)
     context = {
         'games' : product

@@ -16,6 +16,7 @@ urlpatterns = [
    # Games
    path('add-game',views.add_game_page,name="add_game_page"),
    path('insert_game',views.insert_game,name='insert_game'),
+   path('games_csv_upload',views.games_csv_upload,name='games_csv_upload'),
    path('show-games', views.show_games_page, name="show_games_page"),
 
    # Contact

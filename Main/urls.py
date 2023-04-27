@@ -26,7 +26,7 @@ urlpatterns = [
     path('add_to_cart/<id>',views.add_to_cart,name="add_to_cart"),
 
     #view game page
-    path('view_game_page/<str:gid>', views.view_game_detail, name="game_details"), 
+    path('view_game_page/<str:product_key>', views.view_game_detail, name="game_details"), 
 
     #contact
     path('contact_view/', views.contact_view, name="contact_view"),

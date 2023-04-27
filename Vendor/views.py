@@ -1,4 +1,5 @@
-import os, io, random, string, imghdr, csv
+import os, io, random, string, imghdr, csv, chardet
+import pandas as pd
 from django.conf import settings
 from PIL import Image
 from django.shortcuts import get_object_or_404, render, redirect, HttpResponse
@@ -129,40 +130,60 @@ def insert_game(request):
 
 
 """ Insert Games using CSV upload """
-def upload_csv(request):
+def games_csv_upload(request):
     if request.method == 'POST' and request.FILES['file']:
-        csv_file = request.FILES['file']
-        if not csv_file.name.endswith('.csv'):
-            messages.error(request, 'File is not a CSV')
-            return redirect('upload_csv')
-
-        data_set = csv_file.read().decode('UTF-8')
-        io_string = io.StringIO(data_set)
-        next(io_string)
+        uploaded_file = request.FILES['file']
+        file_name = uploaded_file.name
+        if file_name.endswith('.csv'):
+            # For CSV files, read the file directly
+            raw_data = uploaded_file.read()
+            # Detect the encoding of the file
+            file_encoding = chardet.detect(raw_data)['encoding']
+            # Decode the file using the detected encoding
+            decoded_data = raw_data.decode(file_encoding)
+            # Create a StringIO object for pandas to read from
+            file_stream = io.StringIO(decoded_data)
+            df = pd.read_csv(file_stream)
+        elif file_name.endswith('.xls') or file_name.endswith('.xlsx'):
+            # For Excel files, use pandas to read the file
+            df = pd.read_excel(io.BytesIO(uploaded_file.read()))
+        else:
+            messages.error(request, 'File is not a CSV or Excel file')
+            return redirect(reverse(add_game_page))
+        
         vendor_unique_id = request.POST.get('vendor_unique_keyid')
         vendor_ins = Vendors.objects.get(vendor_unique_keyid = vendor_unique_id)
-        for row in csv.reader(io_string, delimiter=',', quotechar='"'):
+        
+        # Loop through each row in the DataFrame and create a new instance of YourModel
+        for index, row in df.iterrows():
             # Check for any primary key or unique constraints
             try:
+                # Convert the comma-separated string to a list of strings
+                features = [s.strip() for s in row['game_features'].split(',')]
+                modes = [s.strip() for s in row['game_modes'].split(',')]
+                categories = [s.strip() for s in row['game_categories'].split(',')]
+                platforms = [s.strip() for s in row['platform_names'].split(',')]
+                languages = [s.strip() for s in row['game_languages'].split(',')]
+                
                 obj = Games.objects.create(
                     product_key           = generate_product_key(request),
-                    game_logo             = row[0],
+                    game_logo             = "",
                     vendor_reference      = vendor_ins,
-                    game_name             = row[1],
-                    game_description      = row[2],
-                    game_developer        = row[3],
-                    game_publisher        = row[4],
-                    game_release_date     = row[5],
-                    avail_stock           = row[6],
-                    game_price            = row[7],
-                    discount              = row[8],
-                    game_storage          = row[9],
-                    game_ram              = row[10],
-                    game_features         = row[11],
-                    game_modes            = row[12],
-                    game_categories       = row[13],
-                    platform_names        = row[14],
-                    game_languages        = row[15]
+                    game_name             = row['game_name'],
+                    game_description      = row['game_description'],
+                    game_developer        = row['game_developer'],
+                    game_publisher        = row['game_publisher'],
+                    game_release_date     = row['game_release_date'],
+                    avail_stock           = row['avail_stock'],
+                    game_price            = row['game_price'],
+                    discount              = row['discount'],
+                    game_storage          = row['game_storage'],
+                    game_ram              = row['game_ram'],
+                    game_features         = features,
+                    game_modes            = modes,
+                    game_categories       = categories,
+                    platform_names        = platforms,
+                    game_languages        = languages
                 )
             except ValidationError as e:
                 # Handle any validation errors
@@ -174,8 +195,8 @@ def upload_csv(request):
                 return redirect(reverse(add_game_page))
         messages.success(request, 'CSV file uploaded successfully')
         return redirect(reverse(show_games_page))
-
     return redirect(reverse(show_games_page))
+
 def contact_game_view(request):
     return render(request, 'contact.html')
 

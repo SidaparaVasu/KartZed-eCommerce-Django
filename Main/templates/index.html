@@ -50,12 +50,16 @@
             </div>
             <div class="slider-card">
                 {% for game in games %}
-                    <div class="product-card">
-                        <div class="card-img-box">
-                            <img src="Media/{{ game.game_logo }}" alt="" srcset="" />
+                    <div class="product-card" class="product-card">
+                        <div class="card-img-box" style="color: black;">
+                            {% if game.game_logo %}
+                                <img src="{{ game.game_logo.url }}" alt="{{ game.game_logo }}" class="w-100" />
+                            {% else %}
+                                image is not rendering
+                            {% endif %}
                         </div>
                         <div class="card-details">
-                            <a href="/view_game_page/{{ game.gid }}">
+                            <!-- <a href="/view_game_page/{{ game.gid }}"> -->
                                 <h2>{{ game.game_name }}</h2>
                                 <div class="grid-col-2">
                                     <div class="ratings">★★★☆☆</div>
@@ -66,11 +70,13 @@
                                     <div class="flex-row">Publisher: <span>{{ game.game_publisher }}</span></div>
                                 </div>
                                 <div class="card-btn-box">
-                                    {% comment %} <a href = "{% url 'view_cart' %}"><button class="filled-btn" style="backgroung-color:purple;">View in Cart</button></a> {% endcomment %}
-                                    <a href = "{% url 'add_to_cart' game.product_key %}"><button class="filled-btn">Add to Cart</button></a>
+                                    <a href = "/view_game_page/{{ game.product_key }}">
+                                        <button class="filled-btn">View Game</button>
+                                    </a>
+                                    <!-- <a href = "{% url 'add_to_cart' game.product_key %}"><button class="filled-btn">Add to Cart</button></a> -->
                                     <button class="outline-btn">♡</button>
                                 </div>
-                            </a>
+                            <!-- </a> -->
                         </div>
                     </div>
 
@@ -81,6 +87,5 @@
         </div>
 
     </section>
-
 </body>
 </html>

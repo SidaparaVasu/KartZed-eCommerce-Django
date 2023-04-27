@@ -17,6 +17,9 @@
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <style>
+        .upload-csv-form{
+            display: flex; padding: 6px 10px; background-color: #f1f2f3; align-items: center;
+        }
         textarea {
             resize: none;
             width: 100%;
@@ -99,8 +102,10 @@
                         <div class="flex-2" style="display: flex; justify-content: space-between;">
                             <h5 class="card-title fw-semibold mb-4">
                                 Add Game</h5>
-                            <form>
+                            <form action="games_csv_upload" method="post" enctype="multipart/form-data" class="upload-csv-form">
+                                {% csrf_token %}
                                 <input type="hidden" name="vendor_unique_keyid" value="{{ request.session.vendor_unique_keyid }}" />
+                                <input type="file" name="file"  id="upload" required/>
                                 <button class="upload-csv-btn btn btn-primary">Upload CSV</button>
                                 <!-- <ion-icon name="help-circle-outline" style="height: 25px; width: 25px;"></ion-icon> -->
                             </form>
