@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 
 from Main.models import Contact
-from .models import Offer, Platform, GameFeatures, GameModes, GameCategory, OperatingSystems, OSVersions 
+from .models import Offer, Platform, GameFeatures, GameModes, GameCategory, OperatingSystems, OSVersions ,Plan
 from .models import Processors, VideoCards, VCVersions
 from Authapp.models import Customers
 
@@ -383,3 +383,28 @@ def delete_contact(request,id):
 
 
 """ Contact Us End """
+
+""" Plan Start """
+
+def view_plan(request):
+    return render(request,'Plan/view_plan.html')
+
+def insert_plan(request):
+    if request.method == 'POST':
+        points = request.POST.get('points')
+        amount = request.POST.get('amount')
+        
+        try:
+            Plan.objects.create( 
+                points = points,
+                amount = amount,
+                )
+            messages.success(request, "Plan Added successfully!")
+            return redirect(reverse(view_plan))
+        except Exception as e:
+            messages.error(request, e)
+            return redirect(reverse(view_plan))
+    messages.error(request, "Plan Insertion failed!")
+    return redirect(reverse(view_plan))
+
+""" Plan End """

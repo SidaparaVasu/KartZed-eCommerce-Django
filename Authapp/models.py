@@ -33,6 +33,7 @@ class Customers(models.Model):
     cust_state         = models.CharField(max_length=25)
     cust_city          = models.CharField(max_length=25)
     cust_address       = models.CharField(max_length=50)
+    cust_balance       = models.IntegerField()
     
     
 class Vendors(models.Model):

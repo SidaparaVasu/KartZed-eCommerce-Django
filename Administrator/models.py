@@ -48,3 +48,8 @@ class Offer(models.Model):
     offer_name = models.CharField(max_length=225) 
     offer_description = models.CharField(max_length=220)
     offer_tc = models.CharField(max_length=220)
+
+class Plan(models.Model):
+    plan_id = models.AutoField(primary_key=True)
+    points = models.IntegerField()
+    amount = models.IntegerField() 
