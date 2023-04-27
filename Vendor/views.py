@@ -1,4 +1,4 @@
-import os, random, string, imghdr
+import os, io, random, string, imghdr, csv
 from django.conf import settings
 from PIL import Image
 from django.shortcuts import get_object_or_404, render, redirect, HttpResponse
@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.shortcuts import render
 from django.contrib import messages
 from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 from .models import Games
 from .forms import GamesForm
 from Authapp.models import Vendors
@@ -35,7 +36,7 @@ def show_games_page(request):
     else:
         return render(request, 'vendor-login.html') 
 
-""" Check Image is in Image formt or not? """
+""" Check Image is in Image format or not? """
 def is_image(file):
     """
     Returns True if the selected file is an image, False otherwise.
@@ -66,7 +67,7 @@ def add_game_page(request):
             'vcv'                         : VCVersions.objects.all(),
         }
         # return HttpResponse(context['categorized_version_data'])
-        return render(request,'Games/game.html', context)
+        return render(request,'Games/add-game.html', context)
     else:
         return render(request, 'vendor-login.html') 
 
@@ -93,19 +94,13 @@ def check_image_format(file):
 def insert_game(request):
     if request.method == 'POST': 
         vendor_unique_id = request.POST.get('vendor_unique_keyid')
-        vendors = Vendors.objects.get(vendor_unique_keyid = vendor_unique_id)
+        vendor_ins = Vendors.objects.get(vendor_unique_keyid = vendor_unique_id)
     
         try:
-            features = list(request.POST.getlist('game_features'))
-            modes = list(request.POST.getlist('game_modes'))
-            categoires = list(request.POST.getlist('game_categories'))
-            platforms = list(request.POST.getlist('platform_names'))
-            languages = list(request.POST.getlist('game_languages'))
-            
             game = Games()
             game.product_key           = generate_product_key(request)
             game.game_logo             = request.FILES['game_logo']
-            game.vendor_reference      = vendors 
+            game.vendor_reference      = vendor_ins  
             game.game_name             = request.POST.get('game_name')
             game.game_description      = request.POST.get('game_description')
             game.game_developer        = request.POST.get('game_developer')
@@ -116,17 +111,66 @@ def insert_game(request):
             game.discount              = request.POST.get('discount')
             game.game_storage          = request.POST.get('game_storage')
             game.game_ram              = request.POST.get('game_ram')
-            game.game_features         = features
-            game.game_modes            = modes
-            game.game_categories       = categoires
-            game.platform_names        = platforms
-            game.game_languages        = languages
+            game.game_features         = list(request.POST.getlist('game_features'))
+            game.game_modes            = list(request.POST.getlist('game_modes'))
+            game.game_categories       = list(request.POST.getlist('game_categories'))
+            game.platform_names        = list(request.POST.getlist('platform_names'))
+            game.game_languages        = list(request.POST.getlist('game_languages'))
             game.save()
             messages.success(request, "Game Added successfully!")
             return redirect(reverse(add_game_page))
         except Exception as e:
-            return HttpResponse(e)
             messages.success(request, "Game Insertion failed!")
             return redirect(reverse(add_game_page))
     messages.error(request, "Bad request of form! Try again later!")
     return redirect(reverse(add_game_page))
+
+
+""" Insert Games using CSV upload """
+def upload_csv(request):
+    if request.method == 'POST' and request.FILES['file']:
+        csv_file = request.FILES['file']
+        if not csv_file.name.endswith('.csv'):
+            messages.error(request, 'File is not a CSV')
+            return redirect('upload_csv')
+
+        data_set = csv_file.read().decode('UTF-8')
+        io_string = io.StringIO(data_set)
+        next(io_string)
+        vendor_unique_id = request.POST.get('vendor_unique_keyid')
+        vendor_ins = Vendors.objects.get(vendor_unique_keyid = vendor_unique_id)
+        for row in csv.reader(io_string, delimiter=',', quotechar='"'):
+            # Check for any primary key or unique constraints
+            try:
+                obj = Games.objects.create(
+                    product_key           = generate_product_key(request),
+                    game_logo             = row[0],
+                    vendor_reference      = vendor_ins,
+                    game_name             = row[1],
+                    game_description      = row[2],
+                    game_developer        = row[3],
+                    game_publisher        = row[4],
+                    game_release_date     = row[5],
+                    avail_stock           = row[6],
+                    game_price            = row[7],
+                    discount              = row[8],
+                    game_storage          = row[9],
+                    game_ram              = row[10],
+                    game_features         = row[11],
+                    game_modes            = row[12],
+                    game_categories       = row[13],
+                    platform_names        = row[14],
+                    game_languages        = row[15]
+                )
+            except ValidationError as e:
+                # Handle any validation errors
+                messages.error(request, f"Error creating object: {str(e)}")
+                return redirect(reverse(add_game_page))
+            except IntegrityError as e:
+                # Handle any duplicate primary key or unique constraint errors
+                messages.error(request, f"Error creating object: {str(e)}")
+                return redirect(reverse(add_game_page))
+        messages.success(request, 'CSV file uploaded successfully')
+        return redirect(reverse(show_games_page))
+
+    return redirect(reverse(show_games_page))

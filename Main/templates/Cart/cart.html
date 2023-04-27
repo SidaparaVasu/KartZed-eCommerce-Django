@@ -107,7 +107,11 @@
 
                 // Get the current value of the input element and increment it
                 var currentValue = parseInt(quantityInput.value);
-                var newValue = currentValue + 1;
+                var newValue = currentValue
+                // Make sure the new value is not less than 10
+                if (currentValue < 10) {
+                    var newValue = currentValue + 1;
+                } 
 
                 // Update the input element with the new value
                 quantityInput.value = newValue;
