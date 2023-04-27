@@ -7,6 +7,8 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
+
+from Main.models import Contact
 from .models import Games
 from .forms import GamesForm
 from Authapp.models import Vendors
@@ -174,3 +176,22 @@ def upload_csv(request):
         return redirect(reverse(show_games_page))
 
     return redirect(reverse(show_games_page))
+def contact_game_view(request):
+    return render(request, 'contact.html')
+
+def insert_game_contact(request):
+    #return HttpResponse("yo")
+    if request.method == 'POST':
+        contact_name    = request.POST.get('contact_name')
+        contact_email   = request.POST.get('contact_email')
+        contact_message = request.POST.get('contact_message')
+        try:
+            Contact.objects.create( 
+                contact_name    = contact_name,   
+                contact_email   = contact_email,  
+                contact_message = contact_message,
+            )
+        except Exception as e:
+            return HttpResponse(e)
+                
+    return render(request, 'contact.html')

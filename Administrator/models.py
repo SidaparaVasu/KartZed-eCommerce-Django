@@ -43,3 +43,8 @@ class VCVersions(models.Model):
     vc_name = models.ForeignKey(VideoCards, on_delete=models.CASCADE) 
     vc_version_name = models.CharField(max_length=50,unique=True)
     
+class Offer(models.Model):
+    offer_id = models.AutoField(primary_key=True)
+    offer_name = models.CharField(max_length=225) 
+    offer_description = models.CharField(max_length=220)
+    offer_tc = models.CharField(max_length=220)

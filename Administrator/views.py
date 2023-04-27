@@ -2,7 +2,9 @@ from django.shortcuts import render,redirect,HttpResponse, get_object_or_404
 from django.urls import reverse
 from django.core.paginator import Paginator
 from django.contrib import messages
-from .models import Platform, GameFeatures, GameModes, GameCategory, OperatingSystems, OSVersions 
+
+from Main.models import Contact
+from .models import Offer, Platform, GameFeatures, GameModes, GameCategory, OperatingSystems, OSVersions 
 from .models import Processors, VideoCards, VCVersions
 from Authapp.models import Customers
 
@@ -318,3 +320,66 @@ def insert_vc_version(request):
     return redirect(reverse(view_vc))
 
 """ VideoCards CRUD End """
+
+""" Offer CRUD Start """
+
+def view_offer(request):
+
+    offer = Offer.objects.all()
+    return render(request,'offer/offer.html',context ={'offer':offer})
+
+def insert_offer(request):
+    if request.method == 'POST':
+        offer_name  = request.POST.get('offer_name')
+        offer_description  = request.POST.get('offer_description')
+        offer_tc  = request.POST.get('offer_tc')
+        
+        try:
+            Offer.objects.create( 
+                offer_name = offer_name,
+                offer_description = offer_description,
+                offer_tc  = offer_tc 
+                )
+            messages.success(request, "Offer Added successfully!")
+            return redirect(reverse(view_offer))
+        except Exception as e:
+            messages.error(request, "Offer is alreay exists /  insertion failed!")
+            return redirect(reverse(view_offer))
+    messages.error(request, "Processor Insertion failed!")
+    return redirect(reverse(view_offer))
+
+def delete_offer(request,id):
+    obj = get_object_or_404(Offer,offer_id=id)
+    
+    if request.method == "GET":
+        if obj.delete():
+            messages.success(request,"Offer deleted successfully!")
+            return redirect(reverse(view_offer))
+        else:
+            messages.error(request,"Offer couldn't delete!")
+    return redirect(reverse(view_offer))
+
+""" Offer CRUD End """
+
+
+""" Contact Us Start """
+
+def view_contact(request):
+
+    contact = Contact.objects.all()
+    return render(request,'contact/viewcontact.html',context ={'contact':contact})
+
+def delete_contact(request,id):
+    obj = get_object_or_404(Contact,contact_id=id)
+    #return HttpResponse(obj)
+    if request.method == "GET":
+        if obj.delete():
+            messages.success(request,"Offer deleted successfully!")
+            return redirect(reverse(view_contact))
+        else:
+            messages.error(request,"Offer couldn't delete!")
+            return redirect(reverse(view_contact))
+    #return HttpResponse(obj)
+
+
+""" Contact Us End """
