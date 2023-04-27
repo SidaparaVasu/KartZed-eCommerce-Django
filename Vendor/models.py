@@ -57,3 +57,9 @@ class Games(models.Model):
     processors_names   = models.CharField(max_length=100)
     vc_names           = models.CharField(max_length=100)
     vc_versions        = models.CharField(max_length=100)
+
+class Vendor_Contact(models.Model):
+    contact_id = models.AutoField(primary_key=True)
+    contact_name = models.CharField(max_length=100)
+    contact_email = models.EmailField()
+    contact_message = models.TextField()

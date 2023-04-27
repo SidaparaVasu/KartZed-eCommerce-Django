@@ -20,6 +20,6 @@ urlpatterns = [
 
    # Contact
    path('contact_game_view/', views.contact_game_view, name="contact_game_view"),
-   path('contact_game_view/insert_game_contact', views.insert_game_contact, name="insert_game_contact"),
+   path('contact_game_view/insert_game_contact', views.insert_game_vcontact, name="insert_game_contact"),
    
 ]
