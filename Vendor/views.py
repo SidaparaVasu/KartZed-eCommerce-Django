@@ -38,7 +38,13 @@ def show_games_page(request):
         return render(request, 'Games/show-games.html', context = {'Games':games})
     else:
         return render(request, 'vendor-login.html') 
-
+    
+def show_game_details(request, prod_key):
+    if request.session.get('is_vendor_authenticated', False):
+        game = Games.objects.filter(product_key = prod_key)
+        return render(request, 'Games/view-game-details.html', context = {'Game':game})
+    else:
+        return render(request, 'vendor-login.html') 
 """ Check Image is in Image format or not? """
 def is_image(file):
     """
@@ -196,6 +202,18 @@ def games_csv_upload(request):
         messages.success(request, 'CSV file uploaded successfully')
         return redirect(reverse(show_games_page))
     return redirect(reverse(show_games_page))
+
+""" upload_game_logo """
+def upload_game_logo(request, prod_key):
+    game = Games.objects.get(product_key = prod_key)
+    url = reverse('show_game_details', args=[prod_key])
+    if request.method == "POST":
+        game.game_logo = request.FILES['game_logo'] 
+        game.save()
+        return redirect(url)
+        # return render(request, 'Games/view-game-details.html', context = {'Game': [game]})
+    return redirect(url)
+
 
 def contact_game_view(request):
     return render(request, 'contact.html')

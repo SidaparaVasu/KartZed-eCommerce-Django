@@ -18,6 +18,10 @@ urlpatterns = [
    path('insert_game',views.insert_game,name='insert_game'),
    path('games_csv_upload',views.games_csv_upload,name='games_csv_upload'),
    path('show-games', views.show_games_page, name="show_games_page"),
+   path('show-game-details/<prod_key>', views.show_game_details, name="show_game_details"),
+   
+   # edits
+   path('show-game-details/<prod_key>/upload_game_logo', views.upload_game_logo, name="upload_game_logo"),
 
    # Contact
    path('contact_game_view/', views.contact_game_view, name="contact_game_view"),
