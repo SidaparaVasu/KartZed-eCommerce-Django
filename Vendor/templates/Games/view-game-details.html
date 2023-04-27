@@ -15,7 +15,7 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <style>
-.card-tags{
+.card-tags-box{
     padding: 3px 6px;
     background-color: #372f51;
     color: #fff;
@@ -76,7 +76,7 @@
                                     <p>Publisher: <span>{{ gm.game_publisher }}</span></p>
                                 </div>
                                 <div class="flex-2">
-                                    <p>Price: <span>{{ gm.game_price }}</span></p>
+                                    <p>Price: <span>₹{{ gm.game_price }}</span></p>
                                     <p>Discount: <span>{{ gm.discount }}%</span></p>
                                 </div>
                                 <div class="flex-2">
@@ -85,48 +85,47 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid-3 w-100 mt-50">
-                            <div class="col-1 flex-col w-100">
+                        <div class="grid-5-5 w-100 mt-50">
+                            <div class="flex-col w-100">
                                 <header>Features</header>
-                                <p class="text-center">
+                                <div class="tags-box">
                                     {% for feature in gm.game_features %}
-                                        <p>{{ feature }}</p>
+                                        <p class="tag">{{ feature }}</p>
                                     {% endfor %}
-                                </p>
+                                </div>
                             </div>
-                            <div class="col-2 flex-col w-100">
+                            <div class="flex-col w-100">
                                 <header>Modes</header>
-                                <p class="text-center">
+                                <div class="tags-box">
                                     {% for mode in gm.game_modes %}
-                                        <p>{{ mode }}</p>
+                                        <p class="tag">{{ mode }}</p>
                                     {% endfor %}
-                                </p>
+                                </div>
                             </div>
-                            <div class="col-3 flex-col w-100">
+                            <div class="flex-col w-100">
                                 <header>Categories</header>
-                                <p class="text-center">
+                                <div class="tags-box">
                                     {% for category in gm.game_categories %}
-                                        <p>{{ category }}</p>
+                                        <p class="tag">{{ category }}</p>
                                     {% endfor %}
-                                </p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="grid-3 w-100 mt-50">
-                            <div class="col-1 flex-col w-100">
+
+                            <div class="flex-col w-100">
                                 <header>Platforms</header>
-                                <p class="text-center">
+                                <div class="tags-box">
                                     {% for platform in gm.platform_names %}
-                                        <p>{{ platform }}</p>
+                                        <p class="tag">{{ platform }}</p>
                                     {% endfor %}
-                                </p>
+                                </div>
                             </div>
-                            <div class="col-2 flex-col w-100">
+                            <div class="flex-col w-100">
                                 <header>Languages</header>
-                                <p class="text-center">
+                                <div class="tags-box">
                                     {% for language in gm.game_languages %}
-                                        <p>{{ language }}</p>
+                                        <p class="tag">{{ language }}</p>
                                     {% endfor %}
-                                </p>
+                                </div>
                             </div>
                         </div>
                         {% endfor %}

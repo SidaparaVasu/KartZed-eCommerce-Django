@@ -92,9 +92,9 @@
     margin-top: 50px;
 }
 
-.grid-3{
+.grid-5-5{
     display: grid;
-    grid-template-columns: 33.33% 33.33% 33.33%;
+    grid-template-columns: 50% 50%;
     gap: 20px; 
 }
 .flex-col{
@@ -109,6 +109,19 @@
     background-color: #e4e4e4;
     text-align: center;
 }
-.flex-col p{
-    text-align: center;
+.flex-col .tags-box{
+    width: 100%;
+    padding: 10px;
+    display: inline-flex;
+    overflow-x: auto;
+    word-wrap: break-word;
+    gap: 5px;
+}
+
+.flex-col .tags-box .tag{
+    width: fit-content;
+    padding: 5px 8px;
+    background-color: #5d87ff;
+    color: #fff;
+    border-radius: 5px;
 }
