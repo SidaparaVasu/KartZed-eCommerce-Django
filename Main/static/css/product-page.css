@@ -5,13 +5,13 @@
 }
 
 body{
-    width:100%;
+    width: 100%;
     min-height: 100vh;
     padding: 120px 80px 80px 80px;
     background-color: #121212;
 }
 .main-container {
-    min-height: 1250px;
+    min-height: auto;
     width: 100%;
     padding: 15px;
     color: var(--white);
@@ -37,19 +37,7 @@ body{
 
 .grid-2 .lft-box,
 .grid-2 .rgt-box {
-    height: 500px;
-}
-
-.grid-2 .lft-box .img-box {
-    height: 100%;
-    width: 100%;
-    background-color: var(--white);
-}
-
-.grid-2 .lft-box .img-box img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
+    height: auto;
 }
 
 .grid-2 .rgt-box {
@@ -160,17 +148,21 @@ body{
 
 
 /* Image Slideshow CSS */
-.game-image-gallary {
+.grid-2 .lft-box .game-image-gallary {
     width: 100%;
     height: 100%;
     background-color: #161616;
 }
 
-
 .image-container{
-    position: relative;
     height: 100%;
     width: 100%;
+    display: grid;
+    gap: 5px;
+    grid-template-rows: 80% 20%;
+}
+.image-container .slides{
+    position: relative;
 }
 .image-container .slides,
 .image-container .slides img{
@@ -182,8 +174,8 @@ body{
 }
 
 
-.image-container .prev,
-.image-container .next{
+.image-container .slides .prev,
+.image-container .slides .next{
     position: absolute;
     top: 0;
     height: 100%;
@@ -196,33 +188,32 @@ body{
     background-color: rgba(0,0,0,0.1);
     user-select: none;
 }
-.image-container .prev{
+.image-container .slides .prev{
     left: 0;
 }
-.image-container .next{
+.image-container .slides .next{
     right: 0;
 }
-.image-container .prev:hover,
-.image-container .next:hover{
+.image-container .slides .prev:hover,
+.image-container .slides .next:hover{
     background-color: rgba(0,0,0,0.5);
     cursor: pointer;
     transition: 0.2s ease-in;
 }
 
-.row {
+.thumb-img-box {
     width: 100%;
-    height: 80px;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    margin-top: 10px;
 }
 
 /* Six columns side by side */
 .column {
     height: 100%;
-    width: 20%;
+    width: 25%;
 }
 
 /* Add a transparency effect for thumnbail images */
