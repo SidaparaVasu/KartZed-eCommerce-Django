@@ -46,6 +46,44 @@ def indexPage(request):
         }
         return render(request, 'index.html', context)
 
+def view_browse(request):
+    if request.session.get('is_authenticated', False):
+        cust_unique_keyid = request.session['cust_unique_keyid']
+        user_id = Customers.objects.get(cust_unique_keyid = cust_unique_keyid)
+        chk = Cart.objects.filter(cust_id = user_id).count()
+        imp = []
+        if chk > 0:
+            chk1 = CartItems.objects.all()   
+            c_items_id = []         
+            for data1 in chk1:
+                c_items_id.append(data1.game.gid)
+            print(c_items_id)
+
+            chk2 = Games.objects.all()
+            for data2 in c_items_id:
+                #print(data2)
+                c_g_items = Games.objects.filter(gid = data2)
+                for data3 in c_g_items:
+                    imp.append(data3.gid)
+                    #print(imp)
+            #return HttpResponse()
+                
+        else :
+            pass    
+        context = {
+            # 'imp' : imp,
+            'games' : Games.objects.all(),
+            'cart_count' : Cart.objects.filter(cust_id = user_id).count()
+        }
+        
+        return render(request, 'browse.html',context)
+    else:
+        context = {
+            'games' : Games.objects.all()
+        }
+        return render(request, 'browse.html', context)
+
+
 def render_account_page(request):
     if request.session.get('is_authenticated', False):
         user_data = Customers.objects.get(cust_unique_keyid = request.session['cust_unique_keyid'])
