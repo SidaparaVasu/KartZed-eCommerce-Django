@@ -11,13 +11,13 @@
             <form action= "search" method = "get">
             <input type="text" class="search-bar" id="search-bar" name="search"
                 placeholder="Search store" >
-            <button type="submit"><ion-icon name="search-outline" class="search-icon"></ion-icon>/<button>
             </input>
+            <button type="submit"><ion-icon name="search-outline" class="search-icon"></ion-icon><button>
             </form>
         </div>
         <div class="links">
             <a href="#">Discover</a>
-            <a href="{% url 'view_browse' %}">Browse</a>
+            <a href="#">Browse</a>
             <a href="{% url 'render_vendor_register_page' %}">Become a Seller</a>
             {% if request.session.is_authenticated %}
                 <a href="{% url 'render_account_page' %}">Account</a>

@@ -30,5 +30,12 @@
     {% include 'navbar/navbar.html' %}
 
     <h1 style="color:white">hello<h1>
+        <div>
+            {% for data in results %}
+                <h1 style="color:white">{{ data.game_name }}<h1>
+                <h1 style="color:white"><h1>
+                <h1 style="color:white">hello<h1>
+            {% endfor %}
+        </div>
 </body>
 </html>

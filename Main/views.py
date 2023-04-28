@@ -213,8 +213,8 @@ def check_payment(request,id):
 
 """ Search :: Browse Start"""
 
-def view_browse(request):
-    return render(request,'Browse/browse.html')
+# def view_browse(request):
+#     return render(request,'Browse/browse.html')
 
 def view_search(request):
     query = request.GET.get('search')

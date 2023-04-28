@@ -38,7 +38,7 @@ urlpatterns = [
     path('check_payment/<id>',views.check_payment,name="check_payment"),
 
     # Browse
-    path('browse',views.view_browse,name="view_browse"),
+    # path('browse',views.view_browse,name="view_browse"),
     path('search',views.view_search,name="view_search"),
     
 
