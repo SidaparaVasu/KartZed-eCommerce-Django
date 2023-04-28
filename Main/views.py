@@ -2,12 +2,15 @@ from django.shortcuts import get_object_or_404, render, redirect, HttpResponse
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
+from django.db.models import Q
 from os import *
 from Administrator.views import *
 from Vendor.models import *
 from Administrator.models import * 
 from .models import *
 from Email.views import Email
+from .forms import *
+
 
 # Create your views here.
 def indexPage(request):
@@ -212,3 +215,17 @@ def check_payment(request,id):
 
 
 """ user points balance """
+
+
+""" Search :: Browse Start"""
+
+def view_browse(request):
+    return render(request,'Browse/browse.html')
+
+def view_search(request):
+    query = request.GET.get('search')
+    results = Games.objects.filter(Q(game_name__icontains=query))
+    context = {'query': query, 'results': results}
+    return render(request,'Browse/browse.html',context)
+
+""" Search End """
