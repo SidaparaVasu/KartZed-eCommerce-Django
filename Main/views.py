@@ -105,7 +105,7 @@ def add_to_cart(request,id):
             cartitem = CartItems.objects.create(cart = cart, game = game)
         except Exception as e:
             return HttpResponse(e)
-        return redirect(reverse(indexPage)) 
+        return redirect(reverse(view_cart)) 
             
     else:
         return redirect(reverse('render_customer_login_page'))
@@ -116,12 +116,8 @@ def delete_cart_item(request,id):
     #return HttpResponse(cartitem.cart.cart_id)
     obj1 = get_object_or_404(Cart,cart_id=cartitem.cart.cart_id)
     if request.method == "GET":
-        if obj.delete():
-            obj1.delete()
-            messages.success(request,"Cart Item deleted successfully!")
-            return redirect(reverse(view_cart))
-        else:
-            messages.error(request,"Cart Item couldn't delete!")
+        obj1.delete()
+        return redirect(reverse(view_cart))
     return redirect(reverse(view_cart))
 
 """ Offer CRUD Start """
@@ -172,18 +168,21 @@ def contact_view(request):
 
 def insert_contact(request):
     #return HttpResponse("yo")
-    if request.method == 'POST':
-        contact_name    = request.POST.get('contact_name')
-        contact_email   = request.POST.get('contact_email')
-        contact_message = request.POST.get('contact_message')
+    if request.method == 'GET':
+        contact_name    = request.GET.get('contact_name')
+        contact_email   = request.GET.get('contact_email')
+        contact_message = request.GET.get('contact_message')
         try:
             Contact.objects.create( 
                 contact_name    = contact_name,   
                 contact_email   = contact_email,  
                 contact_message = contact_message,
             )
+            messages.error(request,"Thanks for your contacting us!")
+            return redirect(reverse(indexPage))
         except Exception as e:
-            return HttpResponse(e)
+            messages.error(request,"Message Coudn't sent! Try again!")
+            return render(request, 'Contact/contact.html')
                 
     return render(request, 'Contact/contact.html')
 
@@ -193,12 +192,7 @@ def insert_contact(request):
 """ View details Start """
 def view_game_detail(request, product_key):
     product = Games.objects.get(product_key = product_key)
-    #return HttpResponse(product.game_description)
-    context = {
-        'games' : product
-        }
-
-    return render(request, 'viewgame.html',context)
+    return render(request, 'product-page.html', context = { 'Game' : product })
 
 """ View details End """
 

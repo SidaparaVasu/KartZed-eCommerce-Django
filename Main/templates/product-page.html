@@ -1,0 +1,136 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Game Details Page | User</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon_logo.png' %}" />
+    <link rel="stylesheet" href="{% static 'css/root.css' %}">
+    <link rel="stylesheet" href="{% static 'css/plugins.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/product-page.css' %}">
+    <!-- Ion Icon CDN -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body>
+    <!-- Include Navigation Bar -->
+    {% include 'navbar/navbar.html' %}
+
+    <!--  Body Wrapper -->
+    <div class="main-container">
+        <div class="header">
+            <a href="{% url 'indexPage' %}">Go Back</a>
+        </div>
+        <form action="add_to_cart/{{Game.product_key}}" method="post" class="grid-2">
+            {% csrf_token %}
+            <div class="lft-box" id="lft-box">
+                <div class="img-box" id="img-box">
+                    {% if Game.game_logo %}
+                    <img src="{{ Game.game_logo.url }}" />
+                    {% else %}
+                    <p class="img-text">Refresh Page if Image is not shown</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="rgt-box">
+                <h2>{{ Game.game_name }}</h2>
+                <p>{{ Game.game_description }}</p>
+                <div class="flex-2 mt-20">
+                    <p>Developer: <span>{{ Game.game_developer }}</span></p>
+                    <p>Storage: <span>{{ Game.game_storage }}</span></p>
+                </div>
+                <div class="flex-2">
+                    <p>Publisher: <span>{{ Game.game_publisher }}</span></p>
+                    <p>RAM: <span>{{ Game.game_ram }}</span></p>
+                </div>
+                <div class="flex-2">
+                    <p>Price: <span>₹{{ Game.game_price }}</span></p>
+                    <p>Release Date: <span>{{ Game.game_release_date }}</span></p>
+                </div>
+                <div class="flex-2">
+                    <p>Discount: <span>{{ Game.discount }}%</span></p>
+                </div>
+
+                <div class="tags-box mt-10">
+                    Category:
+                    {% for category in Game.game_categories %}
+                    <p class="tag">{{ category }}</p>
+                    {% endfor %}
+                </div>
+                <div class="tags-box">
+                    Features:
+                    {% for feature in Game.game_features %}
+                    <p class="tag">{{ feature }}</p>
+                    {% endfor %}
+                </div>
+                <div class="tags-box">
+                    Modes:
+                    {% for mode in Game.game_modes %}
+                    <p class="tag">{{ mode }}</p>
+                    {% endfor %}
+                </div>
+                <div class="tags-box m-10 fl-col">
+                    <p>Languages (Audio & Video):</p>
+                    <p>
+                        {% for language in Game.game_languages %}
+                        {% if forloop.last %}
+                        <span>{{ language }}.</span>
+                        {% else %}
+                        <span>{{ language }},</span>
+                        {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+
+                <div class="btn-box">
+                    <button type="submit" class="cart-btn">Add to Cart</button>
+                </div>
+            </div>
+        </form>
+        <div class="game-image-gallary">
+            <!-- Container for the image gallery -->
+            <div class="image-container">
+                <!-- Full-width images with number text -->
+                <div class="slides">
+                    <img src="https://picsum.photos/id/237/1000/300">
+                    <img src="https://picsum.photos/id/238/1000/300">
+                    <img src="https://picsum.photos/id/239/1000/300">
+                    <img src="https://picsum.photos/id/240/1000/300">
+                    <img src="https://picsum.photos/id/255/1000/300">
+                </div>
+    
+                <!-- Next and previous buttons -->
+                <a class="prev">&#10094;</a>
+                <a class="next">&#10095;</a>
+    
+                <!-- Thumbnail images -->
+                <div class="row">
+                    <div class="column">
+                        <img class="image-dots" src="/Media/product_img/game_logos/20230425210914Valorant2.jpg" onclick="currentSlide(2)">
+                    </div>
+                    <div class="column">
+                        <img class="image-dots" src="/Media/product_img/game_logos/20230425210914Valorant2.jpg" onclick="currentSlide(2)">
+                    </div>
+                    <div class="column">
+                        <img class="image-dots" src="/Media/product_img/game_logos/20230425210914Valorant2.jpg" onclick="currentSlide(2)">
+                    </div>
+                    <div class="column">
+                        <img class="image-dots" src="/Media/product_img/game_logos/20230425210914Valorant2.jpg" onclick="currentSlide(2)">
+                    </div>
+                    <div class="column">
+                        <img class="image-dots" src="/Media/product_img/game_logos/20230425210914Valorant2.jpg" onclick="currentSlide(2)">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/image-slideshow.js' %}"></script>
+</body>
+</html>

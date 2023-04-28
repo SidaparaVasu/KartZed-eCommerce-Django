@@ -55,7 +55,7 @@
     background-color: var(--white);
     border: 2px dashed #e4e4e4;
     display: none;
-    /* z-index: -10; */
+    /* z-index: -10; */ 
 }
 .grid-2 .lft-box .edit-img-box,
 .grid-2 .lft-box .edit-img-box .img-form{
@@ -125,3 +125,4 @@
     color: #fff;
     border-radius: 5px;
 }
+
