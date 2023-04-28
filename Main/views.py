@@ -155,18 +155,21 @@ def contact_view(request):
 
 def insert_contact(request):
     #return HttpResponse("yo")
-    if request.method == 'POST':
-        contact_name    = request.POST.get('contact_name')
-        contact_email   = request.POST.get('contact_email')
-        contact_message = request.POST.get('contact_message')
+    if request.method == 'GET':
+        contact_name    = request.GET.get('contact_name')
+        contact_email   = request.GET.get('contact_email')
+        contact_message = request.GET.get('contact_message')
         try:
             Contact.objects.create( 
                 contact_name    = contact_name,   
                 contact_email   = contact_email,  
                 contact_message = contact_message,
             )
+            messages.error(request,"Thanks for your contacting us!")
+            return redirect(reverse(indexPage))
         except Exception as e:
-            return HttpResponse(e)
+            messages.error(request,"Message Coudn't sent! Try again!")
+            return render(request, 'Contact/contact.html')
                 
     return render(request, 'Contact/contact.html')
 

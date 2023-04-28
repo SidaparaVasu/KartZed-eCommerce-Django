@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{% static 'css/plugins.css' %}">
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+    <link rel="stylesheet" href="{% static 'css/contact.css' %}">
     <!-- Ion Icons CDN -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -30,17 +30,11 @@
     <!-- Include Navigation Bar -->
     {% include 'navbar/navbar.html' %}
 
-    <section class="profile-container">
+    <!-- <section class="profile-container">
         <div class="personal-info-box">
-            <div class="profile-photo-box">
-                <img src="{% static 'images/profile/businessman.png' %}" alt="" srcset="">
-            </div>
             <div class="profile-form">
-                <h1>Contact Form
-                </h1>
-
-                
-                <div class="personal-info">
+                <h1>Have a question? We're here to help!</h1>
+                <div class="personal-info" style="width: 100%;">
                     <form action="insert_contact" method="POST" class="first-form">
                         {% csrf_token %}
                         <label for="input-group" class="form-label">Name</label>
@@ -73,9 +67,29 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
-    <script>
+    <section class="contact-box">
+        <form action="insert_contact" method="get" class="contact-form">
+            <header class="contact-header">Have a question? We're here to help!</header>
+            <div class="flex-2">
+                <div class="col">
+                    <label for="fname">Username</label>
+                    <input type="text" name="contact_name" id="fname" placeholder="Fill me" required/>
+                </div>
+                <div class="col">
+                    <label for="email">Email ID</label>
+                    <input type="email" name="contact_email" id="email" placeholder="Me Too" required/>
+                </div>
+            </div>
+            <div class="col mt-30">
+                <label for="message">Please leave your message here</label>
+                <textarea name="contact_message" id="message" cols="30" rows="10" 
+                    placeholder="We'd love to hear from you. Write your thoughts below." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" id="save-btn">Send Message</button>
+        </form>
+    </section>
 
 </body>
 </html>
