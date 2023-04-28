@@ -102,7 +102,7 @@ def add_to_cart(request,id):
             cartitem = CartItems.objects.create(cart = cart, game = game)
         except Exception as e:
             return HttpResponse(e)
-        return redirect(reverse(indexPage)) 
+        return redirect(reverse(view_cart)) 
             
     else:
         return redirect(reverse('render_customer_login_page'))
@@ -113,12 +113,8 @@ def delete_cart_item(request,id):
     #return HttpResponse(cartitem.cart.cart_id)
     obj1 = get_object_or_404(Cart,cart_id=cartitem.cart.cart_id)
     if request.method == "GET":
-        if obj.delete():
-            obj1.delete()
-            messages.success(request,"Cart Item deleted successfully!")
-            return redirect(reverse(view_cart))
-        else:
-            messages.error(request,"Cart Item couldn't delete!")
+        obj1.delete()
+        return redirect(reverse(view_cart))
     return redirect(reverse(view_cart))
 
 """ Offer CRUD Start """
@@ -193,12 +189,7 @@ def insert_contact(request):
 """ View details Start """
 def view_game_detail(request, product_key):
     product = Games.objects.get(product_key = product_key)
-    #return HttpResponse(product.game_description)
-    context = {
-        'games' : product
-        }
-
-    return render(request, 'viewgame.html',context)
+    return render(request, 'product-page.html', context = { 'Game' : product })
 
 """ View details End """
 
