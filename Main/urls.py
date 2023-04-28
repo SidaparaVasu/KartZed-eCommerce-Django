@@ -24,6 +24,7 @@ urlpatterns = [
     # Cart
     path('view_cart',views.view_cart,name="view_cart"),
     path('add_to_cart/<id>',views.add_to_cart,name="add_to_cart"),
+    path('delete_cart_item/<id>',views.delete_cart_item,name="delete_cart_item"),
 
     #view game page
     path('view_game_page/<str:product_key>', views.view_game_detail, name="game_details"), 
@@ -31,5 +32,9 @@ urlpatterns = [
     #contact
     path('contact_view/', views.contact_view, name="contact_view"),
     path('contact_view/insert_contact', views.insert_contact, name="insert_contact"),
+
+    # Balance
+    path('buy_points',views.buy_points,name="buy_points"),
+    path('check_payment/<id>',views.check_payment,name="check_payment"),
 
 ]

@@ -51,3 +51,9 @@ class OfferForm(forms.ModelForm):
     class Meta:
         model  = Offer 
         fields = ('offer_id', 'offer_name', 'offer_description', 'offer_tc')
+
+class PlanForm(forms.ModelForm):
+    
+    class Meta:
+        model = Plan 
+        fields = ('plan_id','points','amount')

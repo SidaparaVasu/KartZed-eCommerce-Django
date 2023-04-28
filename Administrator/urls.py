@@ -56,6 +56,15 @@ urlpatterns = [
    # Offers ::
    path('offer',views.view_offer,name='view_offer'),
    path('insert_offer',views.insert_offer,name='insert_offer'),
+   path('delete_offer<id>', views.delete_offer, name="delete_offer"),
+
+   # Contact ::
+   path('contact',views.view_contact,name='view_contact'),
+   path('delete_contact/<id>', views.delete_contact, name="delete_contact"),
    path('delete_offer/<id>', views.delete_offer, name="delete_offer"),
+
+   # Plans ::
+   path('plan',views.view_plan,name="view_plan"),
+   path('insert-plan',views.insert_plan,name="insert_plan"),
 
 ]
