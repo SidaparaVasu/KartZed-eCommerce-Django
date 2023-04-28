@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KartZed</title>
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon_logo.png' %}" />
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/root.css' %}">
+    <link rel="stylesheet" href="{% static 'css/plugins.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Ion Icons CDN -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags %}
+                <script>alert("{{ message }}")</script> 
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <!-- Include Navigation Bar -->
+    {% include 'navbar/navbar.html' %}
+
+    <div style= "height:700px;width:100%x;">
+        <h1 style="text-align:center;color:lightblue">BUY POINTS</h1>
+        <br>
+        {% for data in balance %}
+        <div style= "height:400px;width:33%;float:left;text-align:center;">
+            <h1 style="color:lightblue">PLAN {{ data.plan_id }}</h1><br>
+            <hr><br><br><br>
+            <p style="color:#F2FA96;font-size:25px">Buy {{ data.points }} points in ₹{{ data.amount }} only</p><br><br>
+            <a href="{% url 'check_payment' data.plan_id %}">
+                <button style= "height:30px;width:60px;border-radius:5px;color:lightblue;background-color:#090012">BUY</button>
+            </a>
+        </div>
+        {% endfor %}
+        
+    </div>
+
+</body>
+</html>

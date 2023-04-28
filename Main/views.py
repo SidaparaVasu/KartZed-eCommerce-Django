@@ -3,8 +3,9 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
 from os import *
-from Administrator.views import view_contact
+from Administrator.views import *
 from Vendor.models import *
+from Administrator.models import * 
 from .models import *
 from Email.views import Email
 
@@ -13,26 +14,26 @@ def indexPage(request):
     if request.session.get('is_authenticated', False):
         cust_unique_keyid = request.session['cust_unique_keyid']
         user_id = Customers.objects.get(cust_unique_keyid = cust_unique_keyid)
-        chk = Cart.objects.filter(cust_id = user_id).count()
-        imp = []
-        if chk > 0:
-            chk1 = CartItems.objects.all()   
-            c_items_id = []         
-            for data1 in chk1:
-                c_items_id.append(data1.game.gid)
-            print(c_items_id)
+        # chk = Cart.objects.filter(cust_id = user_id).count()
+        # imp = []
+        # if chk > 0:
+        #     chk1 = CartItems.objects.all()   
+        #     c_items_id = []         
+        #     for data1 in chk1:
+        #         c_items_id.append(data1.game.gid)
+        #     print(c_items_id)
 
-            chk2 = Games.objects.all()
-            for data2 in c_items_id:
-                #print(data2)
-                c_g_items = Games.objects.filter(gid = data2)
-                for data3 in c_g_items:
-                    imp.append(data3.gid)
-                    #print(imp)
+        #     chk2 = Games.objects.all()
+        #     for data2 in c_items_id:
+        #         #print(data2)
+        #         c_g_items = Games.objects.filter(gid = data2)
+        #         for data3 in c_g_items:
+        #             imp.append(data3.gid)
+        #             #print(imp)
             #return HttpResponse()
                 
-        else :
-            pass    
+        # else :
+        #     pass    
         context = {
             # 'imp' : imp,
             'games' : Games.objects.all(),
@@ -139,11 +140,20 @@ def add_to_cart(request,id):
             cartitem = CartItems.objects.create(cart = cart, game = game)
         except Exception as e:
             return HttpResponse(e)
-        return redirect(reverse(indexPage)) 
+        return redirect(reverse(view_cart)) 
             
     else:
         return redirect(reverse('render_customer_login_page'))
-        
+
+def delete_cart_item(request,id):
+    obj = get_object_or_404(CartItems,game=id)
+    cartitem = CartItems.objects.get(game=id)
+    #return HttpResponse(cartitem.cart.cart_id)
+    obj1 = get_object_or_404(Cart,cart_id=cartitem.cart.cart_id)
+    if request.method == "GET":
+        obj1.delete()
+        return redirect(reverse(view_cart))
+    return redirect(reverse(view_cart))
 
 """ Offer CRUD Start """
 
@@ -193,18 +203,21 @@ def contact_view(request):
 
 def insert_contact(request):
     #return HttpResponse("yo")
-    if request.method == 'POST':
-        contact_name    = request.POST.get('contact_name')
-        contact_email   = request.POST.get('contact_email')
-        contact_message = request.POST.get('contact_message')
+    if request.method == 'GET':
+        contact_name    = request.GET.get('contact_name')
+        contact_email   = request.GET.get('contact_email')
+        contact_message = request.GET.get('contact_message')
         try:
             Contact.objects.create( 
                 contact_name    = contact_name,   
                 contact_email   = contact_email,  
                 contact_message = contact_message,
             )
+            messages.error(request,"Thanks for your contacting us!")
+            return redirect(reverse(indexPage))
         except Exception as e:
-            return HttpResponse(e)
+            messages.error(request,"Message Coudn't sent! Try again!")
+            return render(request, 'Contact/contact.html')
                 
     return render(request, 'Contact/contact.html')
 
@@ -214,11 +227,20 @@ def insert_contact(request):
 """ View details Start """
 def view_game_detail(request, product_key):
     product = Games.objects.get(product_key = product_key)
-    #return HttpResponse(product.game_description)
-    context = {
-        'games' : product
-        }
-
-    return render(request, 'viewgame.html',context)
+    return render(request, 'product-page.html', context = { 'Game' : product })
 
 """ View details End """
+
+""" user points balance """
+def buy_points(request):
+    context = {
+        'balance' : Plan.objects.all()
+    }
+    return render(request,'Balance/buy_points.html',context)
+
+def check_payment(request,id):
+    
+    return render(request,'Balance/buy_points.html')
+
+
+""" user points balance """

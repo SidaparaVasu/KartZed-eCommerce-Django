@@ -19,7 +19,7 @@
 }
 
 .profile-photo-box{
-    height: 100%;
+    height: calc(100% - 14px);
     width: 100%;
     background: linear-gradient(270deg, rgba(11, 11, 11, 0) 0%, #0B0B0B 100%, #0B0B0B 100%);    
     border-radius: 20px;

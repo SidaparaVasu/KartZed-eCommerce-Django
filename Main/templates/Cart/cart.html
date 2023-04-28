@@ -63,7 +63,17 @@
                                     data-product-id="{{ forloop.counter }}">+</button>
                             </div>
                         </div>
-                        <div class="cart-item">remove</div>
+                        <div class="cart-item">
+                            <a href="{% url 'delete_cart_item' item.gid %}" 
+                                class="remove-btn"
+                                onclick="return confirm('Are you sure you want to delete this?')">
+                                <span class="delete-btn icon-box rd-icon">
+                                    
+                                    <ion-icon name="trash-outline" class="icon"></ion-icon>
+                                    
+                                </span> 
+                            </a>
+                        </div>
                     </div>
                     {% endfor %}
                 </div>

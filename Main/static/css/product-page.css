@@ -1,0 +1,231 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    width: 100%;
+    min-height: 100vh;
+    padding: 120px 80px 80px 80px;
+    background-color: #121212;
+}
+.main-container {
+    min-height: auto;
+    width: 100%;
+    padding: 15px;
+    color: var(--white);
+    background-color: #161616;
+    font-family: var(--ff-montserrat);
+}
+
+.header{
+    width: 100%;
+    padding: 12px;
+    text-align: left;
+}
+.header a{
+    color: var(--white);
+    text-decoration: none;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 10px;
+}
+
+.grid-2 .lft-box,
+.grid-2 .rgt-box {
+    height: auto;
+}
+
+.grid-2 .rgt-box {
+    padding: 0 10px;
+}
+
+.rgt-box h2 {
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.flex-2 {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0 0 0;
+}
+
+.flex-2 p {
+    color: var(--white);
+    font-size: 16px;
+}
+
+.flex-2 span {
+    color: #5d87ff;
+    margin-left: 5px;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+
+.tags-box {
+    width: 100%;
+    display: flex;
+    word-wrap: break-word;
+    gap: 7px;
+    margin: 10px 0 10px 0;
+    font-size: 16px;
+}
+.fl-col{
+    flex-direction: column;
+}
+.tags-box p{
+    width: fit-content;
+}
+
+.mt-10 {
+    margin-top: 20px;
+}
+
+.tags-box .tag {
+    width: fit-content;
+    padding: 5px 8px;
+    background-color: #5d87ff;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 10px;
+}
+
+.card-tags {
+    padding: 3px 6px;
+    background-color: #372f51;
+    color: #fff;
+    font-size: 10px;
+    border-radius: 5px;
+}
+
+.tags-box span {
+    color: #5d87ff;
+}
+
+.btn-box {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px 0 10px 0;
+}
+
+:root {
+    --col-cart-btn: #ffc400;
+    --col-cart-btn-hover: #ff9500;
+}
+
+.btn-box .cart-btn {
+    outline: 1px solid var(--col-cart-btn);
+    border: 1px solid var(--col-cart-btn);
+    padding: 12px 24px;
+    border-radius: 5px;
+    background-color: var(--col-cart-btn);
+    color: var(--black-300);
+    font-weight: 600;
+}
+
+.btn-box .cart-btn:hover {
+    background-color: var(--col-cart-btn-hover);
+    outline: 1px solid var(--col-cart-btn-hover);
+    border: 1px solid var(--col-cart-btn-hover);
+}
+
+.btn-box .cart-btn:is(:active) {
+    outline-offset: 4px;
+    outline-width: 2px;
+}
+
+
+/* Image Slideshow CSS */
+.grid-2 .lft-box .game-image-gallary {
+    width: 100%;
+    height: 100%;
+    background-color: #161616;
+}
+
+.image-container{
+    height: 100%;
+    width: 100%;
+    display: grid;
+    gap: 5px;
+    grid-template-rows: 80% 20%;
+}
+.image-container .slides{
+    position: relative;
+}
+.image-container .slides,
+.image-container .slides img{
+    height: 100%;
+    width: 100%;
+}
+.image-container .slides img{
+    object-fit: cover;
+}
+
+
+.image-container .slides .prev,
+.image-container .slides .next{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 18px;
+    background-color: rgba(0,0,0,0.1);
+    user-select: none;
+}
+.image-container .slides .prev{
+    left: 0;
+}
+.image-container .slides .next{
+    right: 0;
+}
+.image-container .slides .prev:hover,
+.image-container .slides .next:hover{
+    background-color: rgba(0,0,0,0.5);
+    cursor: pointer;
+    transition: 0.2s ease-in;
+}
+
+.thumb-img-box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Six columns side by side */
+.column {
+    height: 100%;
+    width: 25%;
+}
+
+/* Add a transparency effect for thumnbail images */
+.image-dots {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+}
+
+.active,
+.image-dots:hover {
+    opacity: 1;
+    cursor: pointer;
+}
