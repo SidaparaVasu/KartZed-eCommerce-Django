@@ -61,10 +61,10 @@ urlpatterns = [
    # Contact ::
    path('contact',views.view_contact,name='view_contact'),
    path('delete_contact/<id>', views.delete_contact, name="delete_contact"),
+   path('delete_offer/<id>', views.delete_offer, name="delete_offer"),
 
    # Plans ::
    path('plan',views.view_plan,name="view_plan"),
-   path('insert-plan',views.insert_plan,name="insert_plan")
-   path('delete_offer/<id>', views.delete_offer, name="delete_offer"),
+   path('insert-plan',views.insert_plan,name="insert_plan"),
 
 ]
