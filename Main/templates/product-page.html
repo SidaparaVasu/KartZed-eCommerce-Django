@@ -118,7 +118,11 @@
                 </div>
 
                 <div class="btn-box">
-                    <button type="submit" class="cart-btn">Add to Cart</button>
+                    {% if isAdded %}
+                        <a href="{% url 'view_cart' %}" class="cart-btn">View in Cart</a>
+                    {% else %}
+                        <button type="submit" class="cart-btn">Add to Cart</button>
+                    {% endif %}
                 </div>
             </div>
         </form>

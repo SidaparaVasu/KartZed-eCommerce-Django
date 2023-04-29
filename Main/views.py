@@ -80,21 +80,33 @@ def view_cart(request):
             for game in games:
                 GameList.append(game)
         print(GameList)
-        # return HttpResponse("hello")
         return render(request, 'Cart/cart.html', context={'Games': GameList})
-        """ net puru  """
     else:
         return redirect(reverse('render_customer_login_page'))
 
-def add_to_cart(request,id):
-    # return HttpResponse(id)
+""" View details Start """
+def view_game_detail(request, product_key):
+    product = Games.objects.get(product_key = product_key)
+    images = GameImages.objects.filter(game_id = product.gid)
+    
+    gameInCart = CartItems.objects.filter(game = product.gid)
+    # return HttpResponse(len(gameInCart))
+    if len(gameInCart) > 0:
+        return render(request, 'product-page.html', context = {
+            'Game' : product, 'Images':images, 'isAdded': True
+        })
+    
+    return render(request, 'product-page.html', context = {
+        'Game' : product, 'Images':images, 'isAdded': False
+    })
+
+""" View details End """
+
+def add_to_cart(request,product_key):
     if request.session.get('is_authenticated', False):
-        game = Games.objects.get(product_key = id)
-        # chk = CartItems.objects.filter(game = game.gid)
-        # if len(chk) > 0:
-        #     is_added = True
-        #     return redirect(reverse(indexPage),context = {'is_added':is_added}) 
-        # else :
+        game = Games.objects.get(product_key = product_key)
+        url = reverse(view_game_detail, args=[product_key])
+        
         user = request.session['cust_unique_keyid']
         user_id = Customers.objects.get(cust_unique_keyid = user)
         try:
@@ -103,10 +115,10 @@ def add_to_cart(request,id):
                 is_paid = False
             )
             cartitem = CartItems.objects.create(cart = cart, game = game)
+            messages.success(request, "Game Added successfully!")
+            return redirect(url)    
         except Exception as e:
             return HttpResponse(e)
-        return redirect(reverse(view_cart)) 
-            
     else:
         return redirect(reverse('render_customer_login_page'))
 
@@ -188,14 +200,6 @@ def insert_contact(request):
 
 
 """ Contact Us End """
-
-""" View details Start """
-def view_game_detail(request, product_key):
-    product = Games.objects.get(product_key = product_key)
-    images = GameImages.objects.filter(game_id = product.gid)
-    return render(request, 'product-page.html', context = { 'Game' : product, 'Images':images })
-
-""" View details End """
 
 """ user points balance """
 def buy_points(request):
