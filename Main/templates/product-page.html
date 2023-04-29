@@ -35,36 +35,35 @@
                     <div class="image-container">
                         <!-- Full-width images with number text -->
                         <div class="slides">
-                            <img src="https://picsum.photos/id/237/1000/300">
-                            <img src="https://picsum.photos/id/238/1000/300">
-                            <img src="https://picsum.photos/id/239/1000/300">
-                            <img src="https://picsum.photos/id/240/1000/300">
-                            <img src="https://picsum.photos/id/255/1000/300">
+                            <img src="{{ Game.game_logo.url }}">
+                            
+                            {% for image in Images %}
+                            <img src="{{ image.images.url }}">
+                            {% empty %}    
+                            <center>No Other Images Found</center>
+                            {% endfor %}
                             <!-- Next and previous buttons -->
                             <a class="prev">&#10094;</a>
                             <a class="next">&#10095;</a>
                         </div>
-
-
+                        
+                        
                         <!-- Thumbnail images -->
-                        <div class="thumb-img-box">
+                        <!-- <div class="thumb-img-box">
                             <div class="column">
-                                <img class="image-dots" src="/Media/product_img/game_logos/20230425210914Valorant2.jpg"
-                                    onclick="currentSlide(2)">
+                                <img src="{{ Game.game_logo.url }}" class="image-dots"/>
                             </div>
                             <div class="column">
-                                <img class="image-dots" src="/Media/product_img/game_logos/20230425210914Valorant2.jpg"
-                                    onclick="currentSlide(2)">
+                                <img src="{{ Game.game_logo.url }}" class="image-dots" />
                             </div>
+                            {% for image in Images %}
                             <div class="column">
-                                <img class="image-dots" src="/Media/product_img/game_logos/20230425210914Valorant2.jpg"
-                                    onclick="currentSlide(2)">
+                                <img src="{{ image.images.url }}" class="image-dots" />
                             </div>
-                            <div class="column">
-                                <img class="image-dots" src="/Media/product_img/game_logos/20230425210914Valorant2.jpg"
-                                    onclick="currentSlide(2)">
-                            </div>
-                        </div>
+                            {% empty %}    
+                            <center>No Images Found</center>
+                            {% endfor %}
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -119,7 +118,13 @@
                 </div>
 
                 <div class="btn-box">
-                    <button type="submit" class="cart-btn">Add to Cart</button>
+                    {% if isAdded %}
+                        <a href="{% url 'view_cart' %}" class="cart-btn" style="text-decoration: none; font-size: 14px;">
+                            View in Cart
+                        </a>
+                    {% else %}
+                        <button type="submit" class="cart-btn">Add to Cart</button>
+                    {% endif %}
                 </div>
             </div>
         </form>

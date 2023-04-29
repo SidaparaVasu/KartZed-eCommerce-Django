@@ -22,6 +22,37 @@
     font-size: 10px;
     border-radius: 5px;
 }    
+.row > header{
+    width: 100%;
+    padding: 15px;
+    font-size: 22px;
+    text-align: center;
+    font-weight: 600;
+}
+.game-image-gallary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.image-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.image-container  img {
+  max-width: 100%;
+  height: auto;
+  margin: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .game-image-gallary {
+    flex-direction: column;
+    align-items: center;
+  }
+}
 </style>
 </head>
 
@@ -42,21 +73,21 @@
             <div class="container-fluid">
                 <div class="container py-5">
                     <div class="row">
-                        {% for gm in Game %}
+                        
                         <div class="grid-2">
                             <div class="lft-box" id="lft-box">
                                 <div class="edit-icon" id="edit-icon" onclick="show_edit_image()">
                                     <ion-icon name="pencil-outline"></ion-icon>
                                 </div>
                                 <div class="img-box" id="img-box">
-                                    {% if gm.game_logo %}
-                                        <img src="{{ gm.game_logo.url }}" />
+                                    {% if Game.game_logo %}
+                                        <img src="{{ Game.game_logo.url }}" />
                                     {% else %}
                                         <p class="img-text">Upload Logo</p>
                                     {% endif %}
                                 </div>
                                 <div class="edit-img-box" id="edit-img-box">
-                                    <form action="{{gm.product_key}}/upload_game_logo" method="post" class="img-form" id="img-form"
+                                    <form action="{{Game.product_key}}/upload_game_logo" method="post" class="img-form" id="img-form"
                                         enctype="multipart/form-data">
                                         {% csrf_token %}
                                         <input type="file" name="game_logo" id="game_logo" required/>
@@ -65,23 +96,23 @@
                                 </div>
                             </div>
                             <div class="rgt-box">
-                                <h2>{{ gm.game_name }}</h2>
-                                <p>{{ gm.game_description }}</p>
+                                <h2>{{ Game.game_name }}</h2>
+                                <p>{{ Game.game_description }}</p>
                                 <div class="flex-2">
-                                    <p>RAM: <span>{{ gm.game_ram }}</span></p>
-                                    <p>Storage: <span>{{ gm.game_storage }}</span></p>
+                                    <p>RAM: <span>{{ Game.game_ram }}</span></p>
+                                    <p>Storage: <span>{{ Game.game_storage }}</span></p>
                                 </div>
                                 <div class="flex-2">
-                                    <p>Developer: <span>{{ gm.game_developer }}</span></p>
-                                    <p>Publisher: <span>{{ gm.game_publisher }}</span></p>
+                                    <p>Developer: <span>{{ Game.game_developer }}</span></p>
+                                    <p>Publisher: <span>{{ Game.game_publisher }}</span></p>
                                 </div>
                                 <div class="flex-2">
-                                    <p>Price: <span>₹{{ gm.game_price }}</span></p>
-                                    <p>Discount: <span>{{ gm.discount }}%</span></p>
+                                    <p>Price: <span>₹{{ Game.game_price }}</span></p>
+                                    <p>Discount: <span>{{ Game.discount }}%</span></p>
                                 </div>
                                 <div class="flex-2">
-                                    <p>Available Stock: <span>{{ gm.avail_stock }}</span></p>
-                                    <p>Release Date: <span>{{ gm.game_release_date }}</span></p>
+                                    <p>Available Stock: <span>{{ Game.avail_stock }}</span></p>
+                                    <p>Release Date: <span>{{ Game.game_release_date }}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -89,7 +120,7 @@
                             <div class="flex-col w-100">
                                 <header>Features</header>
                                 <div class="tags-box">
-                                    {% for feature in gm.game_features %}
+                                    {% for feature in Game.game_features %}
                                         <p class="tag">{{ feature }}</p>
                                     {% endfor %}
                                 </div>
@@ -97,7 +128,7 @@
                             <div class="flex-col w-100">
                                 <header>Modes</header>
                                 <div class="tags-box">
-                                    {% for mode in gm.game_modes %}
+                                    {% for mode in Game.game_modes %}
                                         <p class="tag">{{ mode }}</p>
                                     {% endfor %}
                                 </div>
@@ -105,7 +136,7 @@
                             <div class="flex-col w-100">
                                 <header>Categories</header>
                                 <div class="tags-box">
-                                    {% for category in gm.game_categories %}
+                                    {% for category in Game.game_categories %}
                                         <p class="tag">{{ category }}</p>
                                     {% endfor %}
                                 </div>
@@ -114,7 +145,7 @@
                             <div class="flex-col w-100">
                                 <header>Platforms</header>
                                 <div class="tags-box">
-                                    {% for platform in gm.platform_names %}
+                                    {% for platform in Game.platform_names %}
                                         <p class="tag">{{ platform }}</p>
                                     {% endfor %}
                                 </div>
@@ -122,13 +153,35 @@
                             <div class="flex-col w-100">
                                 <header>Languages</header>
                                 <div class="tags-box">
-                                    {% for language in gm.game_languages %}
+                                    {% for language in Game.game_languages %}
                                         <p class="tag">{{ language }}</p>
                                     {% endfor %}
                                 </div>
                             </div>
+                            <div class="image-form">
+                                <header>Game Image Bulk Upload</header>
+                                <form action="{{ Game.product_key }}/bulk_image_upload" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <!-- <input type="hidden" name="product_key" value="{{ Game.product_key }}" id="" /> -->
+                                    <input type="file" name="images" id="" multiple required/>
+                                    <button type="submit" class="btn btn-primary">Upload</button>
+                                </form>
+                            </div>
                         </div>
-                        {% endfor %}
+                        
+                    </div>
+
+                    <div class="row" style="margin-top: 50px;">
+                        <header>Gallery</header>
+                        <div class="game-image-gallary">
+                            <div class="image-container">
+                                {% for image in Images %}
+                                <img src="{{ image.images.url }}">
+                                {% empty %}    
+                                    <center>No Images Found</center>
+                                {% endfor %}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

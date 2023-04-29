@@ -91,7 +91,7 @@ def admin_logout_handle(request):
     except KeyError:
         pass
     messages.success(request, "You are Logged out!")
-    return redirect(reverse('auth_admin'))                        
+    return redirect(reverse('render_admin_login_page'))                        
 
 """ ADMIN LOGIN ENDS """
 

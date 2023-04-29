@@ -24,7 +24,7 @@ urlpatterns = [
 
     # Cart
     path('view_cart',views.view_cart,name="view_cart"),
-    path('view_game_page/add_to_cart/<id>',views.add_to_cart,name="add_to_cart"),
+    path('view_game_page/add_to_cart/<str:product_key>',views.add_to_cart,name="add_to_cart"),
     path('delete_cart_item/<id>',views.delete_cart_item,name="delete_cart_item"),
 
     #view game page
