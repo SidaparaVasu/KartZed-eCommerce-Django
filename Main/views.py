@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect, HttpResponse
-from django.http import HttpResponseRedirect
+from django.template.loader import render_to_string
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.contrib import messages
 from django.db.models import Q
@@ -77,15 +78,17 @@ def view_browse(request):
         context = {
             # 'imp' : imp,
             'games' : Games.objects.all(),
-            'cart_count' : Cart.objects.filter(cust_id = user_id).count()
+            'cart_count' : Cart.objects.filter(cust_id = user_id).count(),
+            'modes' : GameModes.objects.all()
         }
         
-        return render(request, 'browse.html',context)
+        return render(request, 'Browse/browse.html',context)
     else:
         context = {
-            'games' : Games.objects.all()
+            'games' : Games.objects.all(),
+            'modes' : GameModes.objects.all()
         }
-        return render(request, 'browse.html', context)
+        return render(request, 'Browse/browse.html', context)
 
 
 def render_account_page(request):
@@ -261,3 +264,12 @@ def view_search(request):
     return render(request,'Browse/browse.html',context)
 
 """ Search End """
+
+#Filter Data
+def filter_data(request):
+    mode=request.GET.getlist('mode[]')
+    allgames=Games.objects.all()
+    if len(mode)>0:
+        allgames=allgames.filter(game_modes__GameModes__game_mode_id__in=mode)
+    t=render_to_string('sort/game-list.html',{'data':allgames})
+    return JsonResponse({'data':t})

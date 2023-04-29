@@ -1,0 +1,29 @@
+{% load static %}
+
+<!-- Sidebar Start -->
+<aside class="left-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+            <ul id="sidebarnav">
+                <!-- Home -->
+                <h1 style="color:white">Start</h1>
+                <div class="filteredProducts">
+                    <p class="ajaxLoader">Loading...</p> 
+                    {% for mode in modes %}
+                    <li class="sidebar-item">
+                            <div>
+                                <input type="checkbox" data-filter="mode" class="filter-checkbox" value="{{ mode.game_mode_id }}">
+                                <label style="color:white">{{ mode.game_mode_id }}</label>
+                                <label style="color:white">{{ mode.game_mode_name }}</label>
+                            </div>
+                    </li>
+                    {% endfor %}
+                </div>
+                <h1 style="color:white">End</h1>
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>
+<!--  Sidebar End -->

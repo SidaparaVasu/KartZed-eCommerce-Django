@@ -12,7 +12,7 @@ urlpatterns = [
     path('', views.indexPage, name="indexPage"),
     path('login', render_customer_login_page, name="render_customer_login_page"),
     path('account', views.render_account_page, name="render_account_page"),
-        path('view_browse/', views.view_browse, name="view_browse"),
+    path('view_browse/', views.view_browse, name="view_browse"),
     
     # Authentication
     path('customer_login', customer_login, name="customer_login"),
@@ -41,6 +41,6 @@ urlpatterns = [
     # Browse
     # path('browse',views.view_browse,name="view_browse"),
     path('search',views.view_search,name="view_search"),
-    
+    path('filter-data',views.filter_data,name="filter_data"),
 
 ]
