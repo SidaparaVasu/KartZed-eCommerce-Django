@@ -5,3 +5,6 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
         fields = ['contact_id', 'contact_name', 'contact_email', 'contact_message']
+
+class SearchForm(forms.Form):
+    query = forms.CharField()
