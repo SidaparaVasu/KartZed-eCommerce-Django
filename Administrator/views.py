@@ -7,6 +7,7 @@ from Main.models import Contact
 from .models import Offer, Platform, GameFeatures, GameModes, GameCategory, OperatingSystems, OSVersions ,Plan
 from .models import Processors, VideoCards, VCVersions
 from Authapp.models import Customers
+from Vendor.models import Vendor_Contact
 
 # Create your views here.
 def index_admin(request):
@@ -399,7 +400,8 @@ def delete_vcontact(request,id):
 """ Plan Start """
 
 def view_plan(request):
-    return render(request,'Plan/view_plan.html')
+    plans = Plan.objects.all()
+    return render(request,'Plan/view_plan.html', context={"plans" : plans})
 
 def insert_plan(request):
     if request.method == 'POST':
