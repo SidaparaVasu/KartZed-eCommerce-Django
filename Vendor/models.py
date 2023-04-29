@@ -44,6 +44,7 @@ class Games(models.Model):
     game_price         = models.IntegerField() 
     avail_stock        = models.IntegerField() 
     discount           = models.CharField(max_length=3) 
+    game_points        = models.IntegerField()
     
     # features
     game_features      = models.JSONField(default=list)

@@ -10,6 +10,9 @@ from Administrator.models import *
 from .models import *
 from Email.views import Email
 from .forms import *
+from django.conf import settings
+import stripe
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 # Create your views here.
@@ -204,9 +207,25 @@ def buy_points(request):
     return render(request,'Balance/buy_points.html',context)
 
 def check_payment(request,id):
-    
-    return render(request,'Balance/buy_points.html')
+    # checkout = Plan.objects.get(plan_id=id)
+    # return HttpResponse(checkout)
+    context = {
+        'checkout' : Plan.objects.get(plan_id= id),
+        'key' : settings.STRIPE_PUBLISHABLE_KEY,
+    }
+    return render(request,'Balance/checkout.html',context)
 
+
+def charge(request):
+    if request.method=='POST':
+        
+        charge = stripe.PaymentIntent.create(
+            amount=500,
+            currency='usd',
+            payment_method_types=['card'],
+            description='Payment for items in cart',
+        )
+        return render(request,'Balance/charge.html')
 
 """ user points balance """
 

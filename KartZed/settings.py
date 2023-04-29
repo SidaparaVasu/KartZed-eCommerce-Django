@@ -165,3 +165,6 @@ EMAIL_PORT = 587
 # EMAIL_HOST_USER = os.environ.get('kartzed3commerce@gmail.com')
 EMAIL_HOST_USER = 'kartzed3commerce@gmail.com'
 EMAIL_HOST_PASSWORD = 'lqclhthcnoasuiyh'
+
+STRIPE_PUBLISHABLE_KEY = "pk_test_51N2HMrSCAuCUxBq4PRyDli9pNK58wwKKasAsOnU2qyrPrcAZYbKRO9BEVrk4UocsNZ5kPOqMtmELEOpvjku1oLax00BJL52Ptf"
+STRIPE_SECRET_KEY = "sk_test_51N2HMrSCAuCUxBq4zsV1CqhjahBj0CYZfKlaNGKrVjjycSGM2VCIuT3tySr2rbo4EEbMWxDli6SKeppuzmf4IDm3002e3aysA9"
