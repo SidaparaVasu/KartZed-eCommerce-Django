@@ -30,3 +30,6 @@ class GamesForm(forms.ModelForm):
             'vc_names',
             'vc_versions'
         ]
+    
+class GameImageForm(forms.Form):
+    images = forms.ImageField(widget=forms.ClearableFileInput(attrs={'multiple': True}))

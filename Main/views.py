@@ -192,7 +192,8 @@ def insert_contact(request):
 """ View details Start """
 def view_game_detail(request, product_key):
     product = Games.objects.get(product_key = product_key)
-    return render(request, 'product-page.html', context = { 'Game' : product })
+    images = GameImages.objects.filter(game_id = product.gid)
+    return render(request, 'product-page.html', context = { 'Game' : product, 'Images':images })
 
 """ View details End """
 

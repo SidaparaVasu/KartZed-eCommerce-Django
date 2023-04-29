@@ -10,8 +10,8 @@ from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 
 
-from .models import Games, Vendor_Contact
-from .forms import GamesForm
+from .models import Games, GameImages, Vendor_Contact
+from .forms import GameImageForm
 from Authapp.models import Vendors
 from Administrator.models import *
 from Administrator.views import get_os_by_category
@@ -41,8 +41,10 @@ def show_games_page(request):
     
 def show_game_details(request, prod_key):
     if request.session.get('is_vendor_authenticated', False):
-        game = Games.objects.filter(product_key = prod_key)
-        return render(request, 'Games/view-game-details.html', context = {'Game':game})
+        game = Games.objects.get(product_key = prod_key)
+        
+        images = GameImages.objects.filter(game_id = game.gid)
+        return render(request, 'Games/view-game-details.html', context = {'Game':game, 'Images':images})
     else:
         return render(request, 'vendor-login.html') 
 """ Check Image is in Image format or not? """
@@ -234,3 +236,17 @@ def insert_game_vcontact(request):
             return HttpResponse(e)
                 
     return render(request, 'contact.html')
+
+
+def bulk_image_upload(request, prod_key):
+    url = reverse('show_game_details', args=[prod_key])
+    if request.method == "POST":
+        game = Games.objects.get(product_key = prod_key)
+        # return HttpResponse(game)
+        
+        form = GameImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            for image in request.FILES.getlist('images'):
+                GameImages.objects.create(game=game, images=image)
+        return redirect(url)
+    return redirect(url)
