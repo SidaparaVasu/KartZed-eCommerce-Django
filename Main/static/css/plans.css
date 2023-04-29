@@ -1,0 +1,82 @@
+.points-plan-box{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    font-family: var(--ff-montserrat);
+}
+
+.points-plan-box header{
+    font-size: 24px;
+    font-weight: 600;
+    width: 100%;
+    padding: 15px;
+    text-align: center;
+}
+
+.plan-box-wrap{
+    margin: auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 240px);
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.plan-box-wrap .plan-box{
+    height: 200px;
+    width: 240px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 7px 4px rgba(0,0,0,0.1);
+}
+
+.plan-box-wrap .plan-box:hover{
+    scale: 1.07;
+    transition: 0.15s ease-in-out;
+}
+
+.fs-16{
+    font-size: 16px;
+}
+
+.plan-box-wrap .plan-box .points,
+.plan-box-wrap .plan-box .price{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+}
+.plan-box-wrap .plan-box .points{
+    height: 70%;
+    width: 100%;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    color: var(--black-300);
+    background-color:rgba(255, 255, 255, 0.1);
+}
+
+.plan-box-wrap .plan-box .price,
+.plan-box-wrap .plan-box .buy-btn{
+    height: 30%;
+    width: 100%;
+    font-size: 18px;
+    background-color: #333333;
+}
+
+.col-white{
+    color: var(--white);
+}
+.plan-box-wrap .plan-box .buy-btn{
+    cursor: pointer;
+    color: var(--white);
+    font-size: 16px;
+    /* background-color: var(--blue); */
+    border: none;
+}
+
+.plan-box-wrap .plan-box .buy-btn:active{
+    outline: 3px solid #333333;
+    outline-offset: 2px;
+}
