@@ -31,6 +31,11 @@
     {% include 'navbar/navbar.html' %}
 
     <section class="profile-container">
+        <div class="balance-point-box">
+            <p>Current Balance Points:</p>
+            <p>100</p>
+            <a href="{% url 'buy_points' %}"><button class="btn btn-primary" id="save-btn">Buy Points</button></a>
+        </div>
         <div class="personal-info-box">
             <div class="profile-photo-box">
                 <img src="{% static 'images/profile/default-user.jpg' %}" alt="" srcset="">
@@ -90,7 +95,7 @@
                         </div>
                     </form>
                    
-                    <div class="col-2-group">
+                    <!-- <div class="col-2-group">
                         <div class="col">
                             <label for="input-group" class="form-label" style = "color:white">Balance Points</label>
                             <div class="input-group" id="input-group">
@@ -104,7 +109,7 @@
                                 <a href="{% url 'buy_points' %}"><button class="btn btn-primary" id="save-btn">Buy Points</button></a>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     
                 </div>
             </div>

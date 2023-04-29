@@ -237,7 +237,7 @@ def view_game_detail(request, product_key):
 """ user points balance """
 def buy_points(request):
     context = {
-        'balance' : Plan.objects.all()
+        'balance_points' : Plan.objects.all()
     }
     return render(request,'Balance/buy_points.html',context)
 

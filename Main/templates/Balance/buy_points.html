@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KartZed</title>
+    <title>Buy Points | KartZed</title>
     <!-- Favicon Icon -->
     <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon_logo.png' %}" />
     <!-- CSS Links -->
@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{% static 'css/plugins.css' %}">
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/plans.css' %}">
     <!-- Ion Icons CDN -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -29,7 +30,21 @@
     <!-- Include Navigation Bar -->
     {% include 'navbar/navbar.html' %}
 
-    <div style= "height:700px;width:100%x;">
+    <div class="points-plan-box" style="background-color: rgba(240,240,240,0.1); padding: 10px 0 60px 0;">
+        <header style="color: #fff; padding-top: 25px;">Balance Points Plan</header>
+        <div class="plan-box-wrap" style="padding: 20px 0;">
+            {% for plan in balance_points %}
+            <div class="plan-box" style="background-color: rgba(255, 255, 255, 0.831);">
+                <div class="points fs-16 col-white">Buy {{ plan.points }} in ₹ {{ plan.amount }}</div>
+                <a href="{% url 'check_payment' plan.plan_id %}">
+                    <button type="submit" class="buy-btn">BUY POINTS</button>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- <div style= "height:700px;width:100%x;">
         <h1 style="text-align:center;color:lightblue">BUY POINTS</h1>
         <br>
         {% for data in balance %}
@@ -42,8 +57,7 @@
             </a>
         </div>
         {% endfor %}
-        
-    </div>
+    </div> -->
 
 </body>
 </html>
