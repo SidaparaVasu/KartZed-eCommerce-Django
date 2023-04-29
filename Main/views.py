@@ -20,28 +20,8 @@ def indexPage(request):
     if request.session.get('is_authenticated', False):
         cust_unique_keyid = request.session['cust_unique_keyid']
         user_id = Customers.objects.get(cust_unique_keyid = cust_unique_keyid)
-        # chk = Cart.objects.filter(cust_id = user_id).count()
-        # imp = []
-        # if chk > 0:
-        #     chk1 = CartItems.objects.all()   
-        #     c_items_id = []         
-        #     for data1 in chk1:
-        #         c_items_id.append(data1.game.gid)
-        #     print(c_items_id)
-
-        #     chk2 = Games.objects.all()
-        #     for data2 in c_items_id:
-        #         #print(data2)
-        #         c_g_items = Games.objects.filter(gid = data2)
-        #         for data3 in c_g_items:
-        #             imp.append(data3.gid)
-        #             #print(imp)
-            #return HttpResponse()
-                
-        # else :
-        #     pass    
+    
         context = {
-            # 'imp' : imp,
             'games' : Games.objects.all(),
             'cart_count' : Cart.objects.filter(cust_id = user_id).count()
         }
@@ -83,21 +63,33 @@ def view_cart(request):
             for game in games:
                 GameList.append(game)
         print(GameList)
-        # return HttpResponse("hello")
         return render(request, 'Cart/cart.html', context={'Games': GameList})
-        """ net puru  """
     else:
         return redirect(reverse('render_customer_login_page'))
 
-def add_to_cart(request,id):
-    # return HttpResponse(id)
+""" View details Start """
+def view_game_detail(request, product_key):
+    product = Games.objects.get(product_key = product_key)
+    images = GameImages.objects.filter(game_id = product.gid)
+    
+    gameInCart = CartItems.objects.filter(game = product.gid)
+    # return HttpResponse(len(gameInCart))
+    if len(gameInCart) > 0:
+        return render(request, 'product-page.html', context = {
+            'Game' : product, 'Images':images, 'isAdded': True
+        })
+    
+    return render(request, 'product-page.html', context = {
+        'Game' : product, 'Images':images, 'isAdded': False
+    })
+
+""" View details End """
+
+def add_to_cart(request,product_key):
     if request.session.get('is_authenticated', False):
-        game = Games.objects.get(product_key = id)
-        # chk = CartItems.objects.filter(game = game.gid)
-        # if len(chk) > 0:
-        #     is_added = True
-        #     return redirect(reverse(indexPage),context = {'is_added':is_added}) 
-        # else :
+        game = Games.objects.get(product_key = product_key)
+        url = reverse(view_game_detail, args=[product_key])
+        
         user = request.session['cust_unique_keyid']
         user_id = Customers.objects.get(cust_unique_keyid = user)
         try:
@@ -106,10 +98,10 @@ def add_to_cart(request,id):
                 is_paid = False
             )
             cartitem = CartItems.objects.create(cart = cart, game = game)
+            messages.success(request, "Game Added successfully!")
+            return redirect(url)    
         except Exception as e:
             return HttpResponse(e)
-        return redirect(reverse(view_cart)) 
-            
     else:
         return redirect(reverse('render_customer_login_page'))
 
@@ -191,13 +183,6 @@ def insert_contact(request):
 
 
 """ Contact Us End """
-
-""" View details Start """
-def view_game_detail(request, product_key):
-    product = Games.objects.get(product_key = product_key)
-    return render(request, 'product-page.html', context = { 'Game' : product })
-
-""" View details End """
 
 """ user points balance """
 def buy_points(request):

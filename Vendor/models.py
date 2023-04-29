@@ -58,6 +58,10 @@ class Games(models.Model):
     processors_names   = models.CharField(max_length=100)
     vc_names           = models.CharField(max_length=100)
     vc_versions        = models.CharField(max_length=100)
+    
+class GameImages(models.Model):
+    game = models.ForeignKey(Games, on_delete=models.CASCADE, related_name='images')
+    images = models.ImageField(upload_to=game_image_filepath, null=True, blank=True)
 
 class Vendor_Contact(models.Model):
     contact_id = models.AutoField(primary_key=True)
