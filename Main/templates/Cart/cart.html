@@ -39,7 +39,7 @@
             <div class="cart-item-box">
                 <div class="cart-item-header">
                     <h2>PRODUCT</h2>
-                    <h2>PRICE</h2>
+                    <h2>POINTS</h2>
                     <h2>QUANTITY</h2>
                     <h2>REMOVE</h2>
                 </div>
@@ -58,7 +58,7 @@
                             </div>
                         </div>
                         <div class="price-div cart-item">
-                            <p class="price" id="game-price-{{ forloop.counter }}">₹{{ item.game_price }}</p>
+                            <p class="price" id="game-price-{{ forloop.counter }}">{{ item.game_points }}</p>
                         </div>
                         <div class="cart-item">
                             <div class="qty-select-box">
@@ -137,11 +137,11 @@
                 var priceElement = document.querySelector("#game-price-" + productId);
 
                 // Get the current price of the product and update it based on the new quantity
-                var currentPrice = parseFloat(priceElement.innerText.replace("₹", ""));
+                var currentPrice = parseFloat(priceElement.innerText); // .replace("₹", "")
                 var newPrice = (currentPrice / currentValue) * newValue;
 
                 // Update the price element with the new price, rounded to 2 decimal places
-                priceElement.innerText = "₹" + newPrice;
+                priceElement.innerText = newPrice;
             });
         });
 
@@ -171,11 +171,11 @@
                 var priceElement = document.querySelector("#game-price-" + productId);
 
                 // Get the current price of the product and update it based on the new quantity
-                var currentPrice = parseFloat(priceElement.innerText.replace("₹", ""));
+                var currentPrice = parseFloat(priceElement.innerText); //.replace("₹", "")
                 var newPrice = (currentPrice / currentValue) * newValue;
 
                 // Update the price element with the new price, rounded to 2 decimal places
-                priceElement.innerText = "₹" + newPrice;
+                priceElement.innerText = newPrice;
             });
         });
 
