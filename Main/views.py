@@ -204,9 +204,8 @@ def buy_points(request):
     }
     return render(request,'Balance/buy_points.html',context)
 
-def check_payment(request,id):
+def check_payment(request, id):
     # checkout = Plan.objects.get(plan_id=id)
-    # return HttpResponse(checkout)
     context = {
         'checkout' : Plan.objects.get(plan_id= id),
         'key' : settings.STRIPE_PUBLISHABLE_KEY,
@@ -216,22 +215,20 @@ def check_payment(request,id):
 
 def charge(request,id):
     if request.method=='POST':
-        
-
+        plan = Plan.objects.get(plan_id=id)
         charge = stripe.PaymentIntent.create(
-            amount=625,
+            amount=plan.amount,
             currency='inr',
             payment_method_types=['card'],
             description='Payment for items in cart',
         )
-        plan = Plan.objects.get(plan_id=id)
         cust_cur_key = request.session['cust_unique_keyid']
         cust_cur_id = Customers.objects.get(cust_unique_keyid = cust_cur_key)
         points_bal = UserBalancePoints.objects.get(customer = cust_cur_id.cust_id)
         new_bal = points_bal.points + plan.points
         points_bal.points = new_bal
         points_bal.save() 
-        return render(request,'Balance/charge.html')
+        return redirect(reverse('render_account_page'))
 
 """ user points balance """
 
