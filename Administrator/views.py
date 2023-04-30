@@ -439,14 +439,13 @@ def view_plan(request):
 
 def insert_plan(request):
     if request.method == 'POST':
-        points = request.POST.get('points')
-        amount = request.POST.get('amount')
-        
+        points = int(request.POST.get('points'))
+        amount = round((125 * points) / 100)
         try:
             Plan.objects.create( 
-                points = points,
+                points = points, 
                 amount = amount,
-                )
+            )
             messages.success(request, "Plan Added successfully!")
             return redirect(reverse(view_plan))
         except Exception as e:

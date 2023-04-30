@@ -208,12 +208,14 @@ input::-webkit-inner-spin-button {
 }
 
 .bill-box > .flex-2{
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+    gap: 5px;
     align-items: center;
+    text-align: center;
     padding: 5px 6px 5px 6px;
 }
-.bill-box > .flex-2 > p:last-child{
+.bill-box > .flex-2 > p{
     font-weight: bold;
 }
 
@@ -229,4 +231,25 @@ input::-webkit-inner-spin-button {
 .checkout-btn:hover{
     background-color: #121212;
     cursor: pointer;
+}
+
+.game-summary > p{
+    text-align: center;
+    font-weight: 400;
+}
+
+.order-summary{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    text-align: center;
+    border-top: 2px dashed #121212;
+    padding: 10px;
+}
+.order-summary > div{
+    font-weight: 600;
+}
+
+.f-cnt{
+    text-align: center;
+    font-weight: 200;
 }

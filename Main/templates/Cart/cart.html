@@ -21,6 +21,14 @@
 </head>
 
 <body>
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags %}
+    <script>alert("{{ message }}")</script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
     <!-- Include Navigation Bar -->
     {% include 'navbar/navbar.html' %}
 
@@ -31,7 +39,7 @@
             <div class="cart-item-box">
                 <div class="cart-item-header">
                     <h2>PRODUCT</h2>
-                    <h2>PRICE</h2>
+                    <h2>POINTS</h2>
                     <h2>QUANTITY</h2>
                     <h2>REMOVE</h2>
                 </div>
@@ -44,34 +52,33 @@
                                     <img src="{{ item.game_logo.url }}" alt="" srcset="">
                                 </div>
                                 <div class="item-details">
-                                    <h2>{{ item.game_name }}</h2>
+                                    <h2 class="game-name">{{ item.game_name }}</h2>
                                     <p class="description">{{ item.game_description }}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="price-div cart-item">
-                            <p class="price" id="game-price-{{ forloop.counter }}">₹{{ item.game_price }}</p>
+                            <p class="price" id="game-price-{{ forloop.counter }}">{{ item.game_points }}</p>
                         </div>
                         <div class="cart-item">
                             <div class="qty-select-box">
                                 <button class="decr-btn" id="decrement-btn"
-                                data-product-id="{{ forloop.counter }}">-</button>
+                                    data-product-id="{{ forloop.counter }}">-</button>
                                 <input type="number" value="1" id="quantity-{{ forloop.counter }}" class="qty-input"
-                                pattern="[0-9]+" maxlength="3" data-product-id="{{ forloop.counter }}"
-                                onKeyDown="return false" />
+                                    pattern="[0-9]+" maxlength="3" data-product-id="{{ forloop.counter }}"
+                                    onKeyDown="return false" />
                                 <button class="incr-btn" id="increment-btn"
                                     data-product-id="{{ forloop.counter }}">+</button>
                             </div>
                         </div>
                         <div class="cart-item">
-                            <a href="{% url 'delete_cart_item' item.gid %}" 
-                                class="remove-btn"
+                            <a href="{% url 'delete_cart_item' item.gid %}" class="remove-btn"
                                 onclick="return confirm('Are you sure you want to delete this?')">
                                 <span class="delete-btn icon-box rd-icon">
-                                    
+
                                     <ion-icon name="trash-outline" class="icon"></ion-icon>
-                                    
-                                </span> 
+
+                                </span>
                             </a>
                         </div>
                     </div>
@@ -91,9 +98,16 @@
                 <div class="bill-box">
                     <div class="header-box">ORDER SUMMARY</div>
                     <p>Shipping and additional costs are calculated based on values you have entered.</p>
-                    <div class="flex-2">
-                        <p>Order Subtotal</p>
-                        <p>₹390.00</p>
+                    <div class="flex-2" style="border-bottom: 2px solid #121212;">
+                        <p>Game name</p>
+                        <p>Quantity</p>
+                        <p>Points</p>
+                    </div>
+                    <div class="flex-2 game-summary">
+                        <!-- Each Game will shown here -->
+                    </div>
+                    <div class="order-summary">
+                        <!-- Total Cost and Quantity shown here -->
                     </div>
                     <button type="submit" class="checkout-btn">PROCCEED TO CHECKOUT</button>
                 </div>
@@ -102,7 +116,6 @@
         </div>
 
     </div>
-
 
     <script>
         // Get all the increment buttons and add a click event listener to each one
@@ -117,11 +130,12 @@
 
                 // Get the current value of the input element and increment it
                 var currentValue = parseInt(quantityInput.value);
-                var newValue = currentValue
+                var newValue = currentValue;
+
                 // Make sure the new value is not less than 10
                 if (currentValue < 10) {
                     var newValue = currentValue + 1;
-                } 
+                }
 
                 // Update the input element with the new value
                 quantityInput.value = newValue;
@@ -130,11 +144,14 @@
                 var priceElement = document.querySelector("#game-price-" + productId);
 
                 // Get the current price of the product and update it based on the new quantity
-                var currentPrice = parseFloat(priceElement.innerText.replace("₹", ""));
+                var currentPrice = parseInt(priceElement.innerText); // .replace("₹", "")
                 var newPrice = (currentPrice / currentValue) * newValue;
 
                 // Update the price element with the new price, rounded to 2 decimal places
-                priceElement.innerText = "₹" + newPrice;
+                priceElement.innerText = newPrice;
+
+                // Update the order summary
+                updateOrderSummary();
             });
         });
 
@@ -155,7 +172,7 @@
                 // Make sure the new value is not less than 1
                 if (newValue < 1) {
                     newValue = 1;
-                } 
+                }
 
                 // Update the input element with the new value
                 quantityInput.value = newValue;
@@ -164,15 +181,89 @@
                 var priceElement = document.querySelector("#game-price-" + productId);
 
                 // Get the current price of the product and update it based on the new quantity
-                var currentPrice = parseFloat(priceElement.innerText.replace("₹", ""));
+                var currentPrice = parseInt(priceElement.innerText); //.replace("₹", "")
                 var newPrice = (currentPrice / currentValue) * newValue;
 
                 // Update the price element with the new price, rounded to 2 decimal places
-                priceElement.innerText = "₹" + newPrice;
+                priceElement.innerText = newPrice;
+
+                // Update the input element with the new value
+                quantityInput.value = newValue;
+
+                // Update the order summary
+                updateOrderSummary();
             });
         });
 
+        function updateOrderSummary() {
+            // Get all the cart items
+            var cartItems = document.querySelectorAll(".cart-item-body .row");
+
+            // Initialize the total cost, quantity, and game names
+            var totalCost = 0;
+            var totalQuantity = 0;
+            var gameNames = [];
+            var gameQty = [];
+            var gameCost = [];
+
+            // Loop through each cart item and update the total cost, quantity, and game names
+            cartItems.forEach(function (cartItem) {
+                // Get the ID of the product associated with this cart item
+                var productId = cartItem.querySelector(".qty-input").dataset.productId;
+
+                // Get the quantity of the product associated with this cart item
+                var quantity = parseInt(cartItem.querySelector(".qty-input").value);
+
+                // Get the price of the product associated with this cart item
+                var price = parseInt(cartItem.querySelector(".price").innerText);
+
+                // Get the name of the game associated with this cart item
+                var gameName = cartItem.querySelector(".game-name").innerText;
+
+                // Update the total cost, quantity, and game names
+                eachCost = price;
+                totalCost += price;
+                eachQty = quantity;
+                totalQuantity += quantity;
+                gameNames.push(gameName);
+                gameQty.push(eachQty);
+                gameCost.push(eachCost);
+            });
+
+            // Update the mini order summary in the .game-summary tag
+            var gameSummary = document.querySelector(".game-summary");
+            gameSummary.innerHTML = "";
+            gameSummary.insertAdjacentHTML(
+                "beforeend",
+                "<p class='f-cnt'>" + gameNames.join(",<br/>") + "</p>"
+            );
+            gameSummary.insertAdjacentHTML(
+                "beforeend",
+                "<p class='f-cnt'>" + gameQty.join("<br/>") + "</p>"
+            );
+            gameSummary.insertAdjacentHTML(
+                "beforeend",
+                "<p class='f-cnt'>" + gameCost.join("<br/>") + "</p>"
+            );
+
+            // Update the order summary
+            var orderSummary = document.querySelector(".bill-box .order-summary");
+            orderSummary.innerHTML = "";
+            orderSummary.insertAdjacentHTML(
+                "beforeend",
+                "<div>Total Quantity: " + totalQuantity + "</div>"
+            );
+            orderSummary.insertAdjacentHTML(
+                "beforeend",
+                "<div>Total Points: " + totalCost + "</div>"
+            );
+
+        }
+        updateOrderSummary();
+
+
     </script>
+
 </body>
 
 </html>

@@ -190,6 +190,7 @@ def games_csv_upload(request):
                     game_release_date     = row['game_release_date'],
                     avail_stock           = row['avail_stock'],
                     game_price            = row['game_price'],
+                    game_points           = round((100 * int(row['game_price'])) / 125),
                     discount              = row['discount'],
                     game_storage          = row['game_storage'],
                     game_ram              = row['game_ram'],
