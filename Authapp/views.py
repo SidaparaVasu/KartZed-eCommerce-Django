@@ -4,7 +4,7 @@ from django.shortcuts import render,redirect,HttpResponse, get_object_or_404, Ht
 from django.contrib.auth.hashers import make_password, check_password
 from django.urls import reverse
 from django.contrib import messages
-from .models import Admins, Customers, Vendors
+from .models import Admins, Customers, Vendors , UserBalancePoints
 
 from Email.views import Email
 from Administrator.views import index_admin

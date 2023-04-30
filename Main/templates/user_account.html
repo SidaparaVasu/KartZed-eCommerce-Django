@@ -33,7 +33,7 @@
     <section class="profile-container">
         <div class="balance-point-box">
             <p>Current Balance Points:</p>
-            <p>100</p>
+            <p>{{ user_points.points }}</p>
             <a href="{% url 'buy_points' %}"><button class="btn btn-primary" id="buy-btn">Buy Points</button></a>
         </div>
         <div class="personal-info-box">

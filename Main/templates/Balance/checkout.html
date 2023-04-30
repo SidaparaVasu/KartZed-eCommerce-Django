@@ -3,8 +3,8 @@
     {% csrf_token %}
     <script src = "https://checkout.stripe.com/checkout.js" class = "stripe-button"
         data-key = "{{ key }}"
-        data-description = {{ checkout.points }} + 'points'
-        data-amount = {{ checkout.amount }}
+        data-description = '{{ checkout.points }}  points of ₹{{ checkout.amount }}'
+        data-amount = '₹ {{ checkout.amount }}'
         data-locale="auto">
     </script>
 </form>

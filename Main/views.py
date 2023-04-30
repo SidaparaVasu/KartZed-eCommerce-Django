@@ -36,7 +36,8 @@ def indexPage(request):
 def render_account_page(request):
     if request.session.get('is_authenticated', False):
         user_data = Customers.objects.get(cust_unique_keyid = request.session['cust_unique_keyid'])
-        return render(request, 'user_account.html', context={'user_data': user_data})
+        user_points = UserBalancePoints.objects.get(customer=user_data)
+        return render(request, 'user_account.html', context={'user_data': user_data,'user_points':user_points})
     else:
         return redirect(reverse('render_customer_login_page'))
 
@@ -204,12 +205,20 @@ def check_payment(request,id):
 def charge(request,id):
     if request.method=='POST':
         
+
         charge = stripe.PaymentIntent.create(
-            amount=500,
-            currency='usd',
+            amount=625,
+            currency='inr',
             payment_method_types=['card'],
             description='Payment for items in cart',
         )
+        plan = Plan.objects.get(plan_id=id)
+        cust_cur_key = request.session['cust_unique_keyid']
+        cust_cur_id = Customers.objects.get(cust_unique_keyid = cust_cur_key)
+        points_bal = UserBalancePoints.objects.get(customer = cust_cur_id.cust_id)
+        new_bal = points_bal.points + plan.points
+        points_bal.points = new_bal
+        points_bal.save() 
         return render(request,'Balance/charge.html')
 
 """ user points balance """
