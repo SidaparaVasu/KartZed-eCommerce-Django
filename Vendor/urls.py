@@ -31,6 +31,7 @@ urlpatterns = [
    
    #histogram
    # path('dashboard/histogram-price', views.price_histogram, name='price_histogram'),
-   path('dashboard/histogram-price/', views.price_histogram, name='price_histogram')
+   path('dashboard/histogram-price/', views.price_histogram, name='price_histogram'),
 
+   
 ]

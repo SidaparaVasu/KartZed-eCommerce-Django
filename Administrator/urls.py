@@ -67,4 +67,5 @@ urlpatterns = [
    path('plan',views.view_plan,name="view_plan"),
    path('insert-plan',views.insert_plan,name="insert_plan"),
 
+
 ]
