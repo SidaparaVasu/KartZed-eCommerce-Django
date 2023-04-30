@@ -8,34 +8,44 @@ from .models import Offer, Platform, GameFeatures, GameModes, GameCategory, Oper
 from .models import Processors, VideoCards, VCVersions
 from Authapp.models import Customers
 from Vendor.models import Vendor_Contact
+# from Authapp.views import render_admin_login_page
 
 # Create your views here.
 def index_admin(request):
-    return render(request,'index-admin.html')
+    if request.session.get('is_admin_authenticated', False):
+        return render(request,'index-admin.html')
+    else:
+        return redirect(reverse('render_admin_login_page'))
 
 """ USER """
 def view_customers(request):
-    customers = Customers.objects.all()
+    if request.session.get('is_admin_authenticated', False):
+        customers = Customers.objects.all()
 
-    p = Paginator(customers, 10)
-    page_number = request.GET.get('page')
-    
-    try:
-        page_obj = p.get_page(page_number)
-    except Paginator.PageNotAnInteger:
-        # if page_number is not an integer then assign the first page
-        page_obj = p.page(1)
-    except Paginator.EmptyPage:
-        # if page is empty then return last page
-        page_obj = p.page(p.num_pages)
-    return render(request,'customers/customers.html',context={'customers':page_obj})
+        p = Paginator(customers, 10)
+        page_number = request.GET.get('page')
+        
+        try:
+            page_obj = p.get_page(page_number)
+        except Paginator.PageNotAnInteger:
+            # if page_number is not an integer then assign the first page
+            page_obj = p.page(1)
+        except Paginator.EmptyPage:
+            # if page is empty then return last page
+            page_obj = p.page(p.num_pages)
+        return render(request,'customers/customers.html',context={'customers':page_obj})
+    else:
+        return redirect(reverse('render_admin_login_page'))
 
 
 """ Platform CRUD Start """
-def view_platform(request):  
-    platform = Platform.objects.all().order_by('platform_name')
-    return render(request,'platform/platform.html', context={'platforms':platform})
-
+def view_platform(request): 
+    if request.session.get('is_admin_authenticated', False): 
+        platform = Platform.objects.all().order_by('platform_name')
+        return render(request,'platform/platform.html', context={'platforms':platform})
+    else:
+        return redirect(reverse('render_admin_login_page'))
+    
 # insertion of platform
 def insert_platform(request):
     if request.method == 'GET':
@@ -68,8 +78,11 @@ def delete_platform(request, id):
 
 """ Game Features CRUD Start """
 def view_game_features(request):
-    features = GameFeatures.objects.all().order_by('game_feature_name')
-    return render(request,'gameFeatures/game_features.html',context={'features':features})
+    if request.session.get('is_admin_authenticated', False): 
+        features = GameFeatures.objects.all().order_by('game_feature_name')
+        return render(request,'gameFeatures/game_features.html',context={'features':features})
+    else:
+        return redirect(reverse('render_admin_login_page'))
 
 def insert_game_feature(request):
     if request.method == 'GET':
@@ -101,8 +114,11 @@ def delete_game_feature(request, id):
 
 """ Game Modes CRUD Start """
 def view_game_modes(request):
-    modes = GameModes.objects.all().order_by('game_mode_name')
-    return render(request,'gameModes/game_modes.html',context={'game_modes': modes})
+    if request.session.get('is_admin_authenticated', False): 
+        modes = GameModes.objects.all().order_by('game_mode_name')
+        return render(request,'gameModes/game_modes.html',context={'game_modes': modes})
+    else:
+        return redirect(reverse('render_admin_login_page'))
 
 def insert_game_mode(request):
     if request.method == 'GET':
@@ -134,8 +150,11 @@ def delete_game_mode(request, id):
 
 """ Game Category CRUD Start """
 def view_game_category(request):
-    game_category = GameCategory.objects.all().order_by('game_category_name')
-    return render(request,'gameCategory/game_category.html',context={'game_category': game_category})
+    if request.session.get('is_admin_authenticated', False): 
+        game_category = GameCategory.objects.all().order_by('game_category_name')
+        return render(request,'gameCategory/game_category.html',context={'game_category': game_category})
+    else:
+        return redirect(reverse('render_admin_login_page'))
 
 def insert_game_category(request):
     if request.method == 'GET':
@@ -182,10 +201,12 @@ def get_os_by_category(request):
     # print(categorized_version_data)
 
 def view_os(request):
-    os_data = OperatingSystems.objects.all()
-    categorized_version_data = get_os_by_category(request)
-
-    return render(request,'OperatingSystems/os.html', context={'operating_system': os_data, 'categorized_version_data': categorized_version_data})
+    if request.session.get('is_admin_authenticated', False): 
+        os_data = OperatingSystems.objects.all()
+        categorized_version_data = get_os_by_category(request)
+        return render(request,'OperatingSystems/os.html', context={'operating_system': os_data, 'categorized_version_data': categorized_version_data})
+    else:
+        return redirect(reverse('render_admin_login_page'))
 
 def insert_os(request):
     if request.method == 'GET':
@@ -224,12 +245,15 @@ def insert_os_version(request):
 """ Processors CRUD Start """
 
 def view_processor(request):
-    os_data = OperatingSystems.objects.all()
-    processor = Processors.objects.all()
-    return render(request,'Processors/processors.html',context ={
-        'operating_system':os_data,
-        'processor':processor
-    })
+    if request.session.get('is_admin_authenticated', False):
+        os_data = OperatingSystems.objects.all()
+        processor = Processors.objects.all()
+        return render(request,'Processors/processors.html',context ={
+            'operating_system':os_data,
+            'processor':processor
+        })
+    else:
+        return redirect(reverse('render_admin_login_page'))
 
 def insert_processor(request):
     if request.method == 'GET':
@@ -267,23 +291,25 @@ def delete_processor(request,id):
 """ VideoCards CRUD Start """
 
 def view_vc(request):
-    vc_data = VideoCards.objects.all()
-    versions_data = VCVersions.objects.all().select_related('vc_name')
-    # print(versions_data)
-    
-    categorized_version_data = {}
-    for vc in vc_data:
-        vc_name = vc.vc_name
-        versions_for_vc = versions_data.filter(vc_name_id = vc.vc_id)
-        categorized_version_data[vc_name] = [v['vc_version_name'] for v in list(list(versions_for_vc.values()))]
+    if request.session.get('is_admin_authenticated', False):
+        vc_data = VideoCards.objects.all()
+        versions_data = VCVersions.objects.all().select_related('vc_name')
+        # print(versions_data)
         
+        categorized_version_data = {}
+        for vc in vc_data:
+            vc_name = vc.vc_name
+            versions_for_vc = versions_data.filter(vc_name_id = vc.vc_id)
+            categorized_version_data[vc_name] = [v['vc_version_name'] for v in list(list(versions_for_vc.values()))]
+            
 
-    for key, value in categorized_version_data.items():
-        print(key, " => ", value)
-    print(categorized_version_data)
+        for key, value in categorized_version_data.items():
+            print(key, " => ", value)
+        print(categorized_version_data)
 
-    return render(request,'VideoCards/videocards.html', context={'vc_data': vc_data, 'categorized_version_data': categorized_version_data})
-    #return render(request,'VideoCards/videocards.html',context={'vc_data':vc_data})
+        return render(request,'VideoCards/videocards.html', context={'vc_data': vc_data, 'categorized_version_data': categorized_version_data})
+    else:
+        return redirect(reverse('render_admin_login_page'))
 
 def insert_vc(request):
     if request.method == 'GET':
@@ -325,9 +351,11 @@ def insert_vc_version(request):
 """ Offer CRUD Start """
 
 def view_offer(request):
-
-    offer = Offer.objects.all()
-    return render(request,'offer/offer.html',context ={'offer':offer})
+    if request.session.get('is_admin_authenticated', False):
+        offer = Offer.objects.all()
+        return render(request,'offer/offer.html',context ={'offer':offer})
+    else:
+        return redirect(reverse('render_admin_login_page'))
 
 def insert_offer(request):
     if request.method == 'POST':
@@ -366,10 +394,12 @@ def delete_offer(request,id):
 """ Contact Us Start """
 
 def view_contact(request):
-
-    contact = Contact.objects.all()
-    vcontact = Vendor_Contact.objects.all()
-    return render(request,'contact/viewcontact.html',context ={'contact':contact, 'vcontact':vcontact})
+    if request.session.get('is_admin_authenticated', False):
+        contact = Contact.objects.all()
+        vcontact = Vendor_Contact.objects.all()
+        return render(request,'contact/viewcontact.html',context ={'contact':contact, 'vcontact':vcontact})
+    else:
+        return redirect(reverse('render_admin_login_page'))
 
 def delete_contact(request,id):
     obj = get_object_or_404(Contact,contact_id=id)
@@ -400,8 +430,12 @@ def delete_vcontact(request,id):
 """ Plan Start """
 
 def view_plan(request):
-    plans = Plan.objects.all()
-    return render(request,'Plan/view_plan.html', context={"plans" : plans})
+    if request.session.get('is_admin_authenticated', False):
+        plans = Plan.objects.all()
+        return render(request,'Plan/view_plan.html', context={"plans" : plans})
+    else:
+        return redirect(reverse('render_admin_login_page'))
+
 
 def insert_plan(request):
     if request.method == 'POST':
