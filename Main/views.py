@@ -201,7 +201,7 @@ def check_payment(request,id):
     return render(request,'Balance/checkout.html',context)
 
 
-def charge(request):
+def charge(request,id):
     if request.method=='POST':
         
         charge = stripe.PaymentIntent.create(

@@ -49,3 +49,8 @@ class Vendors(models.Model):
     GSTIN = models.CharField(max_length=15, unique=True)
     pickup_pincode = models.CharField(max_length=10)
     pickup_address = models.CharField(max_length=50)
+
+class UserBalancePoints(models.Model):
+    points_id = models.AutoField(primary_key=True)
+    points = models.IntegerField()
+    customer = models.ForeignKey(Customers,on_delete=models.CASCADE) 

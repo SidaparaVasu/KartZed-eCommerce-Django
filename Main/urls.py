@@ -36,7 +36,7 @@ urlpatterns = [
     # Balance
     path('buy_points',views.buy_points,name="buy_points"),
     path('check_payment/<id>',views.check_payment,name="check_payment"),
-    path('charge',views.charge,name='charge'),
+    path('charge/<id>',views.charge,name='charge'),
     # Browse
     # path('browse',views.view_browse,name="view_browse"),
     path('search',views.view_search,name="view_search"),

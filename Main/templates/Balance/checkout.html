@@ -1,5 +1,5 @@
 <h1>hello <h1>
-<form action="{% url 'charge' %}" method ="post">
+<form action="{% url 'charge' checkout.plan_id %}" method ="post">
     {% csrf_token %}
     <script src = "https://checkout.stripe.com/checkout.js" class = "stripe-button"
         data-key = "{{ key }}"

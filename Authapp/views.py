@@ -109,7 +109,8 @@ def customer_login(request):
             if email_obj.send_login_otp([email]):
                 return render(request, 'customer-login.html', {'result': True, 'email': email})
         else:
-            # return HttpResponse(email)
+            
+
             try: 
                 Customers.objects.create(
                     cust_unique_keyid = generate_unique_key(request),
@@ -126,7 +127,14 @@ def customer_login(request):
                     cust_address = ''
                 )
                 
+                custo = Customers.objects.get(cust_email=email)
+
+                UserBalancePoints.objects.create(
+                    points = 100,
+                    customer = custo,
+                )
                 email_obj.send_login_otp([email])
+
                 return render(request, 'customer-login.html', {'result': True, 'email': email})
             except Exception as e:
                 messages.success(request, "An Error Occured: try login again")
