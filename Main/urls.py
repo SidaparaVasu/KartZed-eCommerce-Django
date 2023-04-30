@@ -31,13 +31,13 @@ urlpatterns = [
     path('view_game_page/<str:product_key>', views.view_game_detail, name="game_details"), 
 
     #contact
-    path('contact_view/', views.contact_view, name="contact_view"),
+    path('contact_view', views.contact_view, name="contact_view"),
     path('contact_view/insert_contact', views.insert_contact, name="insert_contact"),
 
     # Balance
     path('buy_points',views.buy_points,name="buy_points"),
     path('check_payment/<id>',views.check_payment,name="check_payment"),
-
+    path('charge/<id>',views.charge,name='charge'),
     # Browse
     # path('browse',views.view_browse,name="view_browse"),
     path('search',views.view_search,name="view_search"),

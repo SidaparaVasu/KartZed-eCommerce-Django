@@ -11,6 +11,9 @@ from Administrator.models import *
 from .models import *
 from Email.views import Email
 from .forms import *
+from django.conf import settings
+import stripe
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 # Create your views here.
@@ -87,7 +90,8 @@ def view_browse(request):
 def render_account_page(request):
     if request.session.get('is_authenticated', False):
         user_data = Customers.objects.get(cust_unique_keyid = request.session['cust_unique_keyid'])
-        return render(request, 'user_account.html', context={'user_data': user_data})
+        user_points = UserBalancePoints.objects.get(customer=user_data)
+        return render(request, 'user_account.html', context={'user_data': user_data,'user_points':user_points})
     else:
         return redirect(reverse('render_customer_login_page'))
 
@@ -243,9 +247,33 @@ def buy_points(request):
     return render(request,'Balance/buy_points.html',context)
 
 def check_payment(request,id):
-    
-    return render(request,'Balance/buy_points.html')
+    # checkout = Plan.objects.get(plan_id=id)
+    # return HttpResponse(checkout)
+    context = {
+        'checkout' : Plan.objects.get(plan_id= id),
+        'key' : settings.STRIPE_PUBLISHABLE_KEY,
+    }
+    return render(request,'Balance/checkout.html',context)
 
+
+def charge(request,id):
+    if request.method=='POST':
+        
+
+        charge = stripe.PaymentIntent.create(
+            amount=625,
+            currency='inr',
+            payment_method_types=['card'],
+            description='Payment for items in cart',
+        )
+        plan = Plan.objects.get(plan_id=id)
+        cust_cur_key = request.session['cust_unique_keyid']
+        cust_cur_id = Customers.objects.get(cust_unique_keyid = cust_cur_key)
+        points_bal = UserBalancePoints.objects.get(customer = cust_cur_id.cust_id)
+        new_bal = points_bal.points + plan.points
+        points_bal.points = new_bal
+        points_bal.save() 
+        return render(request,'Balance/charge.html')
 
 """ user points balance """
 

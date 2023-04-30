@@ -106,7 +106,12 @@ def insert_game(request):
     if request.method == 'POST': 
         vendor_unique_id = request.POST.get('vendor_unique_keyid')
         vendor_ins = Vendors.objects.get(vendor_unique_keyid = vendor_unique_id)
-    
+
+        plan = Plan.objects.get(plan_points = 100)
+        g_points = int(request.POST.get('game_price'))
+
+        g_points = (g_points*plan.points)/plan.amount
+        
         try:
             game = Games()
             game.product_key           = generate_product_key(request)
@@ -120,6 +125,7 @@ def insert_game(request):
             game.avail_stock           = request.POST.get('avail_stock')
             game.game_price            = request.POST.get('game_price')
             game.discount              = request.POST.get('discount')
+            game.game_points           = g_points
             game.game_storage          = request.POST.get('game_storage')
             game.game_ram              = request.POST.get('game_ram')
             game.game_features         = list(request.POST.getlist('game_features'))
