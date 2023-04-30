@@ -45,6 +45,8 @@ def view_cart(request):
     if request.session.get('is_authenticated', False):
         user = Customers.objects.get(cust_unique_keyid = request.session['cust_unique_keyid'])
         cart_data = Cart.objects.filter(cust_id = user.cust_id)
+        # return HttpResponse(cart_data)
+        
         cartIDs = []
         for data in cart_data:
             cartIDs.append(data.cart_id)
@@ -72,18 +74,28 @@ def view_cart(request):
 def view_game_detail(request, product_key):
     product = Games.objects.get(product_key = product_key)
     images = GameImages.objects.filter(game_id = product.gid)
-    
-    gameInCart = CartItems.objects.filter(game = product.gid)
-    # return HttpResponse(len(gameInCart))
-    if len(gameInCart) > 0:
+    cartItemForCurrentGame = CartItems.objects.filter(game_id = product.gid) 
+    if cartItemForCurrentGame.count() < 1:
         return render(request, 'product-page.html', context = {
-            'Game' : product, 'Images':images, 'isAdded': True
+            'Game' : product, 'Images':images, 'isAdded': False
         })
-    
+    else:
+        current_user = Customers.objects.get(cust_unique_keyid = request.session['cust_unique_keyid'])
+        user_id = current_user.cust_id
+        cart_data = Cart.objects.filter(cust_id = user_id)
+        item_list = []
+        for c_data in cart_data:
+            item_list.append(CartItems.objects.filter(cart_id = c_data.cart_id))
+        index = 0
+        for item in item_list:
+            if item[index].game_id == product.gid:              
+                return render(request, 'product-page.html', context = {
+                    'Game' : product, 'Images':images, 'isAdded': True
+                })
     return render(request, 'product-page.html', context = {
         'Game' : product, 'Images':images, 'isAdded': False
     })
-
+    
 """ View details End """
 
 def add_to_cart(request,product_key):
