@@ -21,6 +21,14 @@
 </head>
 
 <body>
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags %}
+    <script>alert("{{ message }}")</script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
     <!-- Include Navigation Bar -->
     {% include 'navbar/navbar.html' %}
 
@@ -55,23 +63,22 @@
                         <div class="cart-item">
                             <div class="qty-select-box">
                                 <button class="decr-btn" id="decrement-btn"
-                                data-product-id="{{ forloop.counter }}">-</button>
+                                    data-product-id="{{ forloop.counter }}">-</button>
                                 <input type="number" value="1" id="quantity-{{ forloop.counter }}" class="qty-input"
-                                pattern="[0-9]+" maxlength="3" data-product-id="{{ forloop.counter }}"
-                                onKeyDown="return false" />
+                                    pattern="[0-9]+" maxlength="3" data-product-id="{{ forloop.counter }}"
+                                    onKeyDown="return false" />
                                 <button class="incr-btn" id="increment-btn"
                                     data-product-id="{{ forloop.counter }}">+</button>
                             </div>
                         </div>
                         <div class="cart-item">
-                            <a href="{% url 'delete_cart_item' item.gid %}" 
-                                class="remove-btn"
+                            <a href="{% url 'delete_cart_item' item.gid %}" class="remove-btn"
                                 onclick="return confirm('Are you sure you want to delete this?')">
                                 <span class="delete-btn icon-box rd-icon">
-                                    
+
                                     <ion-icon name="trash-outline" class="icon"></ion-icon>
-                                    
-                                </span> 
+
+                                </span>
                             </a>
                         </div>
                     </div>
@@ -121,7 +128,7 @@
                 // Make sure the new value is not less than 10
                 if (currentValue < 10) {
                     var newValue = currentValue + 1;
-                } 
+                }
 
                 // Update the input element with the new value
                 quantityInput.value = newValue;
@@ -155,7 +162,7 @@
                 // Make sure the new value is not less than 1
                 if (newValue < 1) {
                     newValue = 1;
-                } 
+                }
 
                 // Update the input element with the new value
                 quantityInput.value = newValue;

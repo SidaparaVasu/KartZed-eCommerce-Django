@@ -144,6 +144,8 @@ def verify_otp(request):
         
         if int(user_data.otp) == int(input_otp) or int(input_otp) == 123456:
             return True, user_data, email
+        else:
+            return False, user_data, email
         
 def customer_login_handle(request):
     verified, user_data, email = verify_otp(request)
@@ -156,7 +158,7 @@ def customer_login_handle(request):
         messages.success(request, "You are Logged in successfully!")
         return HttpResponseRedirect('/')
     else:
-        er_context = {'result' : True, 'email': user_data.email_id, 'errormsg': "OTP doesn't match! New OTP sent"}
+        er_context = {'result' : True, 'email': user_data.cust_email, 'errormsg': "OTP doesn't match!"}
         return render(request, 'customer-login.html', er_context)
     
 def customer_logout_handle(request):
