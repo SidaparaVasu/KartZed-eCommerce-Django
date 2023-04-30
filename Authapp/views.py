@@ -25,16 +25,7 @@ def generate_unique_key(request):
     key = ''.join(random.choice(letters_and_digits) for i in range(length))
     return key
 
-"""  ADMIN LOGIN  """
-def set_default_admin(request):
-    form = Admins(
-        admin_name = 'administrator',
-        admin_role = 'super_admin',
-        admin_email = 'admin@gmail.com',
-        admin_password = make_password('admin@123'),
-        admin_image = ''
-    )
-    
+"""  ADMIN LOGIN  """   
 def admin_login(request):
     if request.method == "POST":    
         email = request.POST.get("admin_email")
@@ -63,6 +54,9 @@ def admin_login(request):
                         is_password_match = check_password(password, admin_data[i].admin_password)
                         
                         if is_password_match == True:
+                            # Storing Customers data into session
+                            request.session['admin_unique_keyid'] = admin_data[i].admin_unique_keyid
+                            request.session['is_admin_authenticated'] = True
                             return redirect(reverse('index_admin'))
                         else:
                             messages.error(request, "Password is incorrect!")
