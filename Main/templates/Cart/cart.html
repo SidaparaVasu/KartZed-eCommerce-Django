@@ -100,7 +100,7 @@
                     <p>Shipping and additional costs are calculated based on values you have entered.</p>
                     <div class="flex-2">
                         <p>Order Subtotal</p>
-                        <p>₹390.00</p>
+                        <p class="order-summary"></p>
                     </div>
                     <button type="submit" class="checkout-btn">PROCCEED TO CHECKOUT</button>
                 </div>
@@ -112,72 +112,104 @@
 
 
     <script>
-        // Get all the increment buttons and add a click event listener to each one
-        var incrementButtons = document.querySelectorAll(".incr-btn");
-        incrementButtons.forEach(function (button) {
-            button.addEventListener("click", function () {
-                // Get the ID of the product associated with this increment button
-                var productId = this.dataset.productId;
+       // Get all the increment buttons and add a click event listener to each one
+var incrementButtons = document.querySelectorAll(".incr-btn");
+incrementButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    // Get the ID of the product associated with this increment button
+    var productId = this.dataset.productId;
 
-                // Get the input element for the product with this ID
-                var quantityInput = document.querySelector("#quantity-" + productId);
+    // Get the input element for the product with this ID
+    var quantityInput = document.querySelector("#quantity-" + productId);
 
-                // Get the current value of the input element and increment it
-                var currentValue = parseInt(quantityInput.value);
-                var newValue = currentValue
-                // Make sure the new value is not less than 10
-                if (currentValue < 10) {
-                    var newValue = currentValue + 1;
-                }
+    // Get the current value of the input element and increment it
+    var currentValue = parseInt(quantityInput.value);
+    var newValue = currentValue;
 
-                // Update the input element with the new value
-                quantityInput.value = newValue;
+    // Make sure the new value is not less than 10
+    if (currentValue < 10) {
+      var newValue = currentValue + 1;
+    }
 
-                // Get the price element for the product with this ID
-                var priceElement = document.querySelector("#game-price-" + productId);
+    // Update the input element with the new value
+    quantityInput.value = newValue;
 
-                // Get the current price of the product and update it based on the new quantity
-                var currentPrice = parseFloat(priceElement.innerText); // .replace("₹", "")
-                var newPrice = (currentPrice / currentValue) * newValue;
+    // Update the order summary
+    updateOrderSummary();
+  });
+});
 
-                // Update the price element with the new price, rounded to 2 decimal places
-                priceElement.innerText = newPrice;
-            });
-        });
+// Get all the decrement buttons and add a click event listener to each one
+var decrementButtons = document.querySelectorAll(".decr-btn");
+decrementButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    // Get the ID of the product associated with this decrement button
+    var productId = this.dataset.productId;
 
-        // Get all the decrement buttons and add a click event listener to each one
-        var decrementButtons = document.querySelectorAll(".decr-btn");
-        decrementButtons.forEach(function (button) {
-            button.addEventListener("click", function () {
-                // Get the ID of the product associated with this decrement button
-                var productId = this.dataset.productId;
+    // Get the input element for the product with this ID
+    var quantityInput = document.querySelector("#quantity-" + productId);
 
-                // Get the input element for the product with this ID
-                var quantityInput = document.querySelector("#quantity-" + productId);
+    // Get the current value of the input element and decrement it
+    var currentValue = parseInt(quantityInput.value);
+    var newValue = currentValue - 1;
 
-                // Get the current value of the input element and decrement it
-                var currentValue = parseInt(quantityInput.value);
-                var newValue = currentValue - 1;
+    // Make sure the new value is not less than 1
+    if (newValue < 1) {
+      newValue = 1;
+    }
 
-                // Make sure the new value is not less than 1
-                if (newValue < 1) {
-                    newValue = 1;
-                }
+    // Update the input element with the new value
+    quantityInput.value = newValue;
 
-                // Update the input element with the new value
-                quantityInput.value = newValue;
+    // Update the order summary
+    updateOrderSummary();
+  });
+});
 
-                // Get the price element for the product with this ID
-                var priceElement = document.querySelector("#game-price-" + productId);
+// Function to update the order summary
+function updateOrderSummary() {
+  // Get all the cart items
+  var cartItems = document.querySelectorAll(".cart-item-body .row");
 
-                // Get the current price of the product and update it based on the new quantity
-                var currentPrice = parseFloat(priceElement.innerText); //.replace("₹", "")
-                var newPrice = (currentPrice / currentValue) * newValue;
+  // Initialize the total cost and quantity
+  var totalCost = 0;
+  var totalQuantity = 0;
 
-                // Update the price element with the new price, rounded to 2 decimal places
-                priceElement.innerText = newPrice;
-            });
-        });
+  // Loop through each cart item and update the total cost and quantity
+  cartItems.forEach(function (cartItem) {
+    // Get the ID of the product associated with this cart item
+    var productId = cartItem.querySelector(".qty-input").dataset.productId;
+
+    // Get the quantity of the product associated with this cart item
+    var quantity = parseInt(cartItem.querySelector(".qty-input").value);
+
+    // Get the price of the product associated with this cart item
+    var price = parseFloat(cartItem.querySelector(".price").innerText);
+
+    // Update the total cost and quantity
+    totalCost += price * quantity;
+    totalQuantity += quantity;
+  });
+
+  // Update the order summary
+  var orderSummary = document.querySelector(".bill-box .order-summary");
+  orderSummary.innerHTML = "";
+  orderSummary.insertAdjacentHTML(
+    "beforeend",
+    "<div><span>Total Quantity:</span><span>" +
+      totalQuantity +
+      "</span></div>"
+  );
+  orderSummary.insertAdjacentHTML(
+    "beforeend",
+    "<div><span>Total Cost:</span><span>" +
+      totalCost.toFixed(2) +
+      "</span></div>"
+  );
+}
+
+// Call the updateOrderSummary function to initialize the order summary
+updateOrderSummary();
 
     </script>
 </body>
