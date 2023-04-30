@@ -41,6 +41,5 @@ urlpatterns = [
     # Browse
     # path('browse',views.view_browse,name="view_browse"),
     path('search',views.view_search,name="view_search"),
-    path('filter-data',views.filter_data,name="filter_data"),
 
 ]

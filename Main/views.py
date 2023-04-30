@@ -55,21 +55,34 @@ def view_browse(request):
                 
         else :
             pass    
+        categoryID = request.GET.get('category')
+        if categoryID:
+            games=Games.object.filter(game_modes = categoryID)
+        else:
+            games = Games.objects.all()
         context = {
             # 'imp' : imp,
-            'games' : Games.objects.all(),
+            'games' : games,
             'cart_count' : Cart.objects.filter(cust_id = user_id).count(),
             'modes' : GameModes.objects.all()
         }
         
         return render(request, 'Browse/browse.html',context)
     else:
+        categoryID = request.GET.get('category')
+        print(categoryID)
+        if categoryID:
+            print(categoryID)
+
+            x = GameModes.objects.filter(game_mode_id = categoryID)
+            games=Games.object.filter(game_modes = categoryID)
+        else:
+            games = Games.objects.all()
         context = {
-            'games' : Games.objects.all(),
+            'games' : games,
             'modes' : GameModes.objects.all()
         }
         return render(request, 'Browse/browse.html', context)
-
 
 def render_account_page(request):
     if request.session.get('is_authenticated', False):
@@ -249,12 +262,3 @@ def view_search(request):
     return render(request,'Browse/browse.html',context)
 
 """ Search End """
-
-#Filter Data
-def filter_data(request):
-    mode=request.GET.getlist('mode[]')
-    allgames=Games.objects.all()
-    if len(mode)>0:
-        allgames=allgames.filter(game_modes__GameModes__game_mode_id__in=mode)
-    t=render_to_string('sort/game-list.html',{'data':allgames})
-    return JsonResponse({'data':t})

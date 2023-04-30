@@ -11,11 +11,7 @@
                     <p class="ajaxLoader">Loading...</p> 
                     {% for mode in modes %}
                     <li class="sidebar-item">
-                            <div>
-                                <input type="checkbox" data-filter="mode" class="filter-checkbox" value="{{ mode.game_mode_id }}">
-                                <label style="color:white">{{ mode.game_mode_id }}</label>
-                                <label style="color:white">{{ mode.game_mode_name }}</label>
-                            </div>
+                        <li><a href="/?category={{ mode.game_mode_id }}">{{ mode.game_mode_name }}</a><li> 
                     </li>
                     {% endfor %}
                 </div>
