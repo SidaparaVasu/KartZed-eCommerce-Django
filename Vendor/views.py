@@ -224,7 +224,10 @@ def upload_game_logo(request, prod_key):
 
 
 def contact_game_view(request):
-    return render(request, 'contact.html')
+    if request.session.get('is_vendor_authenticated', False):
+        return render(request, 'contact.html')
+    else:
+        return render(request, 'vendor-login.html') 
 
 def insert_game_vcontact(request):
     #return HttpResponse("yo")
