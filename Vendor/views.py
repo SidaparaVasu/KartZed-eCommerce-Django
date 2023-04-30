@@ -8,7 +8,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
-
+from .charts import *
 
 from .models import Games, GameImages, Vendor_Contact
 from .forms import GameImageForm
@@ -21,7 +21,9 @@ from Administrator.views import get_os_by_category
 #call main page
 def index_vendor(request):
     if request.session.get('is_vendor_authenticated', False):
-        return render(request,'index-vendor.html')
+        labels,data = pie_chart(request)
+
+        return render(request,'index-vendor.html',context = {'labels' : labels,'data' : data })
     else:
         return render(request, 'vendor-login.html')    
 
@@ -260,3 +262,4 @@ def bulk_image_upload(request, prod_key):
                 GameImages.objects.create(game=game, images=image)
         return redirect(url)
     return redirect(url)
+

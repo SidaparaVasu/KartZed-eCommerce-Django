@@ -14,8 +14,8 @@
             <input type="submit" value="" style="display: none;" />
         </form>
         <div class="links">
-            <a href="#">Discover</a>
-            <a href="#">Browse</a>
+            <a href="{% url 'indexPage' %}">Discover</a>
+            <a href="{% url 'view_browse' %}">Browse</a>
             <a href="{% url 'render_vendor_register_page' %}">Become a Seller</a>
             {% if request.session.is_authenticated %}
                 <a href="{% url 'render_account_page' %}">Account</a>
