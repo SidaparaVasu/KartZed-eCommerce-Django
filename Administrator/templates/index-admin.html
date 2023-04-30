@@ -25,9 +25,44 @@
       <!-- Including Header -->
       {% include 'navbar-admin.html' %}
 
+
+
       <div class="container-fluid">
-        <!--  Row 1 -->
+        
         <div class="row">
+          
+        </div>
+        <div id="container" style="width: 75%;">
+          <canvas id="pie-chart"></canvas>
+        </div>
+        <!--  Row 1 -->
+        <script>
+
+          var config = {
+            type: 'pie',
+            data: {
+              datasets: [{
+                data: {{ data|safe }},
+                backgroundColor: [
+                  '#696969', '#808080', '#A9A9A9', '#C0C0C0', '#D3D3D3'
+                ],
+                label: 'Vendors'
+              }],
+              labels: {{ labels|safe }}
+            },
+            options: {
+              responsive: true
+            }
+          };
+      
+          window.onload = function() {
+            var ctx = document.getElementById('pie-chart').getContext('2d');
+            window.myPie = new Chart(ctx, config);
+          };
+      
+        </script>
+
+        {% comment %} <div class="row">
           <div class="col-lg-8 d-flex align-items-strech">
             <div class="card w-100">
               <div class="card-body">
@@ -373,9 +408,10 @@
         <div class="py-6 px-6 text-center">
           <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank" class="pe-1 text-primary text-decoration-underline">AdminMart.com</a></p>
         </div>
+        </div>
+       {% endcomment %}
       </div>
-    </div>
-  </div>
+    </div>  
   <script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script>
   <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'js/sidebarmenu.js' %}"></script>
@@ -383,6 +419,7 @@
   <script src="{% static 'libs/apexcharts/dist/apexcharts.min.js' %}"></script>
   <script src="{% static 'libs/simplebar/dist/simplebar.js' %}"></script>
   <script src="{% static 'js/dashboard.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 </body>
 
 </html>

@@ -23,7 +23,7 @@ function checkCaptcha() {
     const captchaImage = document.getElementById('show-captcha').innerHTML;
     let submitBtn = document.getElementById('submit-btn');
 
-    if (enteredCaptcha === captchaImage && enteredCaptcha == 111111) {
+    if (enteredCaptcha === captchaImage) {
         document.getElementById('captcha-message').innerHTML = 'Captcha is correct.';
         document.getElementById('captcha-message').style.color = '#5D87FF';
         submitBtn.disabled = false;

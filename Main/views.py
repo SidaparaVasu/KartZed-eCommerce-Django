@@ -245,3 +245,11 @@ def view_search(request):
     return render(request,'Browse/browse.html',context)
 
 """ Search End """
+
+
+# """ purchase"""
+# def game_purchase(request):
+
+#     return render(request,'Purchase/place_order.html')
+
+# """ end"""

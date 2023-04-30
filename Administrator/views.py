@@ -6,14 +6,32 @@ from django.contrib import messages
 from Main.models import Contact
 from .models import Offer, Platform, GameFeatures, GameModes, GameCategory, OperatingSystems, OSVersions ,Plan
 from .models import Processors, VideoCards, VCVersions
-from Authapp.models import Customers
-from Vendor.models import Vendor_Contact
+from Authapp.models import *
+from Vendor.models import *
 # from Authapp.views import render_admin_login_page
 
 # Create your views here.
 def index_admin(request):
     if request.session.get('is_admin_authenticated', False):
-        return render(request,'index-admin.html')
+        labels = []
+        data = []
+        data_len = []
+        queryset1 = Vendors.objects.all()
+        queryset2 = Games.objects.all()
+        for vendor in queryset1:
+            for game in queryset2:
+                if game.vendor_reference_id == vendor.vendor_id:
+                    data.append(game.game_name)
+            labels.append(vendor.vendor_id)
+            data_len.append(len(data))
+        print(labels)
+        print(data_len)
+        #return HttpResponse(queryset1)
+        context = {
+            'labels': labels,
+            'data': data_len, 
+            }
+        return render(request,'index-admin.html',context)
     else:
         return redirect(reverse('render_admin_login_page'))
 

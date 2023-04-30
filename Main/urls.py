@@ -40,6 +40,8 @@ urlpatterns = [
     # Browse
     # path('browse',views.view_browse,name="view_browse"),
     path('search',views.view_search,name="view_search"),
-    
 
+    # checkout games
+    #path('game_purchase',views.game_purchase,name="game_purchase"),
+    
 ]
