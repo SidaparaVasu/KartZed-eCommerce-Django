@@ -21,9 +21,14 @@ from Administrator.views import get_os_by_category
 #call main page
 def index_vendor(request):
     if request.session.get('is_vendor_authenticated', False):
-        labels,data = pie_chart(request)
+        g_name_list,g_availstock = pie_chart(request)
+        hist_price = price_histogram(request)
 
-        return render(request,'index-vendor.html',context = {'labels' : labels,'data' : data })
+        return render(request,'index-vendor.html', 
+        context = {
+            'g_name_list' : g_name_list,'g_availstock' : g_availstock,
+            'hist_price' : hist_price,
+            })
     else:
         return render(request, 'vendor-login.html')    
 

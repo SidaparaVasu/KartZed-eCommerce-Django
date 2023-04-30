@@ -8,30 +8,16 @@ from .models import Offer, Platform, GameFeatures, GameModes, GameCategory, Oper
 from .models import Processors, VideoCards, VCVersions
 from Authapp.models import *
 from Vendor.models import *
+from .chart import *
 # from Authapp.views import render_admin_login_page
 
 # Create your views here.
 def index_admin(request):
     if request.session.get('is_admin_authenticated', False):
-        labels = []
-        data = []
-        data_len = []
-        queryset1 = Vendors.objects.all()
-        queryset2 = Games.objects.all()
-        for vendor in queryset1:
-            for game in queryset2:
-                if game.vendor_reference_id == vendor.vendor_id:
-                    data.append(game.game_name)
-            labels.append(vendor.vendor_id)
-            data_len.append(len(data))
-        print(labels)
-        print(data_len)
+        data,labels = games_per_vendor_pie_chart(request)
         #return HttpResponse(queryset1)
-        context = {
-            'labels': labels,
-            'data': data_len, 
-            }
-        return render(request,'index-admin.html',context)
+
+        return render(request,'index-admin.html', context = {'labels': labels,'data': data})
     else:
         return redirect(reverse('render_admin_login_page'))
 

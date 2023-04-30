@@ -29,4 +29,8 @@ urlpatterns = [
    path('contact_game_view/', views.contact_game_view, name="contact_game_view"),
    path('contact_game_view/insert_game_contact', views.insert_game_vcontact, name="insert_game_contact"),
    
+   #histogram
+   # path('dashboard/histogram-price', views.price_histogram, name='price_histogram'),
+   path('dashboard/histogram-price/', views.price_histogram, name='price_histogram')
+
 ]

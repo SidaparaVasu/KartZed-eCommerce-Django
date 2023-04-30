@@ -9,7 +9,8 @@
   <title>Vender | Dashboard</title>
   <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon_logo.png' %}" />
   <link rel="stylesheet" href="{% static 'css/dashboard-styles.min.css' %}" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  {% comment %} <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script> {% endcomment %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
@@ -29,7 +30,7 @@
 
       <div class="container-fluid">
         <!--  Row 1 -->
-        <div class="row" style = "width:100%">
+        <div class="row">
           <div class="col-lg-8 d-flex align-items-strech">
             <div class="card w-100">
               <div class="card-body">
@@ -49,13 +50,13 @@
             type: 'pie',
             data: {
               datasets: [{
-                data: {{ data|safe }},
+                data: {{ g_availstock|safe }},
                 backgroundColor: [
                   '#03045e', '#0077b6', '#00b4d8', '#90e0ef', '#caf0f8'
                 ],
                 label: 'Population'
               }],
-              labels: {{ labels|safe }}
+              labels: {{ g_name_list|safe }}
             },
             options: {
               responsive: true
@@ -75,14 +76,49 @@
               <div class="card-body">
                 <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
                   <div class="mb-3 mb-sm-0">
-                    <h5 class="card-title fw-semibold">Available Stock</h5>
+                    <h5 class="card-title fw-semibold">Price</h5>
                   </div>
                 </div>
-                <canvas id="stock-pie-chart"></canvas>
+                <canvas id="price-histogram"></canvas>
               </div>
             </div>
           </div>
         </div>
+        <script>
+          // Get the canvas element
+var canvas = document.getElementById('price-histogram');
+
+// Get the data for the histogram from the Django view
+fetch('dashboard/histogram-price/')
+  .then(response => response.json())
+  .then(data => {
+    // Create the histogram using Chart.js
+    var chart = new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels: data.labels,  // X-axis labels
+        datasets: [{
+          label: 'Product Prices',  // Y-axis label
+          data: data.data,  // Y-axis data
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+  });
+        </script>
+
+
       </div>
     </div>
   </div>
@@ -90,7 +126,7 @@
   <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'js/sidebarmenu.js' %}"></script>
   <script src="{% static 'js/app.min.js' %}"></script>
-  <script src="{% static 'libs/apexcharts/dist/apexcharts.min.js' %}"></script>
+  {% comment %} <script src="{% static 'libs/apexcharts/dist/apexcharts.min.js' %}"></script> {% endcomment %}
   <script src="{% static 'libs/simplebar/dist/simplebar.js' %}"></script>
   <script src="{% static 'js/dashboard.js' %}"></script>
 </body>
