@@ -108,8 +108,6 @@
                     </div>
                     <div class="order-summary">
                         <!-- Total Cost and Quantity shown here -->
-                        <div class="total-qtys"></div>
-                        <div class="total-points"></div>
                     </div>
                     <button type="submit" class="checkout-btn">PROCCEED TO CHECKOUT</button>
                 </div>
@@ -249,7 +247,6 @@
             );
 
             // Update the order summary
-            var total_qtys = document.getElementsByClassName('total-points').innerText = totalQuantity;
             var orderSummary = document.querySelector(".bill-box .order-summary");
             orderSummary.innerHTML = "";
             orderSummary.insertAdjacentHTML(
