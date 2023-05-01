@@ -20,10 +20,17 @@ urlpatterns = [
    path('show-games', views.show_games_page, name="show_games_page"),
    path('show-game-details/<prod_key>', views.show_game_details, name="show_game_details"),
     
+    # bulk upload game data
    path('show-game-details/<prod_key>/bulk_image_upload', views.bulk_image_upload, name="bulk_image_upload"),
+    
+   # export game data
+   path("export_game_data/", views.export_game_data, name="export_game_data"),
    
    # edits
    path('show-game-details/<prod_key>/upload_game_logo', views.upload_game_logo, name="upload_game_logo"),
+   
+   # Delete Game
+   path('delete_game/<product_key>', views.delete_game, name="delete_game"),
 
    # Contact
    path('contact_game_view/', views.contact_game_view, name="contact_game_view"),

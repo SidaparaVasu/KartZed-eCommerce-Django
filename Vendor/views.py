@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from .charts import *
-
+import openpyxl
 from .models import Games, GameImages, Vendor_Contact
 from .forms import GameImageForm
 from Authapp.models import Vendors
@@ -54,6 +54,18 @@ def show_game_details(request, prod_key):
         return render(request, 'Games/view-game-details.html', context = {'Game':game, 'Images':images})
     else:
         return render(request, 'vendor-login.html') 
+    
+def delete_game(request, product_key):
+    obj = get_object_or_404(Games, product_key=product_key)
+    # return HttpResponse(obj)
+    if request.method == "GET":
+        if obj.delete():
+            messages.success(request,"Game deleted successfully!")
+            return redirect(reverse(show_games_page))
+        else:
+            messages.error(request,"Game couldn't delete!")
+    return redirect(reverse(show_games_page))
+
 """ Check Image is in Image format or not? """
 def is_image(file):
     """
@@ -229,6 +241,62 @@ def upload_game_logo(request, prod_key):
         return redirect(url)
         # return render(request, 'Games/view-game-details.html', context = {'Game': [game]})
     return redirect(url)
+
+
+
+def export_game_data(request):
+        # Get all instances of the model
+        queryset = Games.objects.all()
+
+        # Define the filename and content type for the attachment
+        filename = "data.csv"
+        content_type = "text/csv"
+        if request.GET.get("format") == "excel":
+            filename = "data.xlsx"
+            content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+        # Create a response object with the file attachment headers
+        response = HttpResponse(content_type=content_type)
+        response["Content-Disposition"] = f"attachment; filename={filename}"
+
+        # Generate the CSV or Excel data and write it to the response
+        if request.GET.get("format") == "excel":
+            workbook = openpyxl.Workbook()
+            worksheet = workbook.active
+            for row_index, instance in enumerate(queryset, start=1):
+                worksheet.cell(row=row_index, column=1, value=instance.game_logo)
+                worksheet.cell(row=row_index, column=2, value=instance.game_name)
+                worksheet.cell(row=row_index, column=3, value=instance.game_description)
+                worksheet.cell(row=row_index, column=4, value=instance.game_developer)
+                worksheet.cell(row=row_index, column=5, value=instance.game_publisher)
+                worksheet.cell(row=row_index, column=6, value=instance.game_storage)
+                worksheet.cell(row=row_index, column=7, value=instance.game_languages)
+                worksheet.cell(row=row_index, column=8, value=instance.game_release_date)
+                worksheet.cell(row=row_index, column=9, value=instance.game_price)
+                worksheet.cell(row=row_index, column=10, value=instance.avail_stock)
+                worksheet.cell(row=row_index, column=11, value=instance.discount)
+                worksheet.cell(row=row_index, column=12, value=instance.game_points)
+                worksheet.cell(row=row_index, column=13, value=instance.game_features)
+                worksheet.cell(row=row_index, column=14, value=instance.game_modes)
+                worksheet.cell(row=row_index, column=15, value=instance.game_categories)
+                worksheet.cell(row=row_index, column=16, value=instance.platform_names)
+            workbook.save(response)
+        else:
+            writer = csv.writer(response)
+            writer.writerow([
+                "game_logo", "game_name", "game_description", "game_developer", "game_publisher",
+                "game_storage", "game_languages", "game_release_date", "game_price", "avail_stock",
+                "avail_stock", "discount", "game_points", "game_features", "game_modes", "game_categories",
+                "platform_names"
+            ])
+            for instance in queryset:
+                writer.writerow([
+                    instance.game_logo, instance.game_name, instance.game_description, instance.game_developer, instance.game_publisher,
+                    instance.game_storage, instance.game_languages, instance.game_release_date, instance.game_price, instance.avail_stock,
+                    instance.discount, instance.game_points, instance.game_features, instance.game_modes, instance.game_categories, instance.platform_names
+                ])
+
+        return response
 
 
 def contact_game_view(request):
