@@ -152,7 +152,7 @@ input::-webkit-inner-spin-button {
     height: auto;
     width: 100%;
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 0% 100%;
     margin-top: 40px;
     padding: 10px;
     border-radius: 5px;
@@ -175,6 +175,7 @@ input::-webkit-inner-spin-button {
 
 .coupon-box p, .bill-box p{
     padding: 20px 30px;
+    text-align: center;
 }
 
 .input-box{
@@ -233,7 +234,8 @@ input::-webkit-inner-spin-button {
     cursor: pointer;
 }
 
-.game-summary > p{
+.game-summary:nth-child(2),
+.game-summary:nth-child(3){
     text-align: center;
     font-weight: 400;
 }
@@ -252,4 +254,12 @@ input::-webkit-inner-spin-button {
 .f-cnt{
     text-align: center;
     font-weight: 200;
+}
+
+.input-decor{
+    padding: 7px;
+    font-size: 16px;
+}
+.text-cnt{
+    text-align: center;
 }

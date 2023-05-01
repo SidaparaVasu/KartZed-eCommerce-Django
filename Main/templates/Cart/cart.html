@@ -89,12 +89,12 @@
             <form action = "view_order_summary" class="checkout-box" method = "post">
                 {% csrf_token %}
                 <div class="coupon-box">
-                    <div class="header-box">COUPON CODE</div>
+                    <!-- <div class="header-box">COUPON CODE</div>
                     <p>If you have a coupon code, please enter it in the box below</p>
                     <div class="input-box">
                         <input type="text" name="" id="coupon_code" />
                         <button>Apply Coupon</button>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="bill-box">
                     <div class="header-box">ORDER SUMMARY</div>
@@ -207,6 +207,10 @@
             var gameQty = [];
             var gameCost = [];
 
+            // Update the mini order summary in the .game-summary tag
+            var gameSummary = document.querySelector(".game-summary");
+            gameSummary.innerHTML = "";
+
             // Loop through each cart item and update the total cost, quantity, and game names
             cartItems.forEach(function (cartItem) {
                 // Get the ID of the product associated with this cart item
@@ -226,37 +230,36 @@
                 totalCost += price;
                 eachQty = quantity;
                 totalQuantity += quantity;
-                gameNames.push(gameName);
-                gameQty.push(eachQty);
-                gameCost.push(eachCost);
+                // gameNames.push(gameName);
+                // gameQty.push(eachQty);
+                // gameCost.push(eachCost);
+                gameSummary.insertAdjacentHTML(
+                    "beforeend",
+                    "<p class='class='input-decor'>"+gameName+"<input type='hidden' name='game_name' value='"+gameName+"'/></p>"
+                );
+                gameSummary.insertAdjacentHTML(
+                    "beforeend",
+                    "<p class='class='input-decor text-cnt'>"+quantity+"<input type='hidden' name='qty_per_game' value='"+quantity+"'/></p>"
+
+                );
+                gameSummary.insertAdjacentHTML(
+                    "beforeend",
+                    "<p class='class='input-decor text-cnt'>"+price+"<input type='hidden' name='price_per_game' value='"+price+"'/></p>"
+                );
             });
 
-            // Update the mini order summary in the .game-summary tag
-            var gameSummary = document.querySelector(".game-summary");
-            gameSummary.innerHTML = "";
-            gameSummary.insertAdjacentHTML(
-                "beforeend",
-                "<p class='f-cnt'>" + gameNames.join(",<br/>") + "</p>"
-            );
-            gameSummary.insertAdjacentHTML(
-                "beforeend",
-                "<p class='f-cnt'>" + gameQty.join("<br/>") + "</p>"
-            );
-            gameSummary.insertAdjacentHTML(
-                "beforeend",
-                "<p class='f-cnt'>" + gameCost.join("<br/>") + "</p>"
-            );
+            
 
             // Update the order summary
             var orderSummary = document.querySelector(".bill-box .order-summary");
             orderSummary.innerHTML = "";
             orderSummary.insertAdjacentHTML(
                 "beforeend",
-                "<div name = 'total_quantity'>Total Quantity: " + totalQuantity + "</div>"
+                "<div>Total Quantity: "+totalQuantity+"<input type='hidden' name='total_qty' value='"+totalQuantity+"' class='input-decor' /> </div>"
             );
             orderSummary.insertAdjacentHTML(
                 "beforeend",
-                "<div name = 'total_points'>Total Points: " + totalCost + "</div>"
+                "<div>Total Points: "+totalCost+"<input type='hidden' name='total_points' value='"+totalCost+"' class='input-decor' /> </div>"
             );
 
         }
