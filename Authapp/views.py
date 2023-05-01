@@ -5,6 +5,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.urls import reverse
 from django.contrib import messages
 from .models import Admins, Customers, Vendors , UserBalancePoints
+from django.http import JsonResponse
 
 from Email.views import Email
 from Administrator.views import index_admin
@@ -38,7 +39,7 @@ def admin_login(request):
                 admin_unique_keyid = generate_unique_key(request),
                 admin_name = 'administrator',
                 admin_role = 'super_admin',
-                admin_email = 'admin@gmail.com',
+                admin_email = 'bhavinkalal3118@gmail.com',
                 admin_password = make_password('admin@123'),
                 admin_image = ''
             )
@@ -283,3 +284,87 @@ def vendor_logout_handle(request):
         pass
     messages.success(request, "You are Logged out!")
     return redirect(reverse('render_vendor_login_page'))
+
+
+def change_password_page(request):
+    return render(request, 'change-password.html')
+
+def admin_change_password(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        old_pass = request.POST.get('old_password')
+        new_pass = request.POST.get('new_password')
+        new_conf_pass = request.POST.get('conf_new_password')
+        
+        admin_data = Admins.objects.all()
+        
+        for i in range(len(admin_data)):
+            if admin_data[i].admin_email == email:
+                # return HttpResponse(email)
+                is_password_match = check_password(old_pass, admin_data[i].admin_password)
+                if not is_password_match:
+                    messages.error(request, "Old Password Doesn't Match!")
+                    return redirect(reverse('forgot_password_page'))  
+                else:
+                    if new_pass == new_conf_pass:
+                        admin_data[i].admin_password = make_password(new_pass)
+                        admin_data[i].save()
+                        messages.error(request, "Password Changed!")
+                        return redirect(reverse('render_admin_login_page'))
+                    else:
+                        messages.error(request, "New Password and Confirm Password Doesn't Match!")  
+                        return redirect(reverse('forgot_password_page'))  
+                
+        # return HttpResponse(old_pass)
+    return redirect(reverse('forgot_password_page'))
+
+def forgot_password_page(request):
+    return render(request, 'forgot-password.html')
+
+def verify_otp_page(request):
+    return render(request, 'verify-otp.html')
+
+
+def forgot_password(request):
+    email_obj = Email()
+    if request.method == "POST":
+        email = request.POST.get('email')
+        if email_obj.password_change_otp([email]):
+            messages.success(request, f"Sent OTP on {email}!")
+            
+            return render(request, 'verify-otp.html', context = {'email':email})
+    return redirect(reverse('forgot_password_page'))
+
+def verify_forgot_password_otp(request):
+    if request.method == "POST":
+        input_otp = request.POST.get('otp-input')
+        email = request.POST.get('email')
+        
+        user_data = Admins.objects.get(admin_email=email)
+        
+        if int(user_data.otp) == int(input_otp):
+            Admins.objects.filter(admin_email=email).update(otp='null')
+            return render(request, 'update-password.html', context={'email': email})
+        else:
+            messages.error(request, "OTP doesn't match!")
+            return redirect(reverse('verify_otp_page'))
+    else:
+        return redirect(reverse('verify_otp_page'))
+        
+def upd_password_page(request):
+    return render(request, 'update-password.html')
+
+def new_password(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        new_password = request.POST.get('new_password')
+        print(new_password)
+        user_data = Admins.objects.get(admin_email=email)
+        # return HttpResponse(user_data)
+        user_data.admin_password = make_password(new_password)
+        user_data.save()
+        messages.success(request, "Password Change Successfully!")
+        return redirect(reverse('render_admin_login_page'))
+    else:
+        messages.success(request, "Try again!")
+        return redirect(reverse('upd_password_page'))
