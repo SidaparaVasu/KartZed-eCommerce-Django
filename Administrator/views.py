@@ -9,6 +9,7 @@ from .models import Processors, VideoCards, VCVersions
 from Authapp.models import *
 from Vendor.models import *
 from .chart import *
+from django.db.models import F
 # from Authapp.views import render_admin_login_page
 
 # Create your views here.
@@ -16,8 +17,9 @@ def index_admin(request):
     if request.session.get('is_admin_authenticated', False):
         data,labels = games_per_vendor_pie_chart(request)
         #return HttpResponse(queryset1)
+        top_5_products = Games.objects.order_by(F('game_price').desc())[:5]
 
-        return render(request,'index-admin.html', context = {'labels': labels,'data': data})
+        return render(request,'index-admin.html', context = {'labels': labels,'data': data,'top':top_5_products})
     else:
         return redirect(reverse('render_admin_login_page'))
 
