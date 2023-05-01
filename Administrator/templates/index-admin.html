@@ -29,34 +29,11 @@
 
       <div class="container-fluid">
         
-        <div class="row">
-          
-        </div>
+        
         <div id="container" style="width: 75%;">
           <canvas id="pie-chart"></canvas>
         </div>
-<br>
-        <div>
-          <h1 style="">---------------- Top 5 Costliest Games --------------------</h1>
-          <table>
-            <thead>
-              <th># Rank</th>
-              <th>Game Id</th>
-              <th>Game Name</th>
-              <th>Game Price</th>
-            </thead>
-            <tbody>
-              {% for data in top %}
-                <tr>
-                  <td>1</td>
-                  <td>{{ data.gid }}</td>
-                  <td>{{ data.game_name }}</td>
-                  <td>{{ data.game_price }}</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>  
-        </div>
+        
         <!--  Row 1 -->
         <script>
 
@@ -81,9 +58,44 @@
             var ctx = document.getElementById('pie-chart').getContext('2d');
             window.myPie = new Chart(ctx, config);
           };
-      
+        
         </script>
-
+        <div class="row">
+          <div class="white-box">
+            
+          </div>
+        </div>
+        <div class="container-fluid">
+          <!-- Display users -->
+          <div class="card shadow p-3 mb-5 bg-white rounded">
+              <div class="card-body">
+                  <h5 class="card-title fw-semibold mb-4">Top 5 Costliest Games</h5>
+                  <div class="row">
+                      <div class="white-box">
+                        <table class="show-data-box">
+                          <thead>
+                            <th># Rank</th>
+                            <th>Game Id</th>
+                            <th>Game Name</th>
+                            <th>Game Price</th>
+                          </thead>
+                          <tbody>
+                            {% for data in top %}
+                              <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ data.gid }}</td>
+                                <td>{{ data.game_name }}</td>
+                                <td>{{ data.game_price }}</td>
+                              </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>  
+                              
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
         {% comment %} <div class="row">
           <div class="col-lg-8 d-flex align-items-strech">
             <div class="card w-100">
