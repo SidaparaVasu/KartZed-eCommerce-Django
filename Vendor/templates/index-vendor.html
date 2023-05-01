@@ -46,16 +46,15 @@
           </div>
         </div>
         <script>
-
           var config = {
             type: 'pie',
             data: {
               datasets: [{
                 data: {{ g_availstock|safe }},
                 backgroundColor: [
-                  '#03045e', '#0077b6', '#00b4d8', '#90e0ef', '#caf0f8'
+                  '#2058DC', '#4269E2', '#5A82EA', '#FDDB5B', '#FAB935'
                 ],
-                label: 'Population'
+                label: 'Available Stock'
               }],
               labels: {{ g_name_list|safe }}
             },

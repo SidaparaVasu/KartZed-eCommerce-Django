@@ -283,3 +283,47 @@ def vendor_logout_handle(request):
         pass
     messages.success(request, "You are Logged out!")
     return redirect(reverse('render_vendor_login_page'))
+
+
+def change_password_page(request):
+    return render(request, 'change-password.html')
+
+def admin_change_password(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        old_pass = request.POST.get('old_password')
+        new_pass = request.POST.get('new_password')
+        new_conf_pass = request.POST.get('conf_new_password')
+        
+        admin_data = Admins.objects.all()
+        
+        for i in range(len(admin_data)):
+            if admin_data[i].admin_email == email:
+                # return HttpResponse(email)
+                is_password_match = check_password(old_pass, admin_data[i].admin_password)
+                if not is_password_match:
+                    messages.error(request, "Old Password Doesn't Match!")
+                    return redirect(reverse('forgot_password_page'))  
+                else:
+                    if new_pass == new_conf_pass:
+                        admin_data[i].admin_password = make_password(new_pass)
+                        admin_data[i].save()
+                        messages.error(request, "Password Changed!")
+                        return redirect(reverse('render_admin_login_page'))
+                    else:
+                        messages.error(request, "New Password and Confirm Password Doesn't Match!")  
+                        return redirect(reverse('forgot_password_page'))  
+                
+        # return HttpResponse(old_pass)
+    return redirect(reverse('forgot_password_page'))
+
+def forgot_password_page(request):
+    return render(request, 'forgot-password.html')
+
+
+def forgot_password(request):
+    email_obj = Email()
+    if request.method == "GET":
+        email = request.POST.get('email')
+        email_obj.send_login_otp([email])
+    return redirect(reverse('forgot_password_page'))
