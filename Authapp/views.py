@@ -5,6 +5,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.urls import reverse
 from django.contrib import messages
 from .models import Admins, Customers, Vendors , UserBalancePoints
+from django.http import JsonResponse
 
 from Email.views import Email
 from Administrator.views import index_admin
@@ -335,28 +336,35 @@ def forgot_password(request):
     return redirect(reverse('forgot_password_page'))
 
 def verify_forgot_password_otp(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         input_otp = request.POST.get('otp-input')
         email = request.POST.get('email')
-        print(type(input_otp))
+        
         user_data = Admins.objects.get(admin_email=email)
         
-        # return HttpResponse(user_data.otp)
         if int(user_data.otp) == int(input_otp):
-            return True, email
+            Admins.objects.filter(admin_email=email).update(otp='null')
+            return render(request, 'update-password.html', context={'email': email})
         else:
-            return False, email
+            messages.error(request, "OTP doesn't match!")
+            return redirect(reverse('verify_otp_page'))
+    else:
+        return redirect(reverse('verify_otp_page'))
         
 def upd_password_page(request):
     return render(request, 'update-password.html')
 
 def new_password(request):
-    verified, email = verify_forgot_password_otp(request)
-    return HttpResponse()
-    # if verified:
-    #     Admins.objects.filter(admin_email=email).update(otp='null')
-    #     return render(request, 'update-password.html', context = {'email':str(email)})
-    #     # return render(request ,'update-password.html', {'email':email})
-    # else:
-    #     er_context = {'result' : True, 'email': email, 'errormsg': "OTP doesn't match!"}
-    #     return redirect(reverse('verify_otp_page'), er_context)
+    if request.method == "POST":
+        email = request.POST.get('email')
+        new_password = request.POST.get('new_password')
+        print(new_password)
+        user_data = Admins.objects.get(admin_email=email)
+        # return HttpResponse(user_data)
+        user_data.admin_password = make_password(new_password)
+        user_data.save()
+        messages.success(request, "Password Change Successfully!")
+        return redirect(reverse('render_admin_login_page'))
+    else:
+        messages.success(request, "Try again!")
+        return redirect(reverse('upd_password_page'))

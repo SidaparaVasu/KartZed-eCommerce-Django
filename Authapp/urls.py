@@ -14,5 +14,5 @@ urlpatterns = [
     path('admin_change_password',views.admin_change_password, name='admin_change_password'),
     path('forgot_password',views.forgot_password, name='forgot_password'),
     path('verify_forgot_password_otp',views.verify_forgot_password_otp, name='verify_forgot_password_otp'),
-    
+    path('new_password',views.new_password, name='new_password'),
 ]
