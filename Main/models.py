@@ -20,3 +20,15 @@ class Contact(models.Model):
     contact_name = models.CharField(max_length=100)
     contact_email = models.EmailField()
     contact_message = models.TextField()
+
+class Orders(models.Model):
+    order_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(Customers, on_delete=models.CASCADE)
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now_add=True)
+
+class OrderItems(models.Model):
+    order = models.ForeignKey(Orders, on_delete=models.CASCADE)
+    game = models.ForeignKey(Games, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    points = models.IntegerField()

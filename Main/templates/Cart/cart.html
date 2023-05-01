@@ -86,7 +86,8 @@
                 </div>
             </div>
 
-            <div class="checkout-box">
+            <form action = "view_order_summary" class="checkout-box" method = "post">
+                {% csrf_token %}
                 <div class="coupon-box">
                     <div class="header-box">COUPON CODE</div>
                     <p>If you have a coupon code, please enter it in the box below</p>
@@ -109,9 +110,9 @@
                     <div class="order-summary">
                         <!-- Total Cost and Quantity shown here -->
                     </div>
-                    <a href="javascript:void(0)"><button type="submit" class="checkout-btn">PROCCEED TO CHECKOUT</button></a>
+                    <button type="submit" class="checkout-btn">PROCCEED TO CHECKOUT</button>
                 </div>
-            </div>
+            </form>
 
         </div>
 
@@ -251,11 +252,11 @@
             orderSummary.innerHTML = "";
             orderSummary.insertAdjacentHTML(
                 "beforeend",
-                "<div>Total Quantity: " + totalQuantity + "</div>"
+                "<div name = 'total_quantity'>Total Quantity: " + totalQuantity + "</div>"
             );
             orderSummary.insertAdjacentHTML(
                 "beforeend",
-                "<div>Total Points: " + totalCost + "</div>"
+                "<div name = 'total_points'>Total Points: " + totalCost + "</div>"
             );
 
         }

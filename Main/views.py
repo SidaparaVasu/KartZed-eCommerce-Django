@@ -302,8 +302,9 @@ def view_search(request):
 
 
 # """ purchase"""
-# def game_purchase(request):
-
-#     return render(request,'Purchase/place_order.html')
+def view_order_summary(request):
+    chk = request.POST.get('total_quantity')
+    return HttpResponse(chk)
+    return render(request,'Order/place_order.html')
 
 # """ end"""
