@@ -4,10 +4,12 @@ from .models import Games
 from Authapp.models import *
 
 def pie_chart(request):
+    vendor_data = Vendors.objects.get(vendor_unique_keyid = request.session['vendor_unique_keyid'])
+    games = Games.objects.filter(vendor_reference_id = vendor_data.vendor_id)
     g_name_list = []
     g_availstock = []
 
-    queryset = Games.objects.order_by('-avail_stock')[:5]
+    queryset = games.order_by('-avail_stock')[:5]
     for game in queryset:
         g_name_list.append(game.game_name)
         g_availstock.append(game.avail_stock)

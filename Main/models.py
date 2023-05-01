@@ -22,7 +22,8 @@ class Contact(models.Model):
     contact_message = models.TextField()
 
 class Orders(models.Model):
-    order_id = models.AutoField(primary_key=True)
+    oid = models.AutoField(primary_key=True)
+    order_id = models.CharField(unique=True, max_length=12)
     user = models.ForeignKey(Customers, on_delete=models.CASCADE)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now_add=True)
