@@ -303,8 +303,9 @@ def view_search(request):
 
 # """ purchase"""
 def view_order_summary(request):
-    chk = request.POST.get('total_qty')
-    return HttpResponse(chk)
+    total_qty = request.POST.get('total_qty')
+    total_points = request.POST.get('total_points')
+    return HttpResponse(total_points)
     return render(request,'Order/place_order.html')
 
 # """ end"""
