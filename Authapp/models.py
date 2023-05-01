@@ -17,6 +17,7 @@ class Admins(models.Model):
     admin_role = models.CharField(max_length=40)
     admin_email = models.CharField(max_length=20)
     admin_password = models.CharField(max_length=12)
+    otp = models.CharField(max_length=6)
     admin_image = models.ImageField(upload_to=filepath, null=True, blank=True)
     
 class Customers(models.Model):

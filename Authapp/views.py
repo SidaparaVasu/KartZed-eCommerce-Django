@@ -38,7 +38,7 @@ def admin_login(request):
                 admin_unique_keyid = generate_unique_key(request),
                 admin_name = 'administrator',
                 admin_role = 'super_admin',
-                admin_email = 'admin@gmail.com',
+                admin_email = 'bhavinkalal3118@gmail.com',
                 admin_password = make_password('admin@123'),
                 admin_image = ''
             )
@@ -320,10 +320,43 @@ def admin_change_password(request):
 def forgot_password_page(request):
     return render(request, 'forgot-password.html')
 
+def verify_otp_page(request):
+    return render(request, 'verify-otp.html')
+
 
 def forgot_password(request):
     email_obj = Email()
-    if request.method == "GET":
+    if request.method == "POST":
         email = request.POST.get('email')
-        email_obj.send_login_otp([email])
+        if email_obj.password_change_otp([email]):
+            messages.success(request, f"Sent OTP on {email}!")
+            
+            return render(request, 'verify-otp.html', context = {'email':email})
     return redirect(reverse('forgot_password_page'))
+
+def verify_forgot_password_otp(request):
+    if request.method == 'POST':
+        input_otp = request.POST.get('otp-input')
+        email = request.POST.get('email')
+        print(type(input_otp))
+        user_data = Admins.objects.get(admin_email=email)
+        
+        # return HttpResponse(user_data.otp)
+        if int(user_data.otp) == int(input_otp):
+            return True, email
+        else:
+            return False, email
+        
+def upd_password_page(request):
+    return render(request, 'update-password.html')
+
+def new_password(request):
+    verified, email = verify_forgot_password_otp(request)
+    return HttpResponse()
+    # if verified:
+    #     Admins.objects.filter(admin_email=email).update(otp='null')
+    #     return render(request, 'update-password.html', context = {'email':str(email)})
+    #     # return render(request ,'update-password.html', {'email':email})
+    # else:
+    #     er_context = {'result' : True, 'email': email, 'errormsg': "OTP doesn't match!"}
+    #     return redirect(reverse('verify_otp_page'), er_context)

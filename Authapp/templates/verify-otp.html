@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Forgot Passwrod | KartZed</title>
+  <title>Verify OTP | KartZed</title>
   <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon_logo.png' %}" />
   <link rel="stylesheet" href="{% static 'css/dashboard-styles.css' %}" />
 </head>
@@ -33,13 +33,15 @@
                   <img src="{% static 'images/logos/logo_light.png' %}" width="180" alt="">
                 </a>
                 <p class="text-center">Forgot your Password, No worries. You can change here.</p>
-                <form action="forgot_password" method="post">
+                <form action="verify_forgot_password_otp" method="post">
                   {% csrf_token %}
                     <div class="mb-3">
-                        <label for="email" class="form-label">Enter Email to get OTP.</label>
-                        <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
+                        <input type="hidden" name="email" value="{{ email }}" />
+                        <label for="otp" class="form-label">Enter OTP. {{ email }}</label>
+                        <input type="text" name="otp-input" class="form-control" id="otp"
+                            pattern="[0-9]+" maxlength="6" required/>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Request OTP</button>
+                    <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Verify OTP</button>
                   </form>
               </div>
             </div>
