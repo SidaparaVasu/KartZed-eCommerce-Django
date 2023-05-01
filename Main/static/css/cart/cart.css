@@ -107,7 +107,7 @@ body{
     justify-content: center;
 }
 
-.cart-item > .qty-select-box > button{
+.cart-item > .qty-select-box > span{
     background-color: white;
     border: 1px solid #343A40;
     padding: 6px 10px;
