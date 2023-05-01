@@ -96,7 +96,13 @@
                                 </div>
                             </div>
                             <div class="rgt-box">
-                                <h2>{{ Game.game_name }}</h2>
+                                <div class="flex-2">
+                                    <h2>{{ Game.game_name }}</h2>
+                                    <a href="{% url 'delete_game' Game.product_key %}"
+                                        onclick="return confirm('Are you sure you want to delete this?')">
+                                        Delete Game
+                                    </a>
+                                </div>
                                 <p>{{ Game.game_description }}</p>
                                 <div class="flex-2">
                                     <p>RAM: <span>{{ Game.game_ram }}</span></p>
