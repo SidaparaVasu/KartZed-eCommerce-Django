@@ -1,11 +1,29 @@
-<h1>hello <h1>
-<form action="{% url 'charge' checkout.plan_id %}" method ="post">
-    {% csrf_token %}
-    <script src = "https://checkout.stripe.com/checkout.js" class = "stripe-button"
-        data-key = "{{ key }}"
-        data-description = '{{ checkout.points }}  points of ₹{{ checkout.amount }}'
-        data-amount = '₹ {{ checkout.amount }}'
-        data-locale="auto">
-    </script>
-</form>
+<body style="
+        max-height: 100%; max-width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    ">
 
+    <div style="
+        height: 400px;
+        width: 400px;
+        border: 2px solid #eee;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        font-family: Arial, Helvetica, sans-serif;
+    ">
+        <h1>Secure Payment<h1>
+        <form action="{% url 'charge' checkout.plan_id %}" method="post">
+            {% csrf_token %}
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ key }}"
+                data-description='{{ checkout.points }}  points of ₹{{ checkout.amount }}'
+                data-amount='₹ {{ checkout.amount }}' data-locale="auto">
+            </script>
+        </form>
+    </div>
+
+
+</body>
