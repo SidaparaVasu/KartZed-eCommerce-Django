@@ -43,7 +43,8 @@
                     <h2>QUANTITY</h2>
                     <h2>REMOVE</h2>
                 </div>
-                <div class="cart-item-body">
+                <form action='view_order_summary' method="post" class="cart-item-body">
+                    {% csrf_token %}
                     {% for item in Games %}
                     <div class="row">
                         <div class="cart-item">
@@ -62,13 +63,13 @@
                         </div>
                         <div class="cart-item">
                             <div class="qty-select-box">
-                                <button class="decr-btn" id="decrement-btn"
-                                    data-product-id="{{ forloop.counter }}">-</button>
+                                <span class="decr-btn" id="decrement-btn"
+                                    data-product-id="{{ forloop.counter }}">-</span>
                                 <input type="number" value="1" id="quantity-{{ forloop.counter }}" class="qty-input"
                                     pattern="[0-9]+" maxlength="3" data-product-id="{{ forloop.counter }}"
                                     onKeyDown="return false" />
-                                <button class="incr-btn" id="increment-btn"
-                                    data-product-id="{{ forloop.counter }}">+</button>
+                                <span class="incr-btn" id="increment-btn"
+                                    data-product-id="{{ forloop.counter }}">+</span>
                             </div>
                         </div>
                         <div class="cart-item">
@@ -83,34 +84,11 @@
                         </div>
                     </div>
                     {% endfor %}
-                </div>
-            </div>
-
-            <div class="checkout-box">
-                <div class="coupon-box">
-                    <div class="header-box">COUPON CODE</div>
-                    <p>If you have a coupon code, please enter it in the box below</p>
-                    <div class="input-box">
-                        <input type="text" name="" id="coupon_code" />
-                        <button>Apply Coupon</button>
-                    </div>
-                </div>
-                <div class="bill-box">
-                    <div class="header-box">ORDER SUMMARY</div>
-                    <p>Shipping and additional costs are calculated based on values you have entered.</p>
-                    <div class="flex-2" style="border-bottom: 2px solid #121212;">
-                        <p>Game name</p>
-                        <p>Quantity</p>
-                        <p>Points</p>
-                    </div>
-                    <div class="flex-2 game-summary">
-                        <!-- Each Game will shown here -->
-                    </div>
                     <div class="order-summary">
                         <!-- Total Cost and Quantity shown here -->
                     </div>
-                    <a href="javascript:void(0)"><button type="submit" class="checkout-btn">PROCCEED TO CHECKOUT</button></a>
-                </div>
+                    <button type="submit" class="checkout-btn">PROCCEED TO CHECKOUT</button>
+                </form>
             </div>
 
         </div>
@@ -202,9 +180,6 @@
             // Initialize the total cost, quantity, and game names
             var totalCost = 0;
             var totalQuantity = 0;
-            var gameNames = [];
-            var gameQty = [];
-            var gameCost = [];
 
             // Loop through each cart item and update the total cost, quantity, and game names
             cartItems.forEach(function (cartItem) {
@@ -225,37 +200,20 @@
                 totalCost += price;
                 eachQty = quantity;
                 totalQuantity += quantity;
-                gameNames.push(gameName);
-                gameQty.push(eachQty);
-                gameCost.push(eachCost);
             });
 
-            // Update the mini order summary in the .game-summary tag
-            var gameSummary = document.querySelector(".game-summary");
-            gameSummary.innerHTML = "";
-            gameSummary.insertAdjacentHTML(
-                "beforeend",
-                "<p class='f-cnt'>" + gameNames.join(",<br/>") + "</p>"
-            );
-            gameSummary.insertAdjacentHTML(
-                "beforeend",
-                "<p class='f-cnt'>" + gameQty.join("<br/>") + "</p>"
-            );
-            gameSummary.insertAdjacentHTML(
-                "beforeend",
-                "<p class='f-cnt'>" + gameCost.join("<br/>") + "</p>"
-            );
+            
 
             // Update the order summary
-            var orderSummary = document.querySelector(".bill-box .order-summary");
+            var orderSummary = document.querySelector(".cart-item-body .order-summary");
             orderSummary.innerHTML = "";
             orderSummary.insertAdjacentHTML(
                 "beforeend",
-                "<div>Total Quantity: " + totalQuantity + "</div>"
+                "<div>Total Quantity: "+totalQuantity+"<input type='hidden' name='total_qty' value='"+totalQuantity+"' class='input-decor' /> </div>"
             );
             orderSummary.insertAdjacentHTML(
                 "beforeend",
-                "<div>Total Points: " + totalCost + "</div>"
+                "<div>Total Points: "+totalCost+"<input type='hidden' name='total_points' value='"+totalCost+"' class='input-decor' /> </div>"
             );
 
         }

@@ -43,6 +43,6 @@ urlpatterns = [
     path('search',views.view_search,name="view_search"),
 
     # checkout games
-    #path('game_purchase',views.game_purchase,name="game_purchase"),
+    path('view_order_summary',views.view_order_summary,name="view_order_summary"),
     
 ]
