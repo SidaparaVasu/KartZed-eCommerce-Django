@@ -82,10 +82,14 @@
           <!-- Display users -->
           <div class="card shadow p-3 mb-5 bg-white rounded">
               <div class="card-body">
-                  <h5 class="card-title fw-semibold mb-4">Top 5 Costliest Games</h5>
+                  <form action ="download_report" method="post" class="d-flex justify-content-between mb-5">
+                    {% csrf_token %}
+                    <h5 class="card-title fw-semibold mb-4">Top 5 Costliest Games</h5>
+                    <button class="btn btn-primary">DOWNLOAD</button>
+                  </form>
                   <div class="row">
                       <div class="white-box">
-                        <table class="show-data-box">
+                        <table class="table">
                           <thead>
                             <th># Rank</th>
                             <th>Game Id</th>
