@@ -1,9 +1,13 @@
+from tkinter import Canvas
+from urllib import response
+from django.http import HttpResponse
+from Vendor.models import Games
 
 def download_report(request): 
     resonse = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="Users.pdf"'
     # Create a new PDF document and write to the response
-    pdf = canvas.Canvas(response)
+    pdf = Canvas.Canvas(response)
     pdf.setTitle("Top 5 Costliest Games Report")
     # Define the table headers
     headers = ['Rank','Product Key','Game Name','Game Price']
@@ -23,3 +27,24 @@ def download_report(request):
     pdf.save()
 
     return response
+
+# from django.core.files.storage import FileSystemStorage
+# from django.http import HttpResponse
+# from django.template.loader import render_to_string
+
+# from weasyprint import HTML
+
+# def html_to_pdf_view(request):
+#     paragraphs = ['first paragraph', 'second paragraph', 'third paragraph']
+#     html_string = render_to_string('core/pdf_template.html', {'paragraphs': paragraphs})
+
+#     html = HTML(string=html_string)
+#     html.write_pdf(target='/tmp/mypdf.pdf');
+
+#     fs = FileSystemStorage('/tmp')
+#     with fs.open('mypdf.pdf') as pdf:
+#         response = HttpResponse(pdf, content_type='application/pdf')
+#         response['Content-Disposition'] = 'attachment; filename="mypdf.pdf"'
+#         return response
+
+#     return response
