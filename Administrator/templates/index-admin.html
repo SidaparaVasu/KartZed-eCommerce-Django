@@ -15,27 +15,27 @@
   <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
-    
+
     <!-- Including Sidebar -->
     {% include 'sidebar-admin.html' %}
 
     <!--  Main wrapper -->
     <div class="body-wrapper">
-      
+
       <!-- Including Header -->
       {% include 'navbar-admin.html' %}
 
 
 
       <div class="container-fluid">
-        
+
         <div class="row">
           <div id="container" style="width: 75%;">
             <div class="col-lg-8 d-flex align-items-strech">
               <div class="card w-100">
                 <div class="card-body">
                   <div class="d-sm-flex d-block align-items-center justify-content-between mb-9"
-                      style="display: flex; justify-content: center; flex-direction: column;">
+                    style="display: flex; justify-content: center; flex-direction: column;">
                     <div class="mb-3 mb-sm-0">
                       <h5 class="card-title fw-semibold">Games Per Vendors</h5>
                     </div>
@@ -46,7 +46,7 @@
             </div>
           </div>
         </div>
-        
+
         <!--  Row 1 -->
         <script>
 
@@ -54,65 +54,66 @@
             type: 'pie',
             data: {
               datasets: [{
-                data: {{ data|safe }},
-                backgroundColor: [
-                  '#2058DC', '#4269E2', '#5A82EA', '#FDDB5B', '#FAB935'
-                ],
-                label: 'Vendors'
+                data: {{ data| safe }
+          },
+            backgroundColor: [
+              '#2058DC', '#4269E2', '#5A82EA', '#FDDB5B', '#FAB935'
+            ],
+            label: 'Vendors'
               }],
-              labels: {{ labels|safe }}
+          labels: { { labels | safe } }
             },
-            options: {
-              responsive: true
-            }
+          options: {
+            responsive: true
+          }
           };
-      
-          window.onload = function() {
+
+          window.onload = function () {
             var ctx = document.getElementById('pie-chart').getContext('2d');
             window.myPie = new Chart(ctx, config);
           };
-        
+
         </script>
         <div class="row">
           <div class="white-box">
-            
+
           </div>
         </div>
         <div class="container-fluid">
           <!-- Display users -->
           <div class="card shadow p-3 mb-5 bg-white rounded">
-              <div class="card-body">
-                  <form action ="download_report" method="post" class="d-flex justify-content-between mb-5">
-                    {% csrf_token %}
-                    <h5 class="card-title fw-semibold mb-4">Top 5 Costliest Games</h5>
-                    <button class="btn btn-primary">DOWNLOAD</button>
-                  </form>
-                  <div class="row">
-                      <div class="white-box">
-                        <table class="table">
-                          <thead>
-                            <th># Rank</th>
-                            <th>Game Id</th>
-                            <th>Game Name</th>
-                            <th>Game Price</th>
-                          </thead>
-                          <tbody>
-                            {% for data in top %}
-                              <tr>
-                                <td>{{ forloop.counter }}</td>
-                                <td>{{ data.gid }}</td>
-                                <td>{{ data.game_name }}</td>
-                                <td>{{ data.game_price }}</td>
-                              </tr>
-                            {% endfor %}
-                          </tbody>
-                        </table>  
-                              
-                      </div>
-                  </div>
+            <div class="card-body">
+              <form action="download_report" method="post" class="d-flex justify-content-between mb-5">
+                {% csrf_token %}
+                <h5 class="card-title fw-semibold mb-4">Top 5 Costliest Games</h5>
+                <button class="btn btn-primary">DOWNLOAD</button>
+              </form>
+              <div class="row">
+                <div class="white-box">
+                  <table class="table">
+                    <thead>
+                      <th># Rank</th>
+                      <th>Game Id</th>
+                      <th>Game Name</th>
+                      <th>Game Price</th>
+                    </thead>
+                    <tbody>
+                      {% for data in top %}
+                      <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ data.gid }}</td>
+                        <td>{{ data.game_name }}</td>
+                        <td>{{ data.game_price }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+
+                </div>
               </div>
+            </div>
           </div>
-      </div>
+        </div>
         {% comment %} <div class="row">
           <div class="col-lg-8 d-flex align-items-strech">
             <div class="card w-100">
@@ -255,7 +256,7 @@
                       <span class="timeline-badge border-2 border border-danger flex-shrink-0 my-8"></span>
                       <span class="timeline-badge-border d-block flex-shrink-0"></span>
                     </div>
-                    <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New arrival recorded 
+                    <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New arrival recorded
                     </div>
                   </li>
                   <li class="timeline-item d-flex position-relative overflow-hidden">
@@ -296,10 +297,12 @@
                     </thead>
                     <tbody>
                       <tr>
-                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">1</h6></td>
                         <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-1">Sunil Joshi</h6>
-                            <span class="fw-normal">Web Designer</span>                          
+                          <h6 class="fw-semibold mb-0">1</h6>
+                        </td>
+                        <td class="border-bottom-0">
+                          <h6 class="fw-semibold mb-1">Sunil Joshi</h6>
+                          <span class="fw-normal">Web Designer</span>
                         </td>
                         <td class="border-bottom-0">
                           <p class="mb-0 fw-normal">Elite Admin</p>
@@ -312,12 +315,14 @@
                         <td class="border-bottom-0">
                           <h6 class="fw-semibold mb-0 fs-4">$3.9</h6>
                         </td>
-                      </tr> 
+                      </tr>
                       <tr>
-                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">2</h6></td>
                         <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-1">Andrew McDownland</h6>
-                            <span class="fw-normal">Project Manager</span>                          
+                          <h6 class="fw-semibold mb-0">2</h6>
+                        </td>
+                        <td class="border-bottom-0">
+                          <h6 class="fw-semibold mb-1">Andrew McDownland</h6>
+                          <span class="fw-normal">Project Manager</span>
                         </td>
                         <td class="border-bottom-0">
                           <p class="mb-0 fw-normal">Real Homes WP Theme</p>
@@ -330,12 +335,14 @@
                         <td class="border-bottom-0">
                           <h6 class="fw-semibold mb-0 fs-4">$24.5k</h6>
                         </td>
-                      </tr> 
+                      </tr>
                       <tr>
-                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">3</h6></td>
                         <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-1">Christopher Jamil</h6>
-                            <span class="fw-normal">Project Manager</span>                          
+                          <h6 class="fw-semibold mb-0">3</h6>
+                        </td>
+                        <td class="border-bottom-0">
+                          <h6 class="fw-semibold mb-1">Christopher Jamil</h6>
+                          <span class="fw-normal">Project Manager</span>
                         </td>
                         <td class="border-bottom-0">
                           <p class="mb-0 fw-normal">MedicalPro WP Theme</p>
@@ -348,12 +355,14 @@
                         <td class="border-bottom-0">
                           <h6 class="fw-semibold mb-0 fs-4">$12.8k</h6>
                         </td>
-                      </tr>      
+                      </tr>
                       <tr>
-                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">4</h6></td>
                         <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-1">Nirav Joshi</h6>
-                            <span class="fw-normal">Frontend Engineer</span>                          
+                          <h6 class="fw-semibold mb-0">4</h6>
+                        </td>
+                        <td class="border-bottom-0">
+                          <h6 class="fw-semibold mb-1">Nirav Joshi</h6>
+                          <span class="fw-normal">Frontend Engineer</span>
                         </td>
                         <td class="border-bottom-0">
                           <p class="mb-0 fw-normal">Hosting Press HTML</p>
@@ -366,7 +375,7 @@
                         <td class="border-bottom-0">
                           <h6 class="fw-semibold mb-0 fs-4">$2.4k</h6>
                         </td>
-                      </tr>                       
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -378,12 +387,18 @@
           <div class="col-sm-6 col-xl-3">
             <div class="card overflow-hidden rounded-2">
               <div class="position-relative">
-                <a href="javascript:void(0)"><img src="{% static 'images/products/s4.jpg' %}" class="card-img-top rounded-0" alt="..."></a>
-                <a href="javascript:void(0)" class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i class="ti ti-basket fs-4"></i></a>                      </div>
+                <a href="javascript:void(0)"><img src="{% static 'images/products/s4.jpg' %}"
+                    class="card-img-top rounded-0" alt="..."></a>
+                <a href="javascript:void(0)"
+                  class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
+                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i
+                    class="ti ti-basket fs-4"></i></a>
+              </div>
               <div class="card-body pt-3 p-4">
                 <h6 class="fw-semibold fs-4">Boat Headphone</h6>
                 <div class="d-flex align-items-center justify-content-between">
-                  <h6 class="fw-semibold fs-4 mb-0">$50 <span class="ms-2 fw-normal text-muted fs-3"><del>$65</del></span></h6>
+                  <h6 class="fw-semibold fs-4 mb-0">$50 <span
+                      class="ms-2 fw-normal text-muted fs-3"><del>$65</del></span></h6>
                   <ul class="list-unstyled d-flex align-items-center mb-0">
                     <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
                     <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
@@ -398,12 +413,18 @@
           <div class="col-sm-6 col-xl-3">
             <div class="card overflow-hidden rounded-2">
               <div class="position-relative">
-                <a href="javascript:void(0)"><img src="{% static 'images/products/s5.jpg' %}" class="card-img-top rounded-0" alt="..."></a>
-                <a href="javascript:void(0)" class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i class="ti ti-basket fs-4"></i></a>                      </div>
+                <a href="javascript:void(0)"><img src="{% static 'images/products/s5.jpg' %}"
+                    class="card-img-top rounded-0" alt="..."></a>
+                <a href="javascript:void(0)"
+                  class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
+                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i
+                    class="ti ti-basket fs-4"></i></a>
+              </div>
               <div class="card-body pt-3 p-4">
                 <h6 class="fw-semibold fs-4">MacBook Air Pro</h6>
                 <div class="d-flex align-items-center justify-content-between">
-                  <h6 class="fw-semibold fs-4 mb-0">$650 <span class="ms-2 fw-normal text-muted fs-3"><del>$900</del></span></h6>
+                  <h6 class="fw-semibold fs-4 mb-0">$650 <span
+                      class="ms-2 fw-normal text-muted fs-3"><del>$900</del></span></h6>
                   <ul class="list-unstyled d-flex align-items-center mb-0">
                     <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
                     <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
@@ -418,12 +439,18 @@
           <div class="col-sm-6 col-xl-3">
             <div class="card overflow-hidden rounded-2">
               <div class="position-relative">
-                <a href="javascript:void(0)"><img src="{% static 'images/products/s7.jpg' %}" class="card-img-top rounded-0" alt="..."></a>
-                <a href="javascript:void(0)" class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i class="ti ti-basket fs-4"></i></a>                      </div>
+                <a href="javascript:void(0)"><img src="{% static 'images/products/s7.jpg' %}"
+                    class="card-img-top rounded-0" alt="..."></a>
+                <a href="javascript:void(0)"
+                  class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
+                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i
+                    class="ti ti-basket fs-4"></i></a>
+              </div>
               <div class="card-body pt-3 p-4">
                 <h6 class="fw-semibold fs-4">Red Valvet Dress</h6>
                 <div class="d-flex align-items-center justify-content-between">
-                  <h6 class="fw-semibold fs-4 mb-0">$150 <span class="ms-2 fw-normal text-muted fs-3"><del>$200</del></span></h6>
+                  <h6 class="fw-semibold fs-4 mb-0">$150 <span
+                      class="ms-2 fw-normal text-muted fs-3"><del>$200</del></span></h6>
                   <ul class="list-unstyled d-flex align-items-center mb-0">
                     <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
                     <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
@@ -438,12 +465,18 @@
           <div class="col-sm-6 col-xl-3">
             <div class="card overflow-hidden rounded-2">
               <div class="position-relative">
-                <a href="javascript:void(0)"><img src="{% static 'images/products/s11.jpg' %}" class="card-img-top rounded-0" alt="..."></a>
-                <a href="javascript:void(0)" class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i class="ti ti-basket fs-4"></i></a>                      </div>
+                <a href="javascript:void(0)"><img src="{% static 'images/products/s11.jpg' %}"
+                    class="card-img-top rounded-0" alt="..."></a>
+                <a href="javascript:void(0)"
+                  class="bg-primary rounded-circle p-2 text-white d-inline-flex position-absolute bottom-0 end-0 mb-n3 me-3"
+                  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add To Cart"><i
+                    class="ti ti-basket fs-4"></i></a>
+              </div>
               <div class="card-body pt-3 p-4">
                 <h6 class="fw-semibold fs-4">Cute Soft Teddybear</h6>
                 <div class="d-flex align-items-center justify-content-between">
-                  <h6 class="fw-semibold fs-4 mb-0">$285 <span class="ms-2 fw-normal text-muted fs-3"><del>$345</del></span></h6>
+                  <h6 class="fw-semibold fs-4 mb-0">$285 <span
+                      class="ms-2 fw-normal text-muted fs-3"><del>$345</del></span></h6>
                   <ul class="list-unstyled d-flex align-items-center mb-0">
                     <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
                     <li><a class="me-1" href="javascript:void(0)"><i class="ti ti-star text-warning"></i></a></li>
@@ -457,12 +490,13 @@
           </div>
         </div>
         <div class="py-6 px-6 text-center">
-          <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank" class="pe-1 text-primary text-decoration-underline">AdminMart.com</a></p>
+          <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank"
+              class="pe-1 text-primary text-decoration-underline">AdminMart.com</a></p>
         </div>
-        </div>
-       {% endcomment %}
       </div>
-    </div>  
+      {% endcomment %}
+    </div>
+  </div>
   <script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script>
   <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'js/sidebarmenu.js' %}"></script>
