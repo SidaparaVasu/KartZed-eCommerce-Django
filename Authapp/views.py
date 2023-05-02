@@ -39,7 +39,7 @@ def admin_login(request):
                 admin_unique_keyid = generate_unique_key(request),
                 admin_name = 'administrator',
                 admin_role = 'super_admin',
-                admin_email = 'bhavinkalal3118@gmail.com',
+                admin_email = 'admin@gmail.com',
                 admin_password = make_password('admin@123'),
                 admin_image = ''
             )
