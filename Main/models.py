@@ -25,6 +25,9 @@ class Orders(models.Model):
     oid = models.AutoField(primary_key=True)
     order_id = models.CharField(unique=True, max_length=12)
     user = models.ForeignKey(Customers, on_delete=models.CASCADE)
+    order_placed_status = models.CharField(max_length=12, null=True)
+    shipped_status = models.CharField(max_length=7, null=True)
+    delivered_status = models.CharField(max_length=9, null=True)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now_add=True)
 
