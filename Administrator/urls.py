@@ -2,6 +2,7 @@ from django.urls import path, include
 from Administrator import views
 from Authapp import urls
 from Authapp.views import render_admin_login_page, admin_login, admin_logout_handle
+from . import pdf_reports
 
 #
 urlpatterns = [
@@ -67,5 +68,6 @@ urlpatterns = [
    path('plan',views.view_plan,name="view_plan"),
    path('insert-plan',views.insert_plan,name="insert_plan"),
 
-
+   # Report ::
+   path('download_report',pdf_reports.download_report,name="download_report"),
 ]
