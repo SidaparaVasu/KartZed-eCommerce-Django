@@ -19,8 +19,9 @@
             <a href="{% url 'render_vendor_register_page' %}">Become a Seller</a>
             {% if request.session.is_authenticated %}
                 <a href="{% url 'render_account_page' %}">Account</a>
+                <a href="{% url 'contact_view' %}">Contact</a>
+                <a href="{% url 'view_orders' %}">Orders</a>
             {% endif %}
-            <a href="{% url 'contact_view' %}">Contact</a>
         </div>
     </div>
     <div class="right-nav">

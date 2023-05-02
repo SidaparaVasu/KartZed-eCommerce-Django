@@ -304,9 +304,11 @@ def view_search(request):
 def view_orders(request):
     if request.session.get('is_authenticated', False):
         user_obj = Customers.objects.get(cust_unique_keyid = request.session['cust_unique_keyid'])
-        order_obj = Orders.objects.get(user_id = user_obj.cust_id)
-        order_items_obj = OrderItems.objects.filter(order_id = order_obj.oid)
-        return render(request, 'view-orders.html')
+        order_obj = Orders.objects.filter(user_id = user_obj.cust_id)
+
+        context = {'orders': order_obj}
+        
+        return render(request, 'view-orders.html', context)
     else:
         return redirect(reverse('render_customer_login_page'))
 
@@ -347,7 +349,10 @@ def view_order_summary(request):
         
         save_order = Orders.objects.create(
             order_id = order_id,
-            user = user_data
+            user = user_data,
+            order_placed_status = "order_placed",
+            shipped_status = "",
+            delivered_status = ""   
         )
         save_order.save()
         

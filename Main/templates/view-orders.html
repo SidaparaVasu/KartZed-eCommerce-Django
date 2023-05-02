@@ -19,6 +19,18 @@
     <!-- Ion Icons CDN -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<style>
+    body{
+        font-size: 18px;
+        font-family: var(--ff-montserrat);
+    }
+    .success-txt{
+        color: var(--green);
+    }
+    .pending-txt{
+        color: var(--red);
+    }
+</style>
 </head>
 <body>
     {% if messages %}
@@ -31,7 +43,40 @@
     <!-- Include Navigation Bar -->
     {% include 'navbar/navbar.html' %}
 
-    <section class="main-container">
+    <section class="main-container" style="background-color: aliceblue;">
+        
+        <table>
+            <thead>
+                <th>Order ID</th>
+                <th>Order</th>
+                <th>Shipped</th>
+                <th>Delivered</th>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.order_id }}</td>
+                    {% if order.order_placed_status == 'order_placed' %}
+                        <td class="success-txt">Order Placed</td>
+                    {% else %}
+                        <td class="pending-txt">Pending</td>
+                    {% endif %}
+
+                    {% if order.shipped_status == 'shipped' %}
+                        <td class="success-txt">Shipped</td>
+                    {% else %}
+                        <td class="pending-txt">Pending</td>
+                    {% endif %}
+                    
+                    {% if order.delivered_status == 'delivered' %}
+                        <td class="success-txt">Delivered</td>
+                    {% else %}
+                        <td class="pending-txt">Pending</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </section>
 
 </body>
