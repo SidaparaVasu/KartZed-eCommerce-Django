@@ -301,11 +301,93 @@ def view_search(request):
 """ Search End """
 
 
+def view_orders(request):
+    if request.session.get('is_authenticated', False):
+        user_obj = Customers.objects.get(cust_unique_keyid = request.session['cust_unique_keyid'])
+        order_obj = Orders.objects.get(user_id = user_obj.cust_id)
+        order_items_obj = OrderItems.objects.filter(order_id = order_obj.oid)
+        return render(request, 'view-orders.html')
+    else:
+        return redirect(reverse('render_customer_login_page'))
+
+def generate_order_id():
+    """
+    Generates a random order id of the specified length.
+    """
+    length=12
+    key = ''.join([str(random.randint(0, 9)) for _ in range(length)])
+    return int(key)
+
 # """ purchase"""
 def view_order_summary(request):
-    total_qty = request.POST.get('total_qty')
-    total_points = request.POST.get('total_points')
-    return HttpResponse(total_points)
+    user_data = Customers.objects.get(cust_unique_keyid = request.session['cust_unique_keyid'])
+    balance_obj = UserBalancePoints.objects.get(customer_id = user_data)
+    user_balance_points = balance_obj.points
+
+    total_qty = int(request.POST.get('total_qty'))
+    total_points = int(request.POST.get('total_points'))
+    
+    if user_balance_points < total_points:
+        messages.error(request, "Insufficient Balance! Buy More Points to Purchase")
+        return redirect(reverse(buy_points))
+    else:
+        total_game_in_cart = request.POST.get('total_game_in_cart')
+        
+        games = {}
+        
+        for counter in range(1, int(total_game_in_cart)+1):
+            games[counter] = {
+                "product_key":request.POST.get(f'prod_{counter}'),
+                "points":request.POST.get(f'points_{counter}'),
+                "qty":request.POST.get(f'quantity_{counter}')
+            }
+        
+        # Store Ordered Data in 'Orders' Collection
+        order_id = generate_order_id()
+        
+        save_order = Orders.objects.create(
+            order_id = order_id,
+            user = user_data
+        )
+        save_order.save()
+        
+        # Getting Data from 'Orders' Collection
+        order_obj = Orders.objects.get(order_id = order_id)
+        
+        flag = False
+        
+        for counter in range(1, int(total_game_in_cart)+1):
+            game_ins = Games.objects.get(product_key = games[counter]['product_key'])
+            try:
+                save_order_items = OrderItems.objects.create(
+                    order = order_obj,
+                    game = game_ins,
+                    quantity = games[counter]['qty'],
+                    points = games[counter]['points']
+                )
+                save_order_items.save()
+                flag = True
+            except Exception as e:
+                flag = False
+        
+        if flag:
+            messages.success(request, "Order Placed Successfully!")
+            balance_obj.points -= total_points
+            balance_obj.save()
+            
+            # removing cart items after purchasing
+            cart_obj = Cart.objects.filter(cust_id_id = user_data.cust_id)
+            # return HttpResponse(cart_obj[0].cart_id)
+            cnt = 0
+            for c in cart_obj:
+                cart_items_obj = CartItems.objects.filter(cart_id = c.cart_id)
+                cart_items_obj.delete()
+            cart_obj.delete()
+        
+            return redirect(reverse(view_orders))
+        else:
+            messages.error(request, "Failed to Place Order, Please try again later!")
+            return redirect(reverse(view_cart))
     return render(request,'Order/place_order.html')
 
 # """ end"""

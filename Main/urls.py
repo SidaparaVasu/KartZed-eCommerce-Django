@@ -45,4 +45,6 @@ urlpatterns = [
     # checkout games
     path('view_order_summary',views.view_order_summary,name="view_order_summary"),
     
+    # Track Order Page / View Order Page
+    path('view_orders',views.view_orders,name="view_orders"),
 ]

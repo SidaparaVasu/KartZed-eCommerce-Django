@@ -53,19 +53,26 @@
                                     <img src="{{ item.game_logo.url }}" alt="" srcset="">
                                 </div>
                                 <div class="item-details">
-                                    <h2 class="game-name">{{ item.game_name }}</h2>
+                                    <h2 class="game-name">
+                                        {{ item.game_name }}
+                                        <input type="hidden" name="prod_{{ forloop.counter }}" 
+                                            value="{{ item.product_key }}" />
+                                    </h2>
                                     <p class="description">{{ item.game_description }}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="price-div cart-item">
                             <p class="price" id="game-price-{{ forloop.counter }}">{{ item.game_points }}</p>
+                            <input type="hidden" name="points_{{ forloop.counter }}" id="inp-price-{{ forloop.counter }}"
+                            class="price" value="{{ item.game_points }}" />
                         </div>
                         <div class="cart-item">
                             <div class="qty-select-box">
                                 <span class="decr-btn" id="decrement-btn"
                                     data-product-id="{{ forloop.counter }}">-</span>
                                 <input type="number" value="1" id="quantity-{{ forloop.counter }}" class="qty-input"
+                                    name="quantity_{{ forloop.counter }}"
                                     pattern="[0-9]+" maxlength="3" data-product-id="{{ forloop.counter }}"
                                     onKeyDown="return false" />
                                 <span class="incr-btn" id="increment-btn"
@@ -83,6 +90,7 @@
                             </a>
                         </div>
                     </div>
+                    <input type="hidden" name="total_game_in_cart" value="{{ forloop.counter }}" />
                     {% endfor %}
                     <div class="order-summary">
                         <!-- Total Cost and Quantity shown here -->
@@ -120,6 +128,7 @@
 
                 // Get the price element for the product with this ID
                 var priceElement = document.querySelector("#game-price-" + productId);
+                var priceInputElement = document.querySelector("#inp-price-" + productId);
 
                 // Get the current price of the product and update it based on the new quantity
                 var currentPrice = parseInt(priceElement.innerText); // .replace("₹", "")
@@ -127,7 +136,7 @@
 
                 // Update the price element with the new price, rounded to 2 decimal places
                 priceElement.innerText = newPrice;
-
+                priceInputElement.value = newPrice;
                 // Update the order summary
                 updateOrderSummary();
             });
@@ -157,6 +166,7 @@
 
                 // Get the price element for the product with this ID
                 var priceElement = document.querySelector("#game-price-" + productId);
+                var priceInputElement = document.querySelector("#inp-price-" + productId);
 
                 // Get the current price of the product and update it based on the new quantity
                 var currentPrice = parseInt(priceElement.innerText); //.replace("₹", "")
@@ -164,9 +174,7 @@
 
                 // Update the price element with the new price, rounded to 2 decimal places
                 priceElement.innerText = newPrice;
-
-                // Update the input element with the new value
-                quantityInput.value = newValue;
+                priceInputElement.value = newPrice;
 
                 // Update the order summary
                 updateOrderSummary();
