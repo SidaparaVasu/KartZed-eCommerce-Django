@@ -30,44 +30,6 @@
     <!-- Include Navigation Bar -->
     {% include 'navbar/navbar.html' %}
 
-    <!-- <section class="profile-container">
-        <div class="personal-info-box">
-            <div class="profile-form">
-                <h1>Have a question? We're here to help!</h1>
-                <div class="personal-info" style="width: 100%;">
-                    <form action="insert_contact" method="POST" class="first-form">
-                        {% csrf_token %}
-                        <label for="input-group" class="form-label">Name</label>
-                        <div class="input-group" id="input-group">
-                            <input type="text" name="contact_name" placeholder="Please enter your name" class="form-control" />
-                            
-                        </div>
-                        <div class="col-2-group">
-                            <div class="col">
-                                <label for="input-group" class="form-label">Email Address</label>
-                                <div class="input-group" id="input-group">
-                                    <input type="email" name="contact_email" placeholder="Please enter your email" class="form-control"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2-group">
-                            <div class="col">
-                                <label for="input-group" class="form-label">Message</label>
-                                <div class="input-group" id="input-group">
-                                    <textarea id="message" name="contact_message" style="width: 300px; height: 100px;" placeholder="Please enter your message" class="form-control"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2-group">
-
-                           
-                            <button type="submit" class="btn btn-primary" id="save-btn">Send</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section> -->
 
     <section class="contact-box">
         <form action="insert_contact" method="get" class="contact-form">
