@@ -23,7 +23,8 @@ form.addEventListener('submit', function(event) {
 function validateForm() {
   let isValid = true;
   const mobileNumberRegex = /^[6-9][0-9]{9}$/; // Regex for Indian mobile numbers
-  const gstinRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[A-Z]{1}[0-9A-Z]{1}$/; // Regex for GSTIN
+  // 24 AABCU 9603 R 1 ZT
+  const gstinRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z]{2}$/; // Regex for GSTIN
 
   // Validate display name
   if (displayNameInput.value.trim() === '') {
