@@ -239,7 +239,7 @@ def insert_contact(request):
                 contact_name    = contact_name,   
                 contact_email   = contact_email,  
                 contact_message = contact_message,
-            )
+            ) 
             messages.error(request,"Thanks for your contacting us!")
             return redirect(reverse(indexPage))
         except Exception as e:

@@ -18,8 +18,8 @@ class CartItems(models.Model):
 class Contact(models.Model):
     contact_id = models.AutoField(primary_key=True)
     contact_name = models.CharField(max_length=100)
-    contact_email = models.EmailField()
-    contact_message = models.TextField()
+    contact_email = models.CharField(unique=True, max_length=50)
+    contact_message = models.CharField(max_length=50)
 
 class Orders(models.Model):
     oid = models.AutoField(primary_key=True)

@@ -81,18 +81,18 @@
                                     </tbody>
                                 </table>
                                 <div class="pagination">
-                                    {%if users.has_previous %} {# whether the previous page exists #}
-                                        <a href="?page={{users.previous_page_number}}" class="pagination-btn">prev</a> {# link to the prev page #}
+                                    {%if customers.has_previous %} {# whether the previous page exists #}
+                                        <a href="?page={{customers.previous_page_number}}" class="pagination-btn">prev</a> {# link to the prev page #}
                                     {% endif %}
                     
-                                    {% if users.number == 1 %}
+                                    {% if customers.number == 1 %}
                                         <p></p>
                                     {% else %}
-                                        <span>page: {{users.number}}</span> {# the current page number #}
+                                        <span>page: {{customers.number}}</span> {# the current page number #}
                                     {% endif %}
                                     
-                                    {%if users.has_next %} {# whether the next page exists #}
-                                        <a href="?page={{users.next_page_number}}" class="pagination-btn">next</a> {# link to the next page #}
+                                    {%if customers.has_next %} {# whether the next page exists #}
+                                        <a href="?page={{customers.next_page_number}}" class="pagination-btn">next</a> {# link to the next page #}
                                     {% endif %}
                                 </div>
                             </div>

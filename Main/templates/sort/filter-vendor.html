@@ -6,16 +6,15 @@
         <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
             <ul id="sidebarnav">
                 <!-- Home -->
-                <h1 style="color:white">Start</h1>
                 <div class="filteredProducts">
                     <p class="ajaxLoader">Loading...</p> 
                     {% for mode in modes %}
                     <li class="sidebar-item">
-                        <li><a href="/?category={{ mode.game_mode_id }}">{{ mode.game_mode_name }}</a><li> 
+                        <li><a href="/?category={{ mode.game_mode_id }}"
+                            style="color: aliceblue;">{{ mode.game_mode_name }}</a><li> 
                     </li>
                     {% endfor %}
                 </div>
-                <h1 style="color:white">End</h1>
             </ul>
         </nav>
         <!-- End Sidebar navigation -->
