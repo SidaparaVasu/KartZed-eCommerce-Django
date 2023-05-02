@@ -413,20 +413,20 @@ def delete_contact(request,id):
     #return HttpResponse(obj)
     if request.method == "GET":
         if obj.delete():
-            messages.success(request,"Offer deleted successfully!")
+            messages.success(request,"Contact deleted successfully!")
             return redirect(reverse(view_contact))
         else:
-            messages.error(request,"Offer couldn't delete!")
+            messages.error(request,"Contact couldn't delete!")
             return redirect(reverse(view_contact))
 
 def delete_vcontact(request,id):
     obj = get_object_or_404(Vendor_Contact,contact_id=id)    
     if request.method == "GET":
         if obj.delete():
-            messages.success(request,"Offer deleted successfully!")
+            messages.success(request,"Vendor Contact deleted successfully!")
             return redirect(reverse(view_contact))
         else:
-            messages.error(request,"Offer couldn't delete!")
+            messages.error(request,"Vendor Contact couldn't delete!")
             return redirect(reverse(view_contact))
     #return HttpResponse(obj)
 

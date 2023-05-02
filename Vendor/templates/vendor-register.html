@@ -78,7 +78,7 @@
                 <div class="col-sm">
                     <div class="form-floating mb-3">
                         <input type="tel" name="company_phone_number" class="form-control" id="companymobileno"
-                            pattern="[0-9]+" maxlength="10" required/>
+                            pattern="[0-9]{10}" required/>
                         <label for="companymobileno">Company contact number</label>
                     </div>
                 </div>
@@ -98,7 +98,7 @@
                 <div class="col-sm">
                     <div class="form-floating mb-3">
                         <input type="text" name="GSTIN" class="form-control w-15" id="gstinno" 
-                            maxlength="15" required/>
+                            maxlength="15" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[A-Z]{1}[0-9A-Z]{1}" required/>
                         <label for="gstinno">GSTIN no.</label>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                 <div class="col-sm">
                     <div class="form-floating mb-3">
                         <input type="tel" name="pickup_pincode" class="form-control w-15" id="pickuppincode" 
-                            pattern="[0-9]+" maxlength="6" required/>
+                            pattern="[0-9]{6}" required/>
                         <label for="pickuppincode">Pickup pincode</label>
                     </div>
                 </div>
@@ -145,5 +145,6 @@
 
     <script src="{% static 'js/valid-password-check.js' %}"></script>
     <script src="{% static 'js/captcha.js' %}"></script>
+    <script src="{% static 'js/register-vendor-form.js' %}"></script>
 </body>
 </html>

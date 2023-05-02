@@ -305,7 +305,7 @@ def contact_game_view(request):
     else:
         return render(request, 'vendor-login.html') 
 
-def insert_game_vcontact(request):
+def insert_vendor_contact(request):
     #return HttpResponse("yo")
     if request.method == 'POST':
         contact_name    = request.POST.get('contact_name')
@@ -317,8 +317,10 @@ def insert_game_vcontact(request):
                 contact_email   = contact_email,  
                 contact_message = contact_message,
             )
+            messages.success(request,"Thank you for reaching out to us! We will be in touch with you shortly.")
         except Exception as e:
-            return HttpResponse(e)
+            messages.success(request,"Something Went Wrong!")
+            return render(request, 'contact.html')
                 
     return render(request, 'contact.html')
 

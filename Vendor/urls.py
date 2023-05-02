@@ -34,7 +34,7 @@ urlpatterns = [
 
    # Contact
    path('contact_game_view/', views.contact_game_view, name="contact_game_view"),
-   path('contact_game_view/insert_contact', views.insert_game_vcontact, name="insert_contact"),
+   path('contact_game_view/insert_vendor_contact', views.insert_vendor_contact, name="insert_vendor_contact"),
    
    #histogram
    # path('dashboard/histogram-price', views.price_histogram, name='price_histogram'),

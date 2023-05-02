@@ -44,21 +44,21 @@
                 <div class="card shadow p-3 mb-5 bg-white rounded">
                     <div class="card-body">
                         <h5 class="card-title fw-semibold mb-4">Contact Us</h5>
-                        <form action="insert_game_contact" method="post" enctype="multipart/form-data" class="content-area-form">
+                        <form action="insert_vendor_contact" method="post" enctype="multipart/form-data" class="content-area-form">
                             {% csrf_token %}
                             <div class="mb-3 ">
                                 <label for="inputContactName" class="form-label">Enter Name</label>
-                                <input type="text" name="contact_name" class="form-control" placeholder="Enter your Name" />
+                                <input type="text" name="contact_name" class="form-control" placeholder="Enter your Name" required/>
                             </div>
 
                             <div class="mb-3">
                                 <label for="inputGamePublisher" class="form-label">Enter Email</label>
-                                <input type="email" name="contact_email" class="form-control" placeholder="Enter email address" />
+                                <input type="email" name="contact_email" class="form-control" placeholder="Enter email address" required/>
                             </div>
                             
                             <div class="mb-3">
                                 <label for="inputGamePublisher" class="form-label">Enter your text</label>
-                                <textarea id="message" name="contact_message" style="width: 300px; height: 100px;" placeholder="Please enter your message" class="form-control"></textarea>
+                                <textarea id="message" name="contact_message" style="width: 300px; height: 100px;" placeholder="Please enter your message" class="form-control" required></textarea>
                             </div>
                            
                             <button type="submit" class="btn btn-primary">Send</button>

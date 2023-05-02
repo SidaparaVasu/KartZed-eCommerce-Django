@@ -91,6 +91,8 @@
                         </div>
                     </div>
                     <input type="hidden" name="total_game_in_cart" value="{{ forloop.counter }}" />
+                    {% empty %}
+                    <center style="font-size: 22px; font-weight: 600; margin: 50px;">Cart is empty!</center>
                     {% endfor %}
                     <div class="order-summary">
                         <!-- Total Cost and Quantity shown here -->
