@@ -56,19 +56,19 @@
                 {% for order in orders %}
                 <tr>
                     <td>{{ order.order_id }}</td>
-                    {% if order.order_placed_status == 'order_placed' %}
+                    {% if order.order_placed_status == 'order_placed' or order.order_placed_status == 'shipped' or order.order_placed_status == 'delievered' %}
                         <td class="success-txt">Order Placed</td>
                     {% else %}
                         <td class="pending-txt">Pending</td>
                     {% endif %}
 
-                    {% if order.shipped_status == 'shipped' %}
+                    {% if order.order_placed_status == 'shipped' or order.order_placed_status == 'delievered'%}
                         <td class="success-txt">Shipped</td>
                     {% else %}
                         <td class="pending-txt">Pending</td>
                     {% endif %}
                     
-                    {% if order.delivered_status == 'delivered' %}
+                    {% if order.order_placed_status == 'delievered' %}
                         <td class="success-txt">Delivered</td>
                     {% else %}
                         <td class="pending-txt">Pending</td>
