@@ -14,7 +14,6 @@ const pickupAddressInput = document.getElementById('pickupaddr');
 form.addEventListener('submit', function(event) {
   event.preventDefault(); // prevent default form submission behavior
   if (validateForm()) {
-    alert('Form submitted successfully!');
     form.reset();
   }
 });
@@ -24,7 +23,7 @@ function validateForm() {
   let isValid = true;
   const mobileNumberRegex = /^[6-9][0-9]{9}$/; // Regex for Indian mobile numbers
   // 24 AABCU 9603 R 1 ZT
-  const gstinRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z]{2}$/; // Regex for GSTIN
+  // const gstinRegex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z]{2}$/; // Regex for GSTIN
 
   // Validate display name
   if (displayNameInput.value.trim() === '') {
