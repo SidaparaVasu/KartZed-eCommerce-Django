@@ -8,6 +8,5 @@ The payment gateway is a secure system that enables customers to make payments u
 
 KartZed provide a platform for selling products and services, It can also be used to build brand awareness, provide customer support, and collect valuable data about customer behaviour and preferences. This data can be used to improve marketing strategies, product offerings, and overall customer satisfaction.
 
-```````````````````````````````````````````````````````````````````````
-` # For more details check out documentation and presentation pptx ☝️ `
-```````````````````````````````````````````````````````````````````````
+
+# For more details check out documentation and presentation pptx ☝️
