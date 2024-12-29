@@ -1,0 +1,12 @@
+!pip install pandas
+!pip install numpy
+!pip install pillow
+!pip install djongo
+!pip install cherrypy
+!pip install legacy-cgi
+!pip install stripe
+!pip install standard-imghdr
+!pip install imghdr
+!pip install chardet
+!pip install openpyxl
+!pip install reportlab
