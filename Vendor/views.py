@@ -126,7 +126,8 @@ def insert_game(request):
         vendor_unique_id = request.POST.get('vendor_unique_keyid')
         vendor_ins = Vendors.objects.get(vendor_unique_keyid = vendor_unique_id)
 
-        plan = Plan.objects.get(plan_points = 100)
+        # plan = Plan.objects.get(plan_points = 100)
+        plan = Plan.objects.get(points = 100)
         g_points = int(request.POST.get('game_price'))
 
         g_points = (g_points*plan.points)/plan.amount

@@ -1,273 +1,383 @@
 {% load static %}
 
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Games | Vendor | Dashboard</title>
     <!-- Favicon Icon -->
-    <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon.png' %}" />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="{% static 'images/logos/favicon.png' %}"
+    />
     <!-- CSS Styling -->
     <link rel="stylesheet" href="{% static 'css/root.css' %}" />
     <link rel="stylesheet" href="{% static 'css/global.css' %}" />
     <link rel="stylesheet" href="{% static 'css/dashboard-styles.min.css' %}" />
 
     <!-- Ion Icon CDN -->
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
     <style>
-        .upload-csv-form{
-            display: flex; padding: 6px 10px; background-color: #f1f2f3; align-items: center;
-        }
-        textarea {
-            resize: none;
-            width: 100%;
-            font-size: 13px;
-            padding-top: 8px;
-            padding-left: 16px;
-            border-color: #DFE5EF;
-            border-radius: 8px;
-        }
+      .upload-csv-form {
+        display: flex;
+        padding: 6px 10px;
+        background-color: #f1f2f3;
+        align-items: center;
+      }
+      textarea {
+        resize: none;
+        width: 100%;
+        font-size: 13px;
+        padding-top: 8px;
+        padding-left: 16px;
+        border-color: #dfe5ef;
+        border-radius: 8px;
+      }
 
-        input:focus,
-        textarea:focus {
-            border-color: #5D87FF;
-        }
-        input[type="checkbox"],input[type="radio"]{
-            accent-color: #5D87FF;
-        }
-        .grid-checkbox {
-            display: grid;
-            grid-template-columns: 25% 25% 25% 25%;
-        }
+      input:focus,
+      textarea:focus {
+        border-color: #5d87ff;
+      }
+      input[type="checkbox"],
+      input[type="radio"] {
+        accent-color: #5d87ff;
+      }
+      .grid-checkbox {
+        display: grid;
+        grid-template-columns: 25% 25% 25% 25%;
+      }
 
-        .grid-3 {
-            width: 100%;
-            display: grid;
-            grid-template-columns: 33.33% 33.33% 33.33%;
-        }
+      .grid-3 {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 33.33% 33.33% 33.33%;
+      }
 
-        .grid-3>.grid-items {
-            text-align: center;
-        }
+      .grid-3 > .grid-items {
+        text-align: center;
+      }
 
-        .grid-3>.grid-items>.col {
-            padding: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background-color: #eee;
-        }
+      .grid-3 > .grid-items > .col {
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background-color: #eee;
+      }
 
-        .grid-3>.grid-items>.item-value {
-            background-color: white;
-        }
+      .grid-3 > .grid-items > .item-value {
+        background-color: white;
+      }
 
-        .grid-3>.grid-items>.item-value>col {
-            padding: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            border-bottom: 2px solid #eee;
-        }
+      .grid-3 > .grid-items > .item-value > col {
+        padding: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border-bottom: 2px solid #eee;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    {% if messages %}
-        {% for message in messages %}
-            {% if message.tags %}
-                <script>alert("{{ message }}")</script>
-            {% endif %}
-        {% endfor %}
-    {% endif %}
+  <body>
+    {% if messages %} {% for message in messages %} {% if message.tags %}
+    <script>
+      alert("{{ message }}");
+    </script>
+    {% endif %} {% endfor %} {% endif %}
     <!--  Body Wrapper -->
-    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-        data-sidebar-position="fixed" data-header-position="fixed">
+    <div
+      class="page-wrapper"
+      id="main-wrapper"
+      data-layout="vertical"
+      data-navbarbg="skin6"
+      data-sidebartype="full"
+      data-sidebar-position="fixed"
+      data-header-position="fixed"
+    >
+      <!-- Including Sidebar -->
+      {% include 'sidebar-vendor.html' %}
 
-        <!-- Including Sidebar -->
-        {% include 'sidebar-vendor.html' %}
+      <!--  Main wrapper -->
+      <div class="body-wrapper">
+        <!-- Including Header -->
+        {% include 'navbar-vendor.html' %}
 
-        <!--  Main wrapper -->
-        <div class="body-wrapper">
+        <div class="container-fluid">
+          <!-- Product Form -->
+          <div class="card shadow p-3 mb-5 bg-white rounded">
+            <div class="card-body">
+              <div
+                class="flex-2"
+                style="display: flex; justify-content: space-between"
+              >
+                <h5 class="card-title fw-semibold mb-4">Add Game</h5>
+                <form
+                  action="games_csv_upload"
+                  method="post"
+                  enctype="multipart/form-data"
+                  class="upload-csv-form"
+                >
+                  {% csrf_token %}
+                  <input
+                    type="hidden"
+                    name="vendor_unique_keyid"
+                    value="{{ request.session.vendor_unique_keyid }}"
+                  />
+                  <input type="file" name="file" id="upload" required />
+                  <button class="upload-csv-btn btn btn-primary">
+                    Upload CSV
+                  </button>
+                  <!-- <ion-icon name="help-circle-outline" style="height: 25px; width: 25px;"></ion-icon> -->
+                </form>
+              </div>
 
-            <!-- Including Header -->
-            {% include 'navbar-vendor.html' %}
+              <form
+                action="insert_game"
+                method="post"
+                enctype="multipart/form-data"
+              >
+                {% csrf_token %}
+                <input
+                  type="hidden"
+                  name="vendor_unique_keyid"
+                  value="{{ request.session.vendor_unique_keyid }}"
+                />
+                <div class="row">
+                  <div class="col-sm">
+                    <h5>choose image of game Logo</h5>
+                    <input
+                      type="file"
+                      name="game_logo"
+                      class="form-control"
+                      id="gamename"
+                    />
+                  </div>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col-sm">
+                    <div class="form-floating mb-3">
+                      <input
+                        type="text"
+                        name="game_name"
+                        class="form-control"
+                        id="displayname"
+                      />
+                      <label for="displayname">Enter Game name</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm">
+                    <div class="form-floating mb-3">
+                      <textarea
+                        name="game_description"
+                        id="gamedesc"
+                        cols="50"
+                        rows="5"
+                        placeholder="Enter Game Description"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm">
+                    <div class="form-floating mb-3">
+                      <input
+                        type="text"
+                        name="game_developer"
+                        class="form-control"
+                        id="developername"
+                      />
+                      <label for="developername">Enter Developer name</label>
+                    </div>
+                  </div>
+                  <div class="col-sm">
+                    <div class="form-floating mb-3">
+                      <input
+                        type="text"
+                        name="game_publisher"
+                        class="form-control"
+                        id="publishername"
+                      />
+                      <label for="publishername">Enter Publisher name</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm">
+                    <div class="form-floating mb-3">
+                      <input
+                        type="date"
+                        name="game_release_date"
+                        class="form-control"
+                        id="releasedate"
+                      />
+                      <label for="releasedate">Enter Game Release date</label>
+                    </div>
+                  </div>
+                  <div class="col-sm">
+                    <div class="form-floating mb-3">
+                      <input
+                        type="tel"
+                        name="avail_stock"
+                        class="form-control"
+                        id="availstock"
+                        pattern="[0-9]+"
+                      />
+                      <label for="availstock">Enter Available Stock</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm">
+                    <div class="form-floating mb-3">
+                      <input
+                        type="tel"
+                        name="game_price"
+                        class="form-control"
+                        id="gameprice"
+                        pattern="[0-9]+"
+                      />
+                      <label for="gameprice">Enter Game Price</label>
+                    </div>
+                  </div>
+                  <div class="col-sm">
+                    <div class="form-floating mb-3">
+                      <input
+                        type="tel"
+                        name="discount"
+                        class="form-control"
+                        id="discount"
+                        pattern="[0-9]+"
+                      />
+                      <label for="discount">Enter Discount(%)</label>
+                    </div>
+                  </div>
+                </div>
+                <!-- Game Features, Modes and Categories -->
+                <div class="row">
+                  <h5>Select Game Features</h5>
+                  <div class="grid-checkbox">
+                    {% for feature in game_features %}
+                    <div class="col" style="display: flex; gap: 8px">
+                      <input
+                        type="checkbox"
+                        id="feature_cb"
+                        name="game_features"
+                        value="{{ feature.game_feature_name }}"
+                      />
+                      <label for="feature_cb"
+                        >{{ feature.game_feature_name }}</label
+                      >
+                    </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <br />
+                <div class="row">
+                  <h5>Select Game Modes</h5>
+                  <div class="grid-checkbox">
+                    {% for mode in game_modes %}
+                    <div class="col" style="display: flex; gap: 8px">
+                      <input
+                        type="checkbox"
+                        id="mode_cb"
+                        name="game_modes"
+                        value="{{ mode.game_mode_name }}"
+                      />
+                      <label for="mode_cb">{{ mode.game_mode_name }}</label>
+                    </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <br />
+                <div class="row">
+                  <h5>Select Game Categories</h5>
+                  <div class="grid-checkbox">
+                    {% for category in game_categories %}
+                    <div class="col" style="display: flex; gap: 8px">
+                      <input
+                        type="checkbox"
+                        id="category_cb"
+                        name="game_categories"
+                        value="{{ category.game_category_name }}"
+                      />
+                      <label for="category_cb"
+                        >{{ category.game_category_name }}</label
+                      >
+                    </div>
+                    {% endfor %}
+                  </div>
+                </div>
 
-            <div class="container-fluid">
-                <!-- Product Form -->
-                <div class="card shadow p-3 mb-5 bg-white rounded">
-                    <div class="card-body">
-                        <div class="flex-2" style="display: flex; justify-content: space-between;">
-                            <h5 class="card-title fw-semibold mb-4">
-                                Add Game</h5>
-                            <form action="games_csv_upload" method="post" enctype="multipart/form-data" class="upload-csv-form">
-                                {% csrf_token %}
-                                <input type="hidden" name="vendor_unique_keyid" value="{{ request.session.vendor_unique_keyid }}" />
-                                <input type="file" name="file"  id="upload" required/>
-                                <button class="upload-csv-btn btn btn-primary">Upload CSV</button>
-                                <!-- <ion-icon name="help-circle-outline" style="height: 25px; width: 25px;"></ion-icon> -->
-                            </form>
-                        </div>
+                <br />
 
-                        <form action="insert_game" method="post" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <input type="hidden" name="vendor_unique_keyid" value="{{ request.session.vendor_unique_keyid }}" />
-                            <div class="row">
-                                <div class="col-sm">
-                                    <h5>choose image of game Logo</h5>
-                                    <input type="file" name="game_logo" class="form-control" id="gamename" />
-                                </div>
-                            </div>
-                            <br />
-                            <div class="row">
-                                <div class="col-sm">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" name="game_name" class="form-control" id="displayname"
-                                         />
-                                        <label for="displayname">Enter Game name</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm">
-                                    <div class="form-floating mb-3">
-                                        <textarea name="game_description" id="gamedesc" cols="50" rows="5"
-                                            placeholder="Enter Game Description"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" name="game_developer" class="form-control" id="developername"
-                                         />
-                                        <label for="developername">Enter Developer name</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" name="game_publisher" class="form-control" id="publishername"
-                                         />
-                                        <label for="publishername">Enter Publisher name</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm">
-                                    <div class="form-floating mb-3">
-                                        <input type="date" name="game_release_date" class="form-control"
-                                            id="releasedate" />
-                                        <label for="releasedate">Enter Game Release date</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm">
-                                    <div class="form-floating mb-3">
-                                        <input type="tel" name="avail_stock" class="form-control" id="availstock"
-                                            pattern="[0-9]+" />
-                                        <label for="availstock">Enter Available Stock</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm">
-                                    <div class="form-floating mb-3">
-                                        <input type="tel" name="game_price" class="form-control" id="gameprice"
-                                            pattern="[0-9]+" />
-                                        <label for="gameprice">Enter Game Price</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm">
-                                    <div class="form-floating mb-3">
-                                        <input type="tel" name="discount" class="form-control" id="discount"
-                                            pattern="[0-9]+" />
-                                        <label for="discount">Enter Discount(%)</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Game Features, Modes and Categories -->
-                            <div class="row">
-                                <h5>Select Game Features</h5>
-                                <div class="grid-checkbox">
-                                    {% for feature in game_features %}
-                                    <div class="col" style="display: flex; gap: 8px;">
-                                        <input type="checkbox" id="feature_cb" name="game_features"
-                                            value="{{ feature.game_feature_name }}" />
-                                        <label for="feature_cb">{{ feature.game_feature_name }}</label>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                            <br />
-                            <div class="row">
-                                <h5>Select Game Modes</h5>
-                                <div class="grid-checkbox">
-                                    {% for mode in game_modes %}
-                                    <div class="col" style="display: flex; gap: 8px;">
-                                        <input type="checkbox" id="mode_cb" name="game_modes"
-                                            value="{{ mode.game_mode_name }}" />
-                                        <label for="mode_cb">{{ mode.game_mode_name }}</label>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                            <br />
-                            <div class="row">
-                                <h5>Select Game Categories</h5>
-                                <div class="grid-checkbox">
-                                    {% for category in game_categories %}
-                                    <div class="col" style="display: flex; gap: 8px;">
-                                        <input type="checkbox" id="category_cb" name="game_categories"
-                                            value="{{ category.game_category_name }}" />
-                                        <label for="category_cb">{{ category.game_category_name }}</label>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-
-                            <br />
-
-                            <!-- Minimum Requirements -->
-                            <div class="row">
-                                <h5>Minimum Requirements</h5>
-                                <div class="col-sm">
-                                    <label for="gameram">Select RAM</label>
-                                    <select name="game_ram" class="form-control" id="gameram">
-                                        <option value="disabled" selected disabled>-- select ram --</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm">
-                                    <div class="form-floating mb-3">
-                                        <input type="tel" name="game_storage" class="form-control" id="storage"
-                                            pattern="[0-9]+" />
-                                        <label for="storage">Enter Game Storage</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Platform -->
-                            <div class="row">
-                                <h5>Select supported platforms</h5>
-                                <div class="grid-checkbox">
-                                    {% for platform in platforms %}
-                                    <div class="col" style="display: flex; gap: 8px;">
-                                        <input type="checkbox" name="platform_names" id="platform_cb"
-                                            value="{{ platform.platform_name }}" />
-                                        <label for="platform_cb">{{ platform.platform_name }}</label>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                            <br />
-                            <!-- Supported Languages -->
-                            <div class="row">
-                                <h5>Select Supported Languages for (Audio & Video)</h5>
-                                <div class="grid-checkbox" id="displayCBLang"></div>
-                            </div>
-                            <br />
-                            <!-- <div class="row">
+                <!-- Minimum Requirements -->
+                <div class="row">
+                  <h5>Minimum Requirements</h5>
+                  <div class="col-sm">
+                    <label for="gameram">Select RAM</label>
+                    <select name="game_ram" class="form-control" id="gameram">
+                      <option value="disabled" selected disabled>
+                        -- select ram --
+                      </option>
+                      <option value="4">4</option>
+                      <option value="8">8</option>
+                      <option value="16">16</option>
+                    </select>
+                  </div>
+                  <div class="col-sm">
+                    <div class="form-floating mb-3">
+                      <input
+                        type="tel"
+                        name="game_storage"
+                        class="form-control"
+                        id="storage"
+                        pattern="[0-9]+"
+                      />
+                      <label for="storage">Enter Game Storage</label>
+                    </div>
+                  </div>
+                </div>
+                <!-- Platform -->
+                <div class="row">
+                  <h5>Select supported platforms</h5>
+                  <div class="grid-checkbox">
+                    {% for platform in platforms %}
+                    <div class="col" style="display: flex; gap: 8px">
+                      <input
+                        type="checkbox"
+                        name="platform_names"
+                        id="platform_cb"
+                        value="{{ platform.platform_name }}"
+                      />
+                      <label for="platform_cb"
+                        >{{ platform.platform_name }}</label
+                      >
+                    </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <br />
+                <!-- Supported Languages -->
+                <div class="row">
+                  <h5>Select Supported Languages for (Audio & Video)</h5>
+                  <div class="grid-checkbox" id="displayCBLang"></div>
+                </div>
+                <br />
+                <!-- <div class="row">
                                 <h5>Select supported Operatin System and versions</h5>
                                 <div class="grid-3">
                                     {% for os in operatingsys %}
@@ -294,81 +404,83 @@
                             </div>
                             <br/> -->
 
-                            <button type="submit" class="form-control btn btn-primary"
-                                style="padding: 12px;">Submit</button>
-                        </form>
-
-                    </div>
-                </div>
-
+                <button
+                  type="submit"
+                  class="form-control btn btn-primary"
+                  style="padding: 12px"
+                >
+                  Submit
+                </button>
+              </form>
             </div>
+          </div>
         </div>
+      </div>
     </div>
 
     <script>
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', "{% static 'json/ram.json' %}");
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                var data = JSON.parse(xhr.responseText);
-                var dropdown = document.getElementById('gameram');
-                for (var i = 0; i < data.RAM.length; i++) {
-                    var option = document.createElement('option');
-                    option.text = data.RAM[i];
-                    option.value = data.RAM[i];
-                    dropdown.add(option);
-                }
-            }
-        };
-        xhr.send();
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "{% static 'json/ram.json' %}");
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          var data = JSON.parse(xhr.responseText);
+          var dropdown = document.getElementById("gameram");
+          for (var i = 0; i < data.RAM.length; i++) {
+            var option = document.createElement("option");
+            option.text = data.RAM[i];
+            option.value = data.RAM[i];
+            dropdown.add(option);
+          }
+        }
+      };
+      xhr.send();
     </script>
     <script>
-        // Read JSON file
-        fetch("{% static 'json/languages.json' %}")
-            .then(response => response.json())
-            .then(data => {
-                // Get the languages array from the JSON data
-                const languages = data.languages;
+      // Read JSON file
+      fetch("{% static 'json/languages.json' %}")
+        .then((response) => response.json())
+        .then((data) => {
+          // Get the languages array from the JSON data
+          const languages = data.languages;
 
-                // Get the div element where the checkboxes will be displayed
-                const displayCBLang = document.getElementById('displayCBLang');
+          // Get the div element where the checkboxes will be displayed
+          const displayCBLang = document.getElementById("displayCBLang");
 
-                // Loop through each language in the array
-                languages.forEach(language => {
-                    // Create a div element with a "col" class
-                    const colDiv = document.createElement('div');
-                    colDiv.classList.add('col');
-                    colDiv.style.display = "flex";
-                    colDiv.style.gap = "8px";
+          // Loop through each language in the array
+          languages.forEach((language) => {
+            // Create a div element with a "col" class
+            const colDiv = document.createElement("div");
+            colDiv.classList.add("col");
+            colDiv.style.display = "flex";
+            colDiv.style.gap = "8px";
 
-                    // Create a checkbox element
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.id = language;
-                    checkbox.value = language;
-                    checkbox.name = 'game_languages'
+            // Create a checkbox element
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.id = language;
+            checkbox.value = language;
+            checkbox.name = "game_languages";
 
-                    // Create a label element for the checkbox
-                    const label = document.createElement('label');
-                    label.htmlFor = language;
-                    label.appendChild(document.createTextNode(language));
+            // Create a label element for the checkbox
+            const label = document.createElement("label");
+            label.htmlFor = language;
+            label.appendChild(document.createTextNode(language));
 
-                    // Add the checkbox and label to the "col" div
-                    colDiv.appendChild(checkbox);
-                    colDiv.appendChild(label);
+            // Add the checkbox and label to the "col" div
+            colDiv.appendChild(checkbox);
+            colDiv.appendChild(label);
 
-                    // Add the "col" div to the parent div
-                    displayCBLang.appendChild(colDiv);
-                });
-            });
+            // Add the "col" div to the parent div
+            displayCBLang.appendChild(colDiv);
+          });
+        });
     </script>
 
     <script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script>
     <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/sidebarmenu.js' %}"></script>
-    
+
     <script src="{% static 'js/app.min.js' %}"></script>
     <script src="{% static 'libs/simplebar/dist/simplebar.js' %}"></script>
-</body>
-
+  </body>
 </html>
