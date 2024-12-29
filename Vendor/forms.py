@@ -32,4 +32,4 @@ class GamesForm(forms.ModelForm):
         ]
     
 class GameImageForm(forms.Form):
-    images = forms.ImageField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    images = forms.ImageField(widget=forms.ClearableFileInput(attrs={'allow_multiple_selected': True}))
